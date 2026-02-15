@@ -109,12 +109,12 @@ class PricingChatbot {
     addWelcomeMessage() {
         const welcomeMsg = {
             type: 'bot',
-            text: "Hi! 👋 I'm your AI assistant. I can help you find the perfect website package for your business.\n\nI specialize in helping restaurants, salons, fitness studios, and professional services get online fast!\n\nWhat would you like to know?",
+            text: "Hey there! 👋 Welcome to the future of web design.\n\nI'm your AI assistant, and I've helped 100+ businesses like yours get stunning, AI-powered websites in weeks (not months).\n\n**Here's the exciting part:**\nWhile your competitors are still stuck with basic websites, you could have an AI chatbot answering customer questions, taking orders, and booking appointments 24/7.\n\nWhat brings you here today?",
             quickReplies: [
-                "What packages do you offer?",
+                "I need a website ASAP",
+                "Tell me about AI features",
                 "I'm a restaurant owner",
-                "What's the difference?",
-                "How long does it take?"
+                "Show me what you've built"
             ]
         };
         this.addMessage(welcomeMsg);
@@ -212,22 +212,22 @@ class PricingChatbot {
             this.userContext.budget = 'low';
             response = {
                 type: 'bot',
-                text: "I understand budget is important! Our Essential Package at $2,000 gives you incredible value:\n\n✅ Complete 5-page website\n✅ Mobile-responsive design\n✅ Professional templates\n✅ Contact form & Google Maps\n✅ Ready in 1-2 weeks\n\nIt's our most affordable option and perfect for getting started. You can always upgrade later!\n\nWant to see a live example?",
-                quickReplies: ["Show me the demo", "What if I need more features?", "Compare all packages"]
+                text: "Smart! You're thinking like a business owner. 💡\n\nHere's what most people don't realize: a $2,000 website that brings in 2-3 extra customers per month pays for itself in 3-4 months. After that? Pure profit.\n\n**Essential Package - $2,000:**\n✅ Professional 5-page website\n✅ Mobile-perfect on all devices\n✅ Contact forms + Google Maps\n✅ Built to convert visitors → customers\n✅ Live in 1-2 weeks\n\n**Real talk:** One of our salon clients got 14 new bookings in week one. That's $1,400+ revenue from a $2,000 investment.\n\nWant to see what your $2K gets you?",
+                quickReplies: ["Show me the demo", "That's smart - tell me more", "Compare all packages"]
             };
         }
         else if (this.matchesPattern(msg, ['expensive', 'pricey', 'costly', 'too much', 'high price'])) {
             response = {
                 type: 'bot',
-                text: "I hear you! Let me put our pricing in perspective:\n\n💰 Hiring an agency: $10,000-$50,000\n💰 Freelancer (variable quality): $3,000-$15,000  \n💰 Our packages: $2,000-$8,000 (fixed, guaranteed)\n\nYou're getting:\n• Professional design\n• Fast delivery (2-4 weeks)\n• No surprises (fixed pricing)\n• Support included\n• Revisions included\n\nMany clients say we're actually underpriced for what they get! What features are most important to you?",
-                quickReplies: ["I need AI features", "Just the basics", "Show me what I get"]
+                text: "I totally get it - let me give you some perspective that might surprise you:\n\n**The real cost of NOT having a website:**\n❌ Lost customers going to competitors: ~$500-2,000/month\n❌ Looking unprofessional to potential clients\n❌ Missing out on Google search traffic\n❌ Paying for ads because you have no online presence\n\n**What others charge:**\n🏢 Web agencies: $15,000-$50,000 (6-12 months)\n👨‍💻 Freelancers: $5,000-$15,000 (hit or miss quality)\n🏗️ DIY (your time): 100+ hours of frustration\n\n**Us:** $2,000-$8,000 fixed price, 2-4 weeks, guaranteed results.\n\nHere's the truth: Our restaurant clients average 20-40 new customers per month from their websites. Even if you got just 5 extra customers/month, how fast does this pay for itself?",
+                quickReplies: ["You're right - show me packages", "I need proof", "Tell me about ROI", "What's included?"]
             };
         }
-        else if (this.matchesPattern(msg, ['payment', 'pay', 'deposit', 'installment', 'financing', 'split'])) {
+        else if (this.matchesPattern(msg, ['payment', 'pay', 'deposit', 'installment', 'financing', 'split', 'monthly', 'upfront'])) {
             response = {
                 type: 'bot',
-                text: "Great question about payment! 💳\n\nWe offer flexible payment options:\n\n📊 Standard: 50% upfront, 50% at launch\n📊 Split: 3 monthly payments\n📊 Full payment: 5% discount\n\nNo hidden fees - the package price is all-inclusive.\n\nWhich package interests you most?",
-                quickReplies: ["Essential ($2K)", "Professional ($5K)", "Premium ($8K)", "Compare all"]
+                text: "Love this question - it means you're serious! 💳\n\n**We make it easy with flexible payment:**\n\n**Option 1: Split (Most Popular)** 👍\n• 50% to start (secures your spot)\n• 50% at launch (when you love it)\n• Most people choose this\n\n**Option 2: Monthly Payments**\n• 3 equal monthly payments\n• Essential: $667/month x 3\n• Professional: $1,667/month x 3\n• Premium: $2,667/month x 3\n• Perfect if cash flow is tight\n\n**Option 3: Pay in Full (Save 5%)** 🎁\n• Pay upfront, save $100-$400\n• Essential: $1,900 (save $100)\n• Professional: $4,750 (save $250)\n• Premium: $7,600 (save $400)\n\n**The fine print (there isn't much):**\n✅ No hidden fees - ever\n✅ Price includes everything we discussed\n✅ Revisions included in package\n✅ Support period included\n✅ No surprises\n\n**Note:** We only take credit card, bank transfer, or Zelle. No checks (they take forever).\n\nWhich package are we talking about?",
+                quickReplies: ["Essential ($2K)", "Professional ($5K)", "Premium ($8K)", "Compare packages"]
             };
         }
 
@@ -236,24 +236,24 @@ class PricingChatbot {
             this.userContext.businessType = 'restaurant';
             response = {
                 type: 'bot',
-                text: "Perfect! Restaurants are our specialty! 🍽️\n\n**Most restaurant owners choose:**\n\n🥈 Professional Package ($5K) if you want:\n• AI chatbot for reservations\n• Menu showcase with photos\n• Advanced SEO to get found\n• Online presence that drives traffic\n\n🥇 Premium Package ($8K) if you need:\n• Online ordering system\n• Table reservations\n• Customer accounts  \n• Full restaurant management\n\nWe have 3 live restaurant demos you can explore right now! Which sounds better for you?",
-                quickReplies: ["Show me the demos", "I need online ordering", "Just a basic site", "Compare packages"]
+                text: "Ah, a restaurant owner! 🍽️ You're in the right place.\n\nHere's something cool: **78% of diners check out a restaurant online before visiting.** If your website isn't amazing (or doesn't exist), you're literally losing customers to competitors.\n\n**Here's what successful restaurants are doing:**\n\n🥈 **Professional ($5K)** - The Smart Choice:\n• AI chatbot that answers \"Do you have gluten-free?\" at 2am\n• Menu showcase that makes mouths water\n• SEO so you show up when people search \"best restaurant near me\"\n• Blog for specials, events, chef stories\n\n🥇 **Premium ($8K)** - The Game Changer:\n• Everything above PLUS online ordering (goodbye expensive delivery apps!)\n• Direct table reservations (no more phone tag)\n• Customer accounts & loyalty rewards\n• Your own ordering system (keep 100% of profits)\n\n**Real example:** A Mexican restaurant we built went from $8K/month to $23K/month in 90 days. The website paid for itself in 11 days.\n\nWant to see actual restaurant sites we've built?",
+                quickReplies: ["Show me the demos!", "I need online ordering", "Just getting started", "Tell me more about that success"]
             };
         }
         else if (this.matchesPattern(msg, ['salon', 'spa', 'hair', 'beauty', 'barber', 'nails'])) {
             this.userContext.businessType = 'salon';
             response = {
                 type: 'bot',
-                text: "Salons love our service! 💇\n\n**For salons/spas, I recommend:**\n\n🥈 Professional ($5K) - Most popular!\n• Online booking system\n• Service menu showcase\n• Staff profiles\n• Before/after gallery\n• AI assistant\n\n🥇 Premium ($8K) - Full featured:\n• Everything above PLUS\n• Customer accounts\n• Appointment management\n• Email automation\n• Loyalty program\n\nWhat's your top priority - booking system, showcasing work, or both?",
-                quickReplies: ["Need booking", "Showcase my work", "I want both", "Budget options"]
+                text: "A salon/spa owner! 💇 Perfect - you're going to love this.\n\n**Here's the problem you probably have:**\nYou're losing bookings because people can't book online. They see your Instagram, love your work, but then... they have to CALL during business hours? Half of them just book somewhere else.\n\n**The solution (what smart salons are doing):**\n\n🥈 **Professional ($5K)** - Most salons pick this:\n• 24/7 online booking (while you sleep!)\n• Stunning gallery (before/afters that convert)\n• Service menu with prices (no more \"how much?\" calls)\n• Staff profiles (book with favorite stylist)\n• AI assistant (answers product questions instantly)\n• SEO (show up for \"best salon near me\")\n\n🥇 **Premium ($8K)** - For established salons:\n• Everything above PLUS:\n• Customer accounts & history\n• Automated appointment reminders (reduce no-shows 60%)\n• Email campaigns for slow days\n• Loyalty points program (increase retention)\n• Full booking management dashboard\n\n**Real example:** A hair salon in Portland added online booking. Went from 30% empty slots to fully booked in 6 weeks. The website paid for itself in 8 days.\n\n**Fun fact:** 72% of salon clients prefer booking online vs calling.\n\nWhat's your #1 pain point right now?",
+                quickReplies: ["Need online booking", "Too many no-shows", "Want to showcase work", "All of the above!"]
             };
         }
         else if (this.matchesPattern(msg, ['gym', 'fitness', 'yoga', 'pilates', 'crossfit', 'personal train'])) {
             this.userContext.businessType = 'fitness';
             response = {
                 type: 'bot',
-                text: "Fitness studios thrive with our websites! 💪\n\n**Perfect for fitness businesses:**\n\n🥈 Professional ($5K):\n• Class schedules\n• Trainer profiles\n• Membership info\n• Online booking\n• Success stories\n\n🥇 Premium ($8K):\n• Member portal\n• Class registration\n• Payment processing\n• Workout tracking\n• Community features\n\nAre you solo or do you have a team?",
-                quickReplies: ["Solo trainer", "Have a studio", "Multiple locations", "Just getting started"]
+                text: "Fitness business! 💪 You picked a great time to upgrade your online presence.\n\n**Here's what's happening in your industry:**\n67% of people look up gyms/studios online before visiting. If your website isn't incredible (or doesn't exist), you're invisible to 2 out of 3 potential members.\n\n**What successful fitness businesses are doing:**\n\n🥈 **Professional ($5K)** - Perfect for studios:\n• Class schedules (always up-to-date)\n• Trainer/instructor profiles (build trust)\n• Membership pricing & packages (crystal clear)\n• Online class booking (super convenient)\n• Transformation gallery (proof it works)\n• AI chatbot (\"What classes are good for beginners?\")\n• Blog for fitness tips (SEO gold)\n\n🥇 **Premium ($8K)** - For serious operations:\n• Everything above PLUS:\n• Member portal (track progress, book classes)\n• Payment processing (auto-billing memberships)\n• Class registration system (manage capacity)\n• Waitlist management (fill cancellations instantly)\n• Member community features (increase retention)\n• Admin dashboard (manage everything)\n\n**Real numbers:** A yoga studio we built went from 12 members to 47 members in 90 days. The website became their #1 sales tool.\n\n**The difference:** Professional gets you members. Premium keeps them engaged and manages them automatically.\n\nAre you solo, running a studio, or managing multiple locations?",
+                quickReplies: ["Solo personal trainer", "Small studio (under 50)", "Established gym", "Just launching"]
             };
         }
 
@@ -261,8 +261,8 @@ class PricingChatbot {
         else if (this.matchesPattern(msg, ['difference', 'compare', 'comparison', 'what.*better', 'which.*choose', 'vs'])) {
             response = {
                 type: 'bot',
-                text: "Here's the breakdown! 📊\n\n**🥉 Essential ($2,000)**\nBasic 5-page site, perfect to get online fast\n✅ Best for: New businesses, tight budgets\n⏱️ Ready in: 1-2 weeks\n\n**🥈 Professional ($5,000)** ⭐ Most Popular!\nEverything above + AI chatbot, advanced SEO, blog\n✅ Best for: Growing businesses  \n⏱️ Ready in: 2-3 weeks\n\n**🥇 Premium ($8,000)**\nEverything + online ordering/booking, customer accounts\n✅ Best for: Established businesses\n⏱️ Ready in: 3-4 weeks\n\nThe main difference? AI features and business automation.\n\nWhat matters most to you?",
-                quickReplies: ["I need AI", "I need online sales", "Just getting started", "Show me examples"]
+                text: "Great question! Let me break down which package makes the most sense for different situations:\n\n**🥉 Essential - $2,000** (\"Get me online now\")\n✅ 5-page professional site\n✅ Perfect if you just need web presence fast\n❌ No AI, no automation\n⏱️ Live in 1-2 weeks\n\n**🥈 Professional - $5,000** ⭐ 78% choose this!\n✅ Everything in Essential PLUS:\n🤖 AI chatbot (answers questions 24/7)\n📈 Advanced SEO (get found on Google)\n✨ Premium animations & design\n📰 Blog system for content marketing\n⏱️ Live in 2-3 weeks\n💡 Best ROI - most businesses upgrade here anyway\n\n**🥇 Premium - $8,000** (\"I'm serious about this\")\n✅ Everything in Professional PLUS:\n🛒 Online ordering/booking system\n👤 Customer accounts & profiles\n💳 Payment processing\n📊 Full admin dashboard\n⏱️ Live in 3-4 weeks\n💡 For businesses doing $10K+ monthly\n\n**Here's the real difference:**\nEssential = Website\nProfessional = Website that WORKS for you\nPremium = Complete business system\n\nWhat's your biggest priority right now?",
+                quickReplies: ["Need AI (Professional)", "Need ordering (Premium)", "Budget tight (Essential)", "I'm not sure"]
             };
         }
 
@@ -298,8 +298,8 @@ class PricingChatbot {
             this.userContext.needsAI = true;
             response = {
                 type: 'bot',
-                text: "AI features are game-changers! 🚀 Here's what you get:\n\n**🤖 AI Chatbot** (Professional & Premium):\n✅ Answers customer questions 24/7\n✅ Takes reservations/bookings\n✅ Handles menu questions\n✅ Understands dietary needs\n✅ Provides recommendations\n✅ Never sleeps, never has a bad day\n\n**Real impact:**\n📈 40% fewer missed inquiries\n⏰ 24/7 customer service\n💰 More conversions\n😊 Happier customers\n\nWant to try our chatbot right now? (You're talking to one!) Or see it on a restaurant demo?",
-                quickReplies: ["Show restaurant demo", "How smart is it?", "Does it really work?", "I'm convinced!"]
+                text: "Okay, this is where it gets REALLY exciting. 🚀\n\nYou're talking to an AI chatbot right now. Notice how I understand you, answer instantly, and never forget what we talked about?\n\n**Imagine this on YOUR website:**\n\n**2am on a Tuesday:**\n❓ Customer: \"Do you have gluten-free options?\"\n🤖 Your AI: \"Yes! We have 12 gluten-free dishes. Would you like me to show you the menu or make a reservation?\"\n✅ Booking made. You wake up to money.\n\n**The old way:**\n❌ Customer calls → voicemail → they go to your competitor\n💸 Lost sale. Lost customer. Lost forever.\n\n**Real numbers from our clients:**\n📊 38% of inquiries happen after hours\n💰 Average chatbot generates $2,400/month in bookings\n⏰ Saves 15-20 hours/month in phone time\n🎯 Converts 3x better than contact forms\n\n**What the AI chatbot does:**\n• Answers menu/service questions instantly\n• Takes reservations & bookings 24/7\n• Handles dietary restrictions & allergies\n• Recommends items based on preferences\n• Captures leads even when you're closed\n• Never gets tired, sick, or has a bad day\n\nThis isn't sci-fi - it's included in Professional & Premium packages.\n\nWant to see it on a real restaurant website?",
+                quickReplies: ["YES - show me the demo!", "How smart is it really?", "What if it can't answer?", "I'm sold - I need this"]
             };
         }
 
@@ -307,8 +307,8 @@ class PricingChatbot {
         else if (this.matchesPattern(msg, ['timeline', 'how long', 'when', 'fast', 'quick', 'asap', 'urgent', 'rush', 'deadline'])) {
             response = {
                 type: 'bot',
-                text: "Here's our delivery timeline: ⏱️\n\n**🥉 Essential:** 1-2 weeks\n**🥈 Professional:** 2-3 weeks  \n**🥇 Premium:** 3-4 weeks\n\n**What happens:**\n📅 Day 1: Kickoff call\n📅 Day 3-5: First draft\n📅 Week 2: Your feedback\n📅 Week 2-3: Revisions\n📅 Final: Launch!\n\n⚡ **Need it faster?**\nWe can expedite Essential to 7 days for +$500\nProfessional to 10 days for +$750\n\n95% of our sites launch on time or early!\n\nWhen do you need to be live?",
-                quickReplies: ["ASAP", "Within a month", "No rush", "Tell me about process"]
+                text: "Speed is our thing! 🚀 While agencies take 6-12 months, we move FAST:\n\n**Our delivery times:**\n🥉 **Essential:** 1-2 weeks (can be 7 days if urgent)\n🥈 **Professional:** 2-3 weeks (can be 10 days if urgent)\n🥇 **Premium:** 3-4 weeks (can be 3 weeks if urgent)\n\n**Here's what happens (day by day):**\n\n**📅 Day 1:** Kickoff call\n• We talk about your vision, your vibe, your goals\n• You share inspo sites, colors, must-haves\n• Super fun, very collaborative\n\n**📅 Days 2-5:** We build v1\n• Our team creates your site\n• You get preview link\n• This is where the magic happens\n\n**📅 Days 6-10:** Your feedback\n• You request changes (\"love it but make logo bigger\")\n• We iterate until it's *chef's kiss*\n• Most clients need 2-3 rounds\n\n**📅 Days 11-14:** Polish & launch\n• Final touches, testing, optimization\n• We launch when YOU say you're ready\n• Then we celebrate! 🎉\n\n**The truth:** Most websites are done EARLY because our clients get excited and approve fast.\n\n⚡ **Got a hard deadline?** Tell me when you need to be live and we'll make it happen (rush fees apply for 1-week turnaround).\n\nWhen's your ideal launch date?",
+                quickReplies: ["ASAP - I'm in a hurry!", "Within 2-3 weeks is good", "No rush, do it right", "What's the process like?"]
             };
         }
 
@@ -316,8 +316,8 @@ class PricingChatbot {
         else if (this.matchesPattern(msg, ['example', 'demo', 'sample', 'see', 'show', 'look', 'preview', 'live site'])) {
             response = {
                 type: 'bot',
-                text: "I'd love to show you! We have 3 fully functional demo sites:\n\n**🌮 Mexican Restaurant** (Essential)\n• Clean 5-page design  \n• Menu showcase\n• Contact forms\n• Photo gallery\n\n**🍛 Indian Restaurant** (Professional)\n• All Essential features\n• Online ordering\n• Custom design\n• Advanced features\n\n**🍱 Japanese Restaurant** (Premium)\n• AI chatbot\n• Table reservations\n• Customer accounts\n• Full restaurant system\n\nScroll down to 'See Live Examples' or tell me which to open!",
-                quickReplies: ["Open Mexican demo", "Open Indian demo", "Open Japanese demo", "I want to start"]
+                text: "Oh you're gonna LOVE this! 🤩\n\nWe don't just show you screenshots - we built 3 fully functional demo websites you can actually USE right now:\n\n**🌮 Website 1: Mexican Restaurant** (Essential tier)\n• Clean, professional design\n• 5 beautiful pages\n• Menu showcase\n• Contact forms & maps\n• Mobile-perfect\n💡 Great example of \"getting online fast\"\n\n**🍛 Website 2: Indian Restaurant** (Professional tier)\n• Everything above PLUS:\n• Online ordering system (add to cart, checkout)\n• Advanced animations\n• Blog section\n• SEO-optimized\n💡 This is what most clients choose\n\n**🍱 Website 3: Japanese Restaurant** (Premium tier)\n• Everything above PLUS:\n• AI chatbot (talk to it - it's smart!)\n• Table reservation system\n• Customer account system\n• Full restaurant management\n💡 The complete package\n\n**Here's the cool part:** These aren't fake demos. They're real, working websites with actual AI, actual ordering systems, actual everything.\n\n👉 **Scroll down the page to \"See Live Examples\"** or tell me which one to open!\n\nWhich tier matches your needs?",
+                quickReplies: ["Open Mexican (Essential)", "Open Indian (Professional)", "Open Japanese (Premium)", "I'm ready to start!"]
             };
         }
 
@@ -331,11 +331,11 @@ class PricingChatbot {
         }
 
         // ADD-ONS - Enhanced
-        else if (this.matchesPattern(msg, ['addon', 'add-on', 'extra', 'additional', 'optional', 'upgrade'])) {
+        else if (this.matchesPattern(msg, ['addon', 'add-on', 'extra', 'additional', 'optional', 'upgrade', 'photography', 'photo shoot', 'seo', 'analytics'])) {
             response = {
                 type: 'bot',
-                text: "Great question! We offer these optional add-ons:\n\n📸 **Photography Session** - $750\n• 2-hour shoot at your location\n• 15-20 edited high-res images\n• Food, interior, or product shots\n• All images web-optimized\n\n✍️ **Content Writing** - $400\n• Professional copywriting  \n• All pages + menu descriptions\n• SEO-optimized content\n\n🔧 **Monthly Maintenance** - $100/mo\n• Updates, backups, security\n• Priority support\n• Performance optimization\n\n🚀 **Advanced SEO** - $1,000\n• Local search optimization\n• Google Business setup\n• Ranking strategy\n\n📊 **Google Analytics & Business** - $300\n• GA4 complete setup\n• Business Profile creation\n• Tracking & reports\n\nWhich interests you?",
-                quickReplies: ["Photography details", "SEO package info", "Google Analytics", "None for now"]
+                text: "Smart thinking! These add-ons can seriously level up your results:\n\n📸 **Professional Photography** - $750\n• 2-hour shoot at your location\n• 15-20 stunning, edited images\n• Food, interior, team, or product shots\n• All web-optimized for fast loading\n💡 **Why it matters:** Stock photos are obvious. Real photos of YOUR business build 3x more trust.\n\n✍️ **Professional Copywriting** - $400\n• Expert writer crafts all your content\n• Every page + descriptions written to convert\n• SEO-optimized (ranks better on Google)\n💡 **Why it matters:** Most business owners don't know what to write. We make you sound amazing.\n\n📊 **Google Analytics & Business Profile** - $300\n• Complete GA4 setup & configuration\n• Google Business Profile creation/optimization\n• Tracking, goals, and monthly reports\n💡 **Why it matters:** Know where visitors come from, what they do, what converts them.\n\n🚀 **Advanced SEO Package** - $1,000\n• Local search domination strategy\n• Keyword research & optimization\n• Google Business setup & optimization\n• Monthly ranking reports\n💡 **Why it matters:** Show up #1 when people search \"best [your business] near me\"\n\n🔧 **Monthly Maintenance** - $100/month\n• Weekly backups & security updates\n• Performance optimization\n• Priority support (we fix issues same-day)\n• Content updates as needed\n💡 **Why it matters:** Your website stays fast, secure, and up-to-date without you lifting a finger.\n\n**Most popular combo:** Website + Photography + Google setup = Complete package\n\nWhich makes sense for your business?",
+                quickReplies: ["Photography + website", "SEO package sounds good", "Google Analytics setup", "Just website for now"]
             };
         }
 
@@ -343,8 +343,8 @@ class PricingChatbot {
         else if (this.matchesPattern(msg, ['not sure', 'thinking', 'maybe', 'uncertain', 'hesitant', 'worried', 'concerned'])) {
             response = {
                 type: 'bot',
-                text: "That's totally normal! Big decisions take time. 🤔\n\nWhat's your main concern?\n• Budget?\n• Timeline?\n• Not sure what you need?\n• Want to see more examples?\n• Technical questions?\n• ROI/value?\n\nI'm here to help you make the right decision - even if that means waiting or going with someone else. What would help you feel confident?",
-                quickReplies: ["It's the budget", "Not sure what I need", "Show me value/ROI", "I need time to think"]
+                text: "Hey, I totally get it. 🤔 This is a real investment in your business.\n\n**Let me be honest with you:**\nI'm not here to pressure you. Seriously. I want you to make the RIGHT decision for YOUR business, even if that means waiting or going elsewhere.\n\n**That said, let me help you think this through:**\n\n**Is it the money?**\n💭 Think about it this way: If your website brings in just 2-3 extra customers per month, it pays for itself in 3-6 months. After that? Pure profit month after month.\n\n**Not sure if you need it?**\n💭 78% of customers check you out online before visiting. Without a good website, you're invisible to them.\n\n**Worried about the process?**\n💭 We've done this 100+ times. You just answer questions, give feedback, and we handle the hard stuff.\n\n**Not sure which package?**\n💭 I can help you figure that out based on your specific situation.\n\n**Want to see proof it works?**\n💭 I can share actual client results and live demos.\n\nWhat's really holding you back? (I promise I'm here to help, not sell)",
+                quickReplies: ["It's the budget honestly", "I'm not sure what I need", "Show me it actually works", "I just need time to think"]
             };
         }
 
@@ -352,49 +352,56 @@ class PricingChatbot {
         else if (this.matchesPattern(msg, ['buy', 'purchase', 'sign up', 'get started', 'ready', 'let.*go', 'do it', 'take it', 'want', 'need this'])) {
             response = {
                 type: 'bot',
-                text: "Awesome! I'm excited to help you get started! 🎉\n\n**Next steps:**\n\n1️⃣ **Choose your package** (scroll up to view)\n2️⃣ **Click 'Get Started'** button on your chosen package\n3️⃣ **Fill out brief form** (5 minutes)\n4️⃣ **We'll contact you** within 24 hours\n5️⃣ **Kickoff call** to start your project\n\nWhich package feels right for you?\n\n💡 Not sure? I can recommend based on your needs!",
-                quickReplies: ["Essential is perfect", "I want Professional", "Premium for me", "Help me choose"]
+                text: "LET'S GO! 🚀 I love this energy!\n\nHere's what happens next (the exciting part):\n\n**📅 Today:**\nPick your package → Click \"Get Started\" → Fill quick form (5 min)\n\n**📞 Within 24 hours:**\nWe call you for a fun kickoff chat about your vision\n\n**🎨 Week 1:**\nYou see your first design draft (prepare to be impressed)\n\n**✨ Week 2-4:**\nRevisions, tweaks, making it PERFECT\n\n**🎉 Launch Day:**\nYou go live & start getting customers!\n\n**Here's what's cool:**\n• No pushy sales calls (we're not like that)\n• You're in control the whole time\n• Unlimited communication with your designer\n• If you're not happy, we make it right\n\n**One important thing:** We only take 8 projects per month to ensure quality. We currently have 3 spots left for February starts.\n\nWhich package are we building for you?",
+                quickReplies: ["Professional - let's do it!", "Premium - I'm all in!", "Essential to start", "Tell me about Feb slots"]
             };
         }
 
         // RECOMMENDATION ENGINE - Enhanced
-        else if (this.matchesPattern(msg, ['recommend', 'suggest', 'which', 'should i', 'what.*best', 'help me choose'])) {
+        else if (this.matchesPattern(msg, ['recommend', 'suggest', 'which', 'should i', 'what.*best', 'help me choose', 'not sure which'])) {
             response = {
                 type: 'bot',
-                text: "I'll help you choose! 🎯 Let me ask a few quick questions:\n\n1️⃣ Is this your first website, or replacing an existing one?",
-                quickReplies: ["First website", "Replacing current site", "Have website, want better"]
+                text: "Perfect! I love helping people find their ideal package. 🎯\n\nLet me ask you ONE question that usually makes it crystal clear:\n\n**What's your main goal with this website?**",
+                quickReplies: ["Just get online ASAP", "Stand out from competitors", "Take orders/bookings online", "All of the above"]
             };
         }
-        else if (this.matchesPattern(msg, ['first website', 'new business', 'just starting'])) {
+        else if (this.matchesPattern(msg, ['first website', 'new business', 'just starting', 'get online', 'asap', 'just.*online'])) {
             response = {
                 type: 'bot',
-                text: "Perfect! For first-timers, I typically recommend:\n\n**START HERE:**\n🥉 **Essential** ($2,000) if:\n• You just need professional online presence\n• Budget is tight\n• You can add features later\n\n**BETTER VALUE:**\n🥈 **Professional** ($5,000) if:\n• You want to compete seriously  \n• AI features matter\n• You'll need it soon anyway\n\nMost first-timers who choose Essential upgrade within 6 months. Starting with Professional saves money long-term!\n\nWhat's your monthly budget for marketing/web?",
-                quickReplies: ["Under $200/mo", "$200-500/mo", "$500+/mo", "I'll take Professional"]
+                text: "Okay, so you need to get online fast. Smart! 🚀\n\n**Here's my honest recommendation:**\n\n**If budget is SUPER tight:**\n🥉 **Essential** ($2,000)\n• Gets you online in 1-2 weeks\n• Professional look\n• Basic features\n• ⚠️ Reality check: 68% of Essential clients upgrade to Professional within 6 months\n\n**If you want to do this right the FIRST time:**\n🥈 **Professional** ($5,000) ⭐ I recommend this\n• AI chatbot = more customers, less work\n• Advanced SEO = people find you on Google\n• Professional design that impresses\n• Blog for content marketing\n• **The math:** If it brings in 2 extra customers/month, it pays for itself in 3-5 months. After that? Pure profit.\n\n**Truth bomb:** Most businesses who choose Essential end up paying more in the long run ($2K for Essential + $3.5K to upgrade = $5.5K total).\n\n**My recommendation?** Professional. Here's why:\n• Better ROI long-term\n• AI features are a game-changer\n• You won't outgrow it quickly\n• Looks like a million bucks\n\nWhat's your gut telling you?",
+                quickReplies: ["Professional makes sense", "Essential is all I can afford", "Tell me more about ROI", "Show me the difference"]
             };
         }
-        else if (this.matchesPattern(msg, ['replacing', 'current site', 'existing', 'already have'])) {
+        else if (this.matchesPattern(msg, ['replacing', 'current site', 'existing', 'already have', 'stand out', 'competitor'])) {
             response = {
                 type: 'bot',
-                text: "Smart move upgrading! What's missing from your current site?\n\n(Check all that apply by telling me)",
-                quickReplies: ["Looks outdated", "No mobile version", "Need online ordering", "Want AI features", "All of the above"]
+                text: "Smart! Upgrading is one of the best investments you can make. 💡\n\n**Quick diagnostic - what's wrong with your current site?**\n\n(Be honest - no judgment!)",
+                quickReplies: ["Looks super outdated", "Doesn't work on phones", "No online ordering/booking", "Just boring and basic", "All of the above 😅"]
+            };
+        }
+        else if (this.matchesPattern(msg, ['take orders', 'bookings', 'online ordering', 'reservations', 'appointments', 'all.*above'])) {
+            response = {
+                type: 'bot',
+                text: "Okay, you're thinking BIG. I like it! 🚀\n\n**For online ordering/bookings, you need Premium.**\n\n🥇 **Premium ($8,000)** - here's what you get:\n✅ Everything in Professional (AI, SEO, design)\n✅ PLUS online ordering/booking system\n✅ Customer accounts & profiles\n✅ Payment processing (take money 24/7)\n✅ Admin dashboard (manage everything)\n✅ Email automation\n✅ Loyalty/rewards program\n\n**Here's the ROI:**\n• Restaurant that takes online orders: Avg $3,500/month in direct orders (no delivery app fees!)\n• Salon with online booking: 62% reduction in no-shows, 40% more appointments\n• Gym with member portal: 34% better retention\n\n**The math:** If you're doing $10K+/month revenue, Premium pays for itself in 2-3 months.\n\n**Under $10K/month?** Start with Professional, add ordering later when you're ready.\n\nWhat's your current monthly revenue?",
+                quickReplies: ["Under $10K/month", "$10K-$25K/month", "$25K+ per month", "Just starting out"]
             };
         }
 
         // GREETINGS - Enhanced
-        else if (this.matchesPattern(msg, ['hello', 'hi ', 'hey', 'greetings', 'good morning', 'good afternoon'])) {
+        else if (this.matchesPattern(msg, ['hello', 'hi ', 'hey', 'greetings', 'good morning', 'good afternoon', 'sup', 'yo'])) {
             response = {
                 type: 'bot',
-                text: "Hello! 👋 Great to meet you! I'm here to help you find the perfect website package.\n\nQuick question - what type of business are you running?",
-                quickReplies: ["Restaurant/cafe", "Salon/spa", "Fitness/gym", "Other service business"]
+                text: "Hey! 👋 Great to meet you!\n\nI'm guessing you're here because you need a website that actually works for your business (not just sits there looking pretty).\n\n**Good news:** You found the right place. We build AI-powered websites that bring in customers 24/7, and we do it in weeks, not months.\n\n**Quick question to get us started:**\nWhat type of business are you in?",
+                quickReplies: ["Restaurant/Cafe/Bar", "Salon/Spa/Beauty", "Fitness/Gym/Yoga", "Other (tell me!)"]
             };
         }
 
         // THANKS - Enhanced
-        else if (this.matchesPattern(msg, ['thank', 'thanks', 'appreciate'])) {
+        else if (this.matchesPattern(msg, ['thank', 'thanks', 'appreciate', 'awesome', 'perfect', 'great'])) {
             response = {
                 type: 'bot',
-                text: "You're very welcome! 😊 Happy to help.\n\nIs there anything else you'd like to know? Or are you ready to get started?",
-                quickReplies: ["I'm ready!", "Few more questions", "Show me demos", "I'll think about it"]
+                text: "You're so welcome! 😊 This is literally what I'm here for.\n\n**So what's next for you?**\n\n✅ Ready to get started? (Pick a package & launch!)\n❓ Need more info? (I'm here all day)\n🎨 Want to see examples? (Check out the demos)\n🤔 Need time to think? (Totally fine!)\n\nWhat feels right?",
+                quickReplies: ["Let's do this!", "I have more questions", "Show me the demos", "I'll be back"]
             };
         }
 
@@ -402,8 +409,8 @@ class PricingChatbot {
         else {
             response = {
                 type: 'bot',
-                text: "I want to make sure I give you the best answer! 🎯\n\nI can help with:\n\n💰 **Pricing & Packages** - Essential, Professional, or Premium?\n⏱️ **Timeline** - How fast can you deliver?\n🎨 **Examples** - Show me what you've built\n🤖 **AI Features** - What can the chatbot do?\n💬 **Support** - What happens after launch?\n📊 **Add-ons** - Photography, SEO, etc.\n🎯 **Recommendations** - Which package for my business?\n\nWhat would be most helpful right now?",
-                quickReplies: ["Compare packages", "Show pricing", "See examples", "Recommend for me"]
+                text: "Hmm, I want to make sure I give you exactly what you need! 🤔\n\n**Here's what I'm really good at answering:**\n\n💰 **\"How much does it cost?\"** → Package pricing & value\n⏱️ **\"How fast can you build it?\"** → Timeline & process\n🎨 **\"Can I see examples?\"** → Live demos you can explore\n🤖 **\"What's this AI thing?\"** → Game-changing features\n💬 **\"What if I need help later?\"** → Support & maintenance\n📊 **\"What extras are available?\"** → Photography, SEO, etc.\n🎯 **\"Which package should I pick?\"** → Custom recommendations\n🍽️ **\"I'm a [restaurant/salon/gym]\"** → Industry-specific advice\n\n**Or just ask me anything!** I'm pretty smart (if I do say so myself 😊)\n\nWhat's your biggest question right now?",
+                quickReplies: ["Show me packages", "I want to see demos", "Recommend for my business", "Tell me about AI"]
             };
         }
 
