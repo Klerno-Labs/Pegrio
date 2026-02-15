@@ -224,23 +224,24 @@ export default function Home() {
 
         <div className="section-container relative z-10 py-20 lg:py-32 text-center">
           <div className="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold animate-fade-in">
-            🚀 Launch Your Restaurant Online in 2-4 Weeks
+            ✨ Powered by Advanced AI Technology
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight animate-slide-up">
-            Restaurant Websites That <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Drive Orders</span>
+            Professional Websites That <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Drive Results</span>
           </h1>
 
           <p className="text-xl md:text-2xl mb-10 opacity-95 max-w-3xl mx-auto leading-relaxed">
-            Choose your package and get online in 2-4 weeks. No custom quotes, no surprises.
+            Perfect for restaurants, salons, fitness studios & professional services.<br/>
+            Get online in 2-4 weeks. Clear pricing. No surprises.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <a href="#packages" className="btn btn-primary shadow-2xl hover:shadow-yellow-400/20">
               View Packages
             </a>
-            <a href="#demos" className="btn btn-secondary">
-              See Live Demos
+            <a href="#ai-features" className="btn btn-secondary">
+              Explore AI Features
             </a>
           </div>
 
@@ -460,9 +461,9 @@ export default function Home() {
           <p className="text-xl text-gray-600 text-center mb-16">View actual sites we've built for each tier</p>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <DemoCard tier="Essential" icon="🌮" name="The Simple Taco" description="Clean, professional 5-page site with menu display" gradient="from-orange-500 to-red-600" />
-            <DemoCard tier="Professional" icon="🍜" name="Thai Way 6" description="Full-featured with online ordering and custom design" gradient="from-purple-500 to-indigo-600" isPopular />
-            <DemoCard tier="Premium" icon="🍝" name="Bella Vita Italian" description="Enterprise solution with payments, accounts, and analytics" gradient="from-pink-500 to-rose-600" />
+            <DemoCard tier="Essential" icon="🌮" name="La Casa de Sabor" description="Clean, professional Mexican restaurant website" gradient="from-orange-500 to-red-600" demoUrl="/website 1/" />
+            <DemoCard tier="Professional" icon="🍛" name="Spice Symphony" description="Full-featured Indian restaurant with ordering system" gradient="from-purple-500 to-indigo-600" isPopular demoUrl="/website 2/" />
+            <DemoCard tier="Premium" icon="🍣" name="Yuki Izakaya" description="Premium Japanese restaurant with AI-generated images" gradient="from-pink-500 to-rose-600" demoUrl="/website 3/" />
           </div>
         </div>
       </section>
@@ -590,13 +591,14 @@ export default function Home() {
   )
 }
 
-function DemoCard({ tier, icon, name, description, gradient, isPopular = false }: {
+function DemoCard({ tier, icon, name, description, gradient, isPopular = false, demoUrl }: {
   tier: string
   icon: string
   name: string
   description: string
   gradient: string
   isPopular?: boolean
+  demoUrl?: string
 }) {
   return (
     <div className={`bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-3 transition-all duration-300 ${isPopular ? 'ring-4 ring-primary-500' : ''}`}>
@@ -617,9 +619,9 @@ function DemoCard({ tier, icon, name, description, gradient, isPopular = false }
       <div className="p-6">
         <h3 className="font-bold text-xl mb-2">{tier} Tier Example</h3>
         <p className="text-gray-600 mb-4 leading-relaxed">{description}</p>
-        <button type="button" className={`${isPopular ? 'btn btn-primary' : 'btn btn-small btn-outline'} w-full`}>
+        <a href={demoUrl} target="_blank" rel="noopener noreferrer" className={`${isPopular ? 'btn btn-primary' : 'btn btn-small btn-outline'} w-full block text-center`}>
           View Demo →
-        </button>
+        </a>
       </div>
     </div>
   )
