@@ -1,37 +1,28 @@
 {
-  "framework": null,
-  "buildCommand": "echo 'Static site - no build needed'",
-  "outputDirectory": ".",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "routes": [
+  "rewrites": [
     {
-      "src": "^/$",
-      "dest": "/index.html"
+      "source": "/website-1",
+      "destination": "/website 1/index.html"
     },
     {
-      "src": "^/website-1/?$",
-      "dest": "/website 1/index.html"
+      "source": "/website-2",
+      "destination": "/website 2/index.html"
     },
     {
-      "src": "^/website-2/?$",
-      "dest": "/website 2/index.html"
+      "source": "/website-3",
+      "destination": "/website 3/index.html"
     },
     {
-      "src": "^/website-3/?$",
-      "dest": "/website 3/index.html"
+      "source": "/website-1/:path*",
+      "destination": "/website 1/:path*"
     },
     {
-      "src": "^/website 1/(.*)",
-      "dest": "/website 1/$1"
+      "source": "/website-2/:path*",
+      "destination": "/website 2/:path*"
     },
     {
-      "src": "^/website 2/(.*)",
-      "dest": "/website 2/$1"
-    },
-    {
-      "src": "^/website 3/(.*)",
-      "dest": "/website 3/$1"
+      "source": "/website-3/:path*",
+      "destination": "/website 3/:path*"
     }
   ]
 }
