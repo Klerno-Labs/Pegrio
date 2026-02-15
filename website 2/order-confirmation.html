@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Order confirmation from Spice Symphony.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Order Confirmed - Spice Symphony</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="25" cy="25" r="24" fill="#C95D3F" stroke="#E6A834" stroke-width="2"/>
+                            <path d="M25 8 C30 15, 35 22, 25 30 C15 22, 20 15, 25 8 Z" fill="#E6A834"/>
+                            <circle cx="25" cy="32" r="3" fill="#87AE73"/>
+                            <path d="M15 35 Q25 28, 35 35" stroke="#E6A834" stroke-width="2" fill="none"/>
+                            <circle cx="20" cy="18" r="2" fill="#87AE73"/>
+                            <circle cx="30" cy="18" r="2" fill="#87AE73"/>
+                            <circle cx="25" cy="23" r="2" fill="#87AE73"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-main">Spice Symphony</span>
+                        <span class="logo-tagline">Authentic Indian Cuisine</span>
+                    </div>
+                </a>
+
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Confirmation Content -->
+    <section class="confirmation-section">
+        <div class="container">
+            <div class="confirmation-wrapper">
+                <div class="success-icon">
+                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <circle cx="40" cy="40" r="38" fill="#4CAF50" opacity="0.1"/>
+                        <circle cx="40" cy="40" r="30" fill="#4CAF50"/>
+                        <path d="M25 40 L35 50 L55 30" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+
+                <h1>Order Confirmed!</h1>
+                <p class="confirmation-message">Thank you for your order. We've sent a confirmation email to <span id="customer-email"></span></p>
+
+                <div class="order-number">
+                    <span>Order Number:</span>
+                    <strong id="order-number"></strong>
+                </div>
+
+                <div class="order-details-card">
+                    <h3>Order Details</h3>
+
+                    <div class="order-info-grid">
+                        <div class="order-info-item">
+                            <strong>Fulfillment Method:</strong>
+                            <span id="fulfillment-method"></span>
+                        </div>
+                        <div class="order-info-item">
+                            <strong>Estimated Time:</strong>
+                            <span id="estimated-time"></span>
+                        </div>
+                        <div class="order-info-item" id="delivery-address-section" style="display: none;">
+                            <strong>Delivery Address:</strong>
+                            <span id="delivery-address"></span>
+                        </div>
+                        <div class="order-info-item">
+                            <strong>Payment Method:</strong>
+                            <span id="payment-method"></span>
+                        </div>
+                    </div>
+
+                    <div class="order-items">
+                        <h4>Items Ordered</h4>
+                        <div id="order-items-list">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+
+                    <div class="order-totals">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="order-subtotal"></span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax:</span>
+                            <span id="order-tax"></span>
+                        </div>
+                        <div class="total-row">
+                            <span id="order-fee-label">Delivery Fee:</span>
+                            <span id="order-fee"></span>
+                        </div>
+                        <div class="total-row total-final">
+                            <strong>Total:</strong>
+                            <strong id="order-total"></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-tracking">
+                    <h3>Track Your Order</h3>
+                    <div class="tracking-steps">
+                        <div class="tracking-step active">
+                            <div class="tracking-icon">✓</div>
+                            <div class="tracking-label">Order Placed</div>
+                        </div>
+                        <div class="tracking-step active">
+                            <div class="tracking-icon">👨‍🍳</div>
+                            <div class="tracking-label">Preparing</div>
+                        </div>
+                        <div class="tracking-step" id="delivery-step">
+                            <div class="tracking-icon">🚗</div>
+                            <div class="tracking-label">On the Way</div>
+                        </div>
+                        <div class="tracking-step">
+                            <div class="tracking-icon">🎉</div>
+                            <div class="tracking-label">Delivered</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="confirmation-actions">
+                    <a href="index.html" class="btn btn-primary">Return to Home</a>
+                    <a href="menu.html" class="btn btn-secondary">Order Again</a>
+                </div>
+
+                <div class="help-section">
+                    <p>Need help with your order?</p>
+                    <p><strong>Call us:</strong> (555) 123-4567</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Spice Symphony</h4>
+                    <p>Bringing authentic Mexican flavors to your table since 2010.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="reviews.html">Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Hours</h4>
+                    <ul>
+                        <li>Monday - Thursday: 11am - 9pm</li>
+                        <li>Friday - Saturday: 11am - 10pm</li>
+                        <li>Sunday: 12pm - 8pm</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>📍 123 Main Street, City, ST 12345</li>
+                        <li>📞 (555) 123-4567</li>
+                        <li>✉️ info@lacasadelsol.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Spice Symphony. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/order-confirmation.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

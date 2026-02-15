@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="My Account - Manage your profile and orders at Yuki Izakaya">
+    <title>My Account - Yuki Izakaya</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/account.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Yuki Izakaya <span class="japanese">雪居酒屋</span></h1>
+                </a>
+            </div>
+
+            <nav class="nav" id="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="order.html">Order Online</a></li>
+                    <li><a href="rewards.html">Rewards</a></li>
+                    <li><a href="account.html" class="active">Account</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="btn-icon cart-btn" id="cartBtn" aria-label="Shopping cart">
+                        🛒 <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <button class="btn-primary" id="loginBtn">Sign In</button>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Account Section -->
+    <section class="account-section">
+        <div class="container">
+            <!-- Not Logged In View -->
+            <div id="loginPrompt" class="login-prompt">
+                <h2>Welcome Back!</h2>
+                <p>Sign in to access your account, view order history, and manage your rewards.</p>
+                <div class="login-buttons">
+                    <button class="btn-primary btn-lg" id="showLoginForm">Sign In</button>
+                    <button class="btn-secondary btn-lg" id="showRegisterForm">Create Account</button>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form" style="display: none;">
+                <h2>Sign In</h2>
+                <form id="loginFormElement">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn-primary btn-block">Sign In</button>
+                    <p class="form-footer">
+                        Don't have an account? <a href="#" id="switchToRegister">Create one</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="auth-form" style="display: none;">
+                <h2>Create Account</h2>
+                <form id="registerFormElement">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="regFirstName">First Name</label>
+                            <input type="text" id="regFirstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regLastName">Last Name</label>
+                            <input type="text" id="regLastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email</label>
+                        <input type="email" id="regEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPhone">Phone</label>
+                        <input type="tel" id="regPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" required minlength="8">
+                    </div>
+                    <button type="submit" class="btn-primary btn-block">Create Account</button>
+                    <p class="form-footer">
+                        Already have an account? <a href="#" id="switchToLogin">Sign in</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Logged In View -->
+            <div id="accountDashboard" style="display: none;">
+                <div class="account-header">
+                    <h1>My Account</h1>
+                    <button class="btn-outline" id="logoutBtn">Logout</button>
+                </div>
+
+                <div class="account-grid">
+                    <!-- Profile Card -->
+                    <div class="account-card">
+                        <h3>Profile Information</h3>
+                        <div id="profileInfo">
+                            <p><strong>Name:</strong> <span id="profileName"></span></p>
+                            <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+                            <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
+                            <p><strong>Member Since:</strong> <span id="memberSince"></span></p>
+                        </div>
+                        <button class="btn-secondary" id="editProfileBtn">Edit Profile</button>
+                    </div>
+
+                    <!-- Rewards Card -->
+                    <div class="account-card rewards-card">
+                        <h3>Loyalty Points</h3>
+                        <div class="points-display">
+                            <div class="points-number" id="userPoints">0</div>
+                            <p>points available</p>
+                        </div>
+                        <a href="rewards.html" class="btn-primary">View Rewards</a>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="account-card">
+                        <h3>Order Statistics</h3>
+                        <div class="stats-grid">
+                            <div class="stat">
+                                <div class="stat-number" id="totalOrders">0</div>
+                                <div class="stat-label">Total Orders</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number" id="totalSpent">$0</div>
+                                <div class="stat-label">Total Spent</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order History -->
+                <div class="order-history">
+                    <h2>Order History</h2>
+                    <div id="ordersList" class="orders-list">
+                        <p class="no-orders">No orders yet. <a href="menu.html">Start ordering!</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Yuki Izakaya <span class="japanese">雪居酒屋</span></h3>
+                    <p>Authentic Japanese cuisine crafted with passion and tradition.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="order.html">Order Online</a></li>
+                        <li><a href="rewards.html">Rewards Program</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <p>📍 123 Sakura Street<br>Downtown, ST 12345</p>
+                    <p>📞 (555) 123-4567</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Yuki Izakaya. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="overlay" id="cartOverlay"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/account.js"></script>
+</body>
+</html>

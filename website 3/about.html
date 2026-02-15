@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About Yuki Izakaya - Learn about our story, chef, and commitment to authentic Japanese cuisine">
+    <title>About Us - Yuki Izakaya</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/image-placeholders.css">
+
+    <style>
+        .about-hero {
+            height: 500px;
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('assets/images/restaurant-interior.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 80px;
+        }
+
+        .about-hero-content {
+            text-align: center;
+            color: white;
+        }
+
+        .about-hero h1 {
+            font-size: 4rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .story-section {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+
+        .story-image {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .story-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .chef-section {
+            padding: var(--spacing-xl) 0;
+            background: var(--bg-light);
+        }
+
+        .chef-grid {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+
+        .chef-photo {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .chef-photo img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .values-section {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .value-card {
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .team-section {
+            padding: var(--spacing-xl) 0;
+            background: var(--bg-light);
+        }
+
+        .team-photo {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .team-photo img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .story-grid,
+            .chef-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Yuki Izakaya <span class="japanese">雪居酒屋</span></h1>
+                </a>
+            </div>
+
+            <nav class="nav" id="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="order.html">Order Online</a></li>
+                    <li><a href="rewards.html">Rewards</a></li>
+                    <li><a href="account.html">Account</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="btn-icon cart-btn" id="cartBtn">
+                        🛒 <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <button class="btn-primary" id="loginBtn">Sign In</button>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <h1>Our Story</h1>
+            <p style="font-size: 1.5rem;">Bringing Tokyo's Heart to Your Table</p>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-image">
+                    <img src="assets/images/dining-area.jpg" alt="Yuki Izakaya dining area" loading="lazy">
+                </div>
+                <div class="story-content">
+                    <h2>A Journey from Tokyo to Here</h2>
+                    <p class="lead">Founded in 2020 by Chef Takeshi Yamamoto, Yuki Izakaya represents a lifelong dream of bringing authentic Japanese izakaya culture to the community.</p>
+                    <p>Growing up in Tokyo's bustling Shibuya district, Chef Takeshi spent his childhood surrounded by the vibrant energy of traditional izakayas. After training for 15 years in some of Tokyo's finest establishments, he embarked on a journey to share this rich culinary heritage.</p>
+                    <p>Yuki Izakaya isn't just a restaurant—it's a celebration of Japanese craftsmanship, seasonal ingredients, and the communal spirit of sharing good food with great company.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chef Section -->
+    <section class="chef-section">
+        <div class="container">
+            <div class="chef-grid">
+                <div class="chef-photo">
+                    <img src="assets/images/chef-cooking.jpg" alt="Chef Takeshi Yamamoto" loading="lazy">
+                </div>
+                <div class="chef-content">
+                    <h2>Meet Our Head Chef</h2>
+                    <h3>Chef Takeshi Yamamoto</h3>
+                    <p class="lead">15 years of experience in Tokyo's finest kitchens</p>
+                    <p>"Cooking is about more than just food—it's about creating moments of joy and connection. Every dish we serve tells a story, honors tradition, and celebrates the seasons."</p>
+
+                    <h4 style="margin-top: 2rem;">Experience:</h4>
+                    <ul style="margin-left: 1.5rem; line-height: 1.8;">
+                        <li>2006-2012: Apprentice at Sukiyabashi Jiro, Tokyo</li>
+                        <li>2012-2016: Sous Chef at Kikunoi, Kyoto</li>
+                        <li>2016-2019: Head Chef at Narisawa, Tokyo</li>
+                        <li>2020-Present: Owner & Head Chef, Yuki Izakaya</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem;">Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🍱</div>
+                    <h3>Authenticity</h3>
+                    <p>Traditional recipes and techniques, honoring centuries of Japanese culinary heritage</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🌸</div>
+                    <h3>Seasonality</h3>
+                    <p>Fresh, seasonal ingredients at their peak, celebrating nature's rhythm</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🎨</div>
+                    <h3>Craftsmanship</h3>
+                    <p>Every dish is carefully prepared with precision and artistry</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">❤️</div>
+                    <h3>Community</h3>
+                    <p>Creating a welcoming space where people gather, share, and connect</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Our Team</h2>
+            <div class="team-photo">
+                <img src="assets/images/team-photo.jpg" alt="Yuki Izakaya team" loading="lazy">
+            </div>
+            <p style="text-align: center; font-size: 1.125rem; max-width: 800px; margin: 0 auto;">
+                Behind every great meal is a passionate team. From our skilled chefs to our welcoming front-of-house staff, every member of the Yuki family is dedicated to providing you with an exceptional dining experience.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="padding: 4rem 0; background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); text-align: center; color: white;">
+        <div class="container">
+            <h2 style="color: white; margin-bottom: 1rem;">Experience Yuki Izakaya</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem;">Join us for an authentic Japanese dining experience</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="menu.html" class="btn-primary btn-lg">View Menu</a>
+                <a href="order.html" class="btn-secondary btn-lg">Order Now</a>
+                <a href="gallery.html" class="btn-outline btn-lg" style="background: white; color: var(--primary-color);">View Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Yuki Izakaya <span class="japanese">雪居酒屋</span></h3>
+                    <p>Authentic Japanese cuisine crafted with passion and tradition.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <p>📍 123 Sakura Street<br>Downtown, ST 12345</p>
+                    <p>📞 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Yuki Izakaya. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Your Order</h3>
+            <button class="btn-close" id="closeCart">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="cart-empty">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Subtotal:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <a href="checkout.html" class="btn-primary btn-block">Checkout</a>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
