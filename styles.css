@@ -924,7 +924,7 @@ p {
    ======================================== */
 
 .faq {
-    padding: var(--space-3xl) 0;
+    padding: var(--space-2xl) 0;
     background: var(--color-white);
 }
 
@@ -935,7 +935,7 @@ p {
 }
 
 .faq-item {
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-sm);
     border: 1px solid var(--color-gray-200);
     border-radius: var(--radius-lg);
     background: var(--color-white);
@@ -953,7 +953,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-lg) var(--space-xl);
+    padding: var(--space-md) var(--space-lg);
     background: none;
     border: none;
     text-align: left;
@@ -970,7 +970,7 @@ p {
 }
 
 .faq-icon {
-    font-size: var(--font-2xl);
+    font-size: var(--font-xl);
     color: var(--color-blue);
     font-weight: 400;
     transition: transform var(--transition-base);
@@ -989,17 +989,17 @@ p {
 }
 
 .faq-item.active .faq-answer {
-    max-height: 1000px;
+    max-height: 500px;
 }
 
 .faq-answer > div {
-    padding: 0 var(--space-xl) var(--space-lg);
+    padding: 0 var(--space-lg) var(--space-md);
 }
 
 .faq-answer p {
-    margin-bottom: var(--space-md);
-    font-size: var(--font-base);
-    line-height: 1.7;
+    margin-bottom: 0;
+    font-size: var(--font-sm);
+    line-height: 1.6;
     color: var(--color-gray-600);
 }
 
@@ -1013,15 +1013,15 @@ p {
 }
 
 .faq-answer ul {
-    margin: var(--space-sm) 0 var(--space-md) var(--space-lg);
+    margin: var(--space-xs) 0 0 var(--space-md);
     padding-left: 0;
 }
 
 .faq-answer li {
     margin-bottom: var(--space-xs);
-    font-size: var(--font-base);
+    font-size: var(--font-sm);
     color: var(--color-gray-600);
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 /* ========================================
