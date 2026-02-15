@@ -229,7 +229,7 @@ paymentTypeButtons.forEach(btn => {
 function updatePaymentPrices(basePrice) {
     const fullPrice = Math.round(basePrice * 0.95);
     const splitPrice = Math.round(basePrice / 2);
-    const monthlyPrice = Math.round(basePrice / 10);
+    const monthlyPrice = Math.round(basePrice / 3);
 
     const fullPriceEl = document.getElementById('full-price');
     const splitPriceEl = document.getElementById('split-price');
@@ -238,6 +238,75 @@ function updatePaymentPrices(basePrice) {
     if (fullPriceEl) fullPriceEl.textContent = '$' + fullPrice.toLocaleString();
     if (splitPriceEl) splitPriceEl.textContent = '$' + splitPrice.toLocaleString();
     if (monthlyPriceEl) monthlyPriceEl.textContent = '$' + monthlyPrice.toLocaleString() + '/mo';
+}
+
+// ========================================
+// QUOTE FORM SUBMISSION
+// ========================================
+
+const quoteForm = document.getElementById('quote-form');
+if (quoteForm) {
+    quoteForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const submitButton = document.getElementById('checkout-button');
+        const originalText = submitButton.textContent;
+
+        // Get selected payment type
+        const selectedPaymentType = document.querySelector('.payment-type-btn.active').dataset.type;
+        const packageName = document.getElementById('selected-package-name').textContent;
+        const packagePrice = document.getElementById('selected-package-price').textContent;
+
+        // Get form data
+        const formData = {
+            package: packageName,
+            price: packagePrice,
+            paymentType: selectedPaymentType,
+            name: document.getElementById('quote-name').value,
+            business: document.getElementById('quote-business').value,
+            email: document.getElementById('quote-email').value,
+            phone: document.getElementById('quote-phone').value,
+            message: document.getElementById('quote-message').value,
+            timestamp: new Date().toISOString()
+        };
+
+        // Update button to show loading
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+
+        try {
+            // Simulate API call (replace with actual endpoint)
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // Log to console (in production, send to backend)
+            console.log('Quote Request:', formData);
+
+            // Show success message
+            submitButton.textContent = '✓ Request Sent!';
+            submitButton.style.background = '#10b981';
+
+            // Close modal after success
+            setTimeout(() => {
+                modal.style.display = 'none';
+                submitButton.textContent = originalText;
+                submitButton.style.background = '';
+                submitButton.disabled = false;
+                quoteForm.reset();
+
+                // Show success alert
+                alert('Thank you! We\'ll send you a detailed proposal within 24 hours. Check your email (' + formData.email + ') soon!');
+            }, 2000);
+
+        } catch (error) {
+            console.error('Error submitting quote:', error);
+            submitButton.textContent = 'Error - Try Again';
+            submitButton.disabled = false;
+
+            setTimeout(() => {
+                submitButton.textContent = originalText;
+            }, 3000);
+        }
+    });
 }
 
 // ========================================
@@ -380,6 +449,25 @@ window.addEventListener('load', () => {
         }, index * 100);
     });
 });
+
+// ========================================
+// FAQ ACCORDION
+// ========================================
+
+function toggleFAQ(button) {
+    const faqItem = button.parentElement;
+    const wasActive = faqItem.classList.contains('active');
+
+    // Close all FAQ items
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // Open clicked item if it wasn't active
+    if (!wasActive) {
+        faqItem.classList.add('active');
+    }
+}
 
 // ========================================
 // CONSOLE MESSAGE

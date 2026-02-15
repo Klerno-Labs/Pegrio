@@ -1,0 +1,14 @@
+# https://pegrio.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Block access to admin areas (if any in future)
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://pegrio.com/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 0
