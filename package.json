@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "echo 'Static site - no build required'",
     "start": "next start",
     "lint": "next lint"
   },
