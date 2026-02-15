@@ -1,15 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams()
-  const [sessionId, setSessionId] = useState<string | null>(null)
-
-  useEffect(() => {
-    setSessionId(searchParams.get('session_id'))
-  }, [searchParams])
+  const sessionId = searchParams.get('session_id')
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-600 via-purple-600 to-primary-700 flex items-center justify-center p-4">
@@ -80,5 +76,17 @@ export default function SuccessPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-primary-600 via-purple-600 to-primary-700 flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   )
 }
