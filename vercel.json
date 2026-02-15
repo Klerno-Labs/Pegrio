@@ -1,0 +1,36 @@
+{
+  "buildCommand": "echo 'Static site - no build needed'",
+  "outputDirectory": ".",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    {
+      "src": "^/$",
+      "dest": "/index.html"
+    },
+    {
+      "src": "^/website-1/?$",
+      "dest": "/website 1/index.html"
+    },
+    {
+      "src": "^/website-2/?$",
+      "dest": "/website 2/index.html"
+    },
+    {
+      "src": "^/website-3/?$",
+      "dest": "/website 3/index.html"
+    },
+    {
+      "src": "^/website 1/(.*)",
+      "dest": "/website 1/$1"
+    },
+    {
+      "src": "^/website 2/(.*)",
+      "dest": "/website 2/$1"
+    },
+    {
+      "src": "^/website 3/(.*)",
+      "dest": "/website 3/$1"
+    }
+  ]
+}
