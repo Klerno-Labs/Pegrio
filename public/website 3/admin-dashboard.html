@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin Dashboard - Analytics and Management for Yuki Izakaya">
+    <title>Admin Dashboard - Yuki Izakaya</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/admin-dashboard.css">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+        <div class="sidebar-header">
+            <h2>Yuki Admin</h2>
+            <p class="japanese">管理</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#overview" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Overview</span>
+            </a>
+            <a href="#orders" class="nav-item">
+                <span class="nav-icon">🛒</span>
+                <span class="nav-text">Orders</span>
+            </a>
+            <a href="#customers" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Customers</span>
+            </a>
+            <a href="#menu" class="nav-item">
+                <span class="nav-icon">🍜</span>
+                <span class="nav-text">Menu Items</span>
+            </a>
+            <a href="#analytics" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Analytics</span>
+            </a>
+            <a href="#rewards" class="nav-item">
+                <span class="nav-icon">⭐</span>
+                <span class="nav-text">Rewards</span>
+            </a>
+            <a href="#settings" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="index.html" class="btn-outline btn-block">← Back to Site</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <header class="dashboard-header">
+            <div>
+                <h1>Dashboard Overview</h1>
+                <p class="header-subtitle">Welcome back, Admin!</p>
+            </div>
+            <div class="header-actions">
+                <select id="dateRange" class="date-select">
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month" selected>This Month</option>
+                    <option value="year">This Year</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-icon">💰</span>
+                    <h3>Total Revenue</h3>
+                </div>
+                <div class="stat-value" id="totalRevenue">$0</div>
+                <div class="stat-change positive">+12.5% from last month</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-icon">🛍️</span>
+                    <h3>Orders</h3>
+                </div>
+                <div class="stat-value" id="totalOrders">0</div>
+                <div class="stat-change positive">+8.3% from last month</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-icon">👥</span>
+                    <h3>Customers</h3>
+                </div>
+                <div class="stat-value" id="totalCustomers">0</div>
+                <div class="stat-change positive">+15.7% from last month</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-icon">⭐</span>
+                    <h3>Avg Order Value</h3>
+                </div>
+                <div class="stat-value" id="avgOrderValue">$0</div>
+                <div class="stat-change negative">-2.1% from last month</div>
+            </div>
+        </section>
+
+        <!-- Charts Row -->
+        <section class="charts-row">
+            <div class="chart-card">
+                <h3>Revenue Overview</h3>
+                <div class="chart-placeholder" id="revenueChart">
+                    <div class="bar-chart">
+                        <div class="bar" style="height: 60%"><span>Mon</span></div>
+                        <div class="bar" style="height: 75%"><span>Tue</span></div>
+                        <div class="bar" style="height: 50%"><span>Wed</span></div>
+                        <div class="bar" style="height: 85%"><span>Thu</span></div>
+                        <div class="bar" style="height: 90%"><span>Fri</span></div>
+                        <div class="bar" style="height: 100%"><span>Sat</span></div>
+                        <div class="bar" style="height: 70%"><span>Sun</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Top Menu Items</h3>
+                <div class="top-items-list" id="topItems">
+                    <div class="top-item">
+                        <div class="item-info">
+                            <span class="item-rank">1</span>
+                            <span class="item-name">Tonkotsu Ramen</span>
+                        </div>
+                        <div class="item-stats">
+                            <span class="item-sales">142 orders</span>
+                            <div class="item-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="top-item">
+                        <div class="item-info">
+                            <span class="item-rank">2</span>
+                            <span class="item-name">Premium Sushi Platter</span>
+                        </div>
+                        <div class="item-stats">
+                            <span class="item-sales">98 orders</span>
+                            <div class="item-bar" style="width: 69%"></div>
+                        </div>
+                    </div>
+                    <div class="top-item">
+                        <div class="item-info">
+                            <span class="item-rank">3</span>
+                            <span class="item-name">Spicy Miso Ramen</span>
+                        </div>
+                        <div class="item-stats">
+                            <span class="item-sales">87 orders</span>
+                            <div class="item-bar" style="width: 61%"></div>
+                        </div>
+                    </div>
+                    <div class="top-item">
+                        <div class="item-info">
+                            <span class="item-rank">4</span>
+                            <span class="item-name">Gyoza</span>
+                        </div>
+                        <div class="item-stats">
+                            <span class="item-sales">76 orders</span>
+                            <div class="item-bar" style="width: 54%"></div>
+                        </div>
+                    </div>
+                    <div class="top-item">
+                        <div class="item-info">
+                            <span class="item-rank">5</span>
+                            <span class="item-name">Dragon Roll</span>
+                        </div>
+                        <div class="item-stats">
+                            <span class="item-sales">64 orders</span>
+                            <div class="item-bar" style="width: 45%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Orders -->
+        <section class="dashboard-card">
+            <div class="card-header">
+                <h3>Recent Orders</h3>
+                <a href="#orders" class="link-primary">View All</a>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table" id="recentOrdersTable">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Customer Insights -->
+        <section class="insights-row">
+            <div class="dashboard-card">
+                <h3>Customer Activity</h3>
+                <div class="activity-stats">
+                    <div class="activity-item">
+                        <span class="activity-label">New Customers (This Month)</span>
+                        <span class="activity-value">23</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-label">Repeat Customers</span>
+                        <span class="activity-value">67%</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-label">Rewards Members</span>
+                        <span class="activity-value">142</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-label">Points Redeemed</span>
+                        <span class="activity-value">8,450</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Performance Metrics</h3>
+                <div class="metrics-list">
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <span>Average Prep Time</span>
+                            <span class="metric-value">18 min</span>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 70%; background: #4caf50"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <span>Average Delivery Time</span>
+                            <span class="metric-value">32 min</span>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 85%; background: #ff9800"></div>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <span>Customer Satisfaction</span>
+                            <span class="metric-value">4.8/5.0</span>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 96%; background: #4caf50"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>
