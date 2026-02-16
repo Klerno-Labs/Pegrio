@@ -1,0 +1,487 @@
+/* ========================================
+   CHATBOT ANIMATIONS
+   Smooth, 60fps micro-animations
+   ======================================== */
+
+/* ========================================
+   MESSAGE ANIMATIONS
+   ======================================== */
+
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(30px) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   TOGGLE BUTTON ANIMATIONS
+   ======================================== */
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+    }
+}
+
+.chatbot-toggle.pulse {
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.chatbot-toggle.bounce {
+    animation: bounce 2s ease infinite;
+}
+
+/* ========================================
+   WINDOW OPEN/CLOSE
+   ======================================== */
+
+@keyframes windowOpen {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    60% {
+        transform: translateY(-5px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes windowClose {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+}
+
+.chatbot-window.opening {
+    animation: windowOpen 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.chatbot-window.closing {
+    animation: windowClose 0.3s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+/* ========================================
+   QUICK REPLY ANIMATIONS
+   ======================================== */
+
+.chatbot-quick-reply-btn {
+    animation: fadeSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.chatbot-quick-reply-btn:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.chatbot-quick-reply-btn:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.chatbot-quick-reply-btn:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.chatbot-quick-reply-btn:nth-child(4) {
+    animation-delay: 0.25s;
+}
+
+@keyframes fadeSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   TYPING INDICATOR
+   ======================================== */
+
+.chatbot-typing {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes typing-bounce {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+    30% {
+        transform: translateY(-12px);
+        opacity: 1;
+    }
+}
+
+.chatbot-typing-dot {
+    animation: typing-bounce 1.4s infinite ease-in-out;
+    will-change: transform, opacity;
+}
+
+.chatbot-typing-dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.chatbot-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.chatbot-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* ========================================
+   STATUS DOT PULSE
+   ======================================== */
+
+@keyframes pulse-dot {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+.chatbot-status-dot {
+    animation: pulse-dot 2s ease-in-out infinite;
+    will-change: opacity, transform;
+}
+
+/* ========================================
+   SHIMMER EFFECT (Loading)
+   ======================================== */
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.chatbot-shimmer {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* ========================================
+   BADGE ANIMATIONS
+   ======================================== */
+
+@keyframes badgePop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.chatbot-toggle-badge {
+    animation: badgePop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes badgeWiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-10deg);
+    }
+    75% {
+        transform: rotate(10deg);
+    }
+}
+
+.chatbot-toggle-badge.wiggle {
+    animation: badgeWiggle 0.5s ease-in-out 3;
+}
+
+/* ========================================
+   BUTTON RIPPLE EFFECT
+   ======================================== */
+
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.chatbot-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    animation: ripple 0.6s ease-out;
+}
+
+/* ========================================
+   PROGRESS BAR (for form completion)
+   ======================================== */
+
+@keyframes progressFill {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.chatbot-progress-bar {
+    transform-origin: left;
+    animation: progressFill 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ========================================
+   SCROLL HINT ARROW
+   ======================================== */
+
+@keyframes arrowBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+}
+
+.chatbot-scroll-hint {
+    animation: arrowBounce 1.5s ease-in-out infinite;
+}
+
+/* ========================================
+   ERROR SHAKE
+   ======================================== */
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+.chatbot-error {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* ========================================
+   SUCCESS CHECKMARK
+   ======================================== */
+
+@keyframes checkmarkDraw {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.chatbot-checkmark {
+    stroke-dasharray: 100;
+    animation: checkmarkDraw 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ========================================
+   SKELETON LOADING
+   ======================================== */
+
+@keyframes skeleton-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
+}
+
+.chatbot-skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.1) 25%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.1) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* ========================================
+   GLOW EFFECT
+   ======================================== */
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(102, 126, 234, 0.8);
+    }
+}
+
+.chatbot-glow {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* ========================================
+   ROTATE LOADING SPINNER
+   ======================================== */
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.chatbot-spinner {
+    animation: rotate 1s linear infinite;
+}
+
+/* ========================================
+   SCALE PULSE (for CTA buttons)
+   ======================================== */
+
+@keyframes scalePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.chatbot-cta-pulse {
+    animation: scalePulse 2s ease-in-out infinite;
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+/* Enable hardware acceleration */
+.chatbot-message,
+.chatbot-toggle,
+.chatbot-window,
+.chatbot-quick-reply-btn {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Remove will-change after animation */
+.chatbot-message.animated,
+.chatbot-toggle.animated,
+.chatbot-window.animated {
+    will-change: auto;
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .chatbot-typing-dot,
+    .chatbot-status-dot,
+    .chatbot-toggle.pulse {
+        animation: none !important;
+    }
+}

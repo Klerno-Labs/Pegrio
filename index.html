@@ -29,7 +29,9 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="chatbot.css">
+    <!-- New Premium Chatbot CSS -->
+    <link rel="stylesheet" href="chatbot/ui/chatbot-premium.css">
+    <link rel="stylesheet" href="chatbot/ui/chatbot-animations.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -750,6 +752,33 @@
     </div>
 
     <script src="script.js"></script>
-    <script src="chatbot-main.js"></script>
+
+    <!-- New Premium Chatbot System -->
+    <!-- Core -->
+    <script src="chatbot/core/chatbot-config.js"></script>
+    <script src="chatbot/core/chatbot-utils.js"></script>
+
+    <!-- Intelligence -->
+    <script src="chatbot/intelligence/chatbot-intent-library.js"></script>
+    <script src="chatbot/intelligence/chatbot-entity-extractor.js"></script>
+    <script src="chatbot/intelligence/chatbot-nlp-engine.js"></script>
+
+    <!-- Conversation -->
+    <script src="chatbot/conversation/chatbot-conversation-memory.js"></script>
+    <script src="chatbot/conversation/chatbot-conversation-flow.js"></script>
+    <script src="chatbot/conversation/chatbot-response-generator.js"></script>
+
+    <!-- Qualification -->
+    <script src="chatbot/qualification/chatbot-lead-qualifier.js"></script>
+    <script src="chatbot/qualification/chatbot-recommendation.js"></script>
+
+    <!-- Integration -->
+    <script src="chatbot/integration/chatbot-form-integrator.js"></script>
+
+    <!-- UI -->
+    <script src="chatbot/ui/chatbot-ui.js"></script>
+
+    <!-- Core Orchestrator (MUST BE LAST!) -->
+    <script src="chatbot/core/chatbot-core.js"></script>
 </body>
 </html>
