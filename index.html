@@ -819,6 +819,23 @@
     <!-- Calendly Integration -->
     <script src="features/booking/calendly-integration.js"></script>
 
+    <!-- Lead Magnets -->
+    <script src="features/lead-magnets/lead-magnet-manager.js"></script>
+    <link rel="stylesheet" href="features/lead-magnets/lead-magnet-styles.css">
+
+    <!-- Email Marketing -->
+    <script src="features/email-marketing/convertkit-integration.js"></script>
+
+    <!-- Live Chat -->
+    <script src="features/live-chat/crisp-chat.js"></script>
+
+    <!-- Exit-Intent Popup -->
+    <script src="features/exit-intent/exit-intent-popup.js"></script>
+
+    <!-- Social Proof Widgets -->
+    <script src="features/social-proof/social-proof-widgets.js"></script>
+    <link rel="stylesheet" href="features/social-proof/social-proof-styles.css">
+
     <!-- Initialize Integrations -->
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -846,6 +863,54 @@
                         });
                     });
                 });
+            }
+
+            // Initialize Lead Magnets
+            if (window.LeadMagnetManager) {
+                window.LeadMagnetManager.init();
+            }
+
+            // Initialize Email Marketing
+            if (window.ConvertKitIntegration) {
+                window.ConvertKitIntegration.init();
+            }
+
+            // Initialize Live Chat (delayed for performance)
+            if (window.CrispChat) {
+                setTimeout(() => {
+                    window.CrispChat.init();
+                }, 2000);
+            }
+
+            // Initialize Exit-Intent Popup
+            if (window.ExitIntentPopup) {
+                window.ExitIntentPopup.init();
+            }
+
+            // Initialize Social Proof Widgets
+            if (window.SocialProofWidgets) {
+                window.SocialProofWidgets.init();
+
+                // Show live activity notifications
+                window.SocialProofWidgets.startActivityFeed();
+
+                // Rotate reviews if review container exists
+                const reviewContainer = document.querySelector('#review-rotator');
+                if (reviewContainer) {
+                    window.SocialProofWidgets.startReviewRotation(reviewContainer);
+                }
+
+                // Show trust badges if container exists
+                const badgesContainer = document.querySelector('#trust-badges');
+                if (badgesContainer) {
+                    window.SocialProofWidgets.showTrustBadges(badgesContainer);
+                }
+
+                // Animate stats if container exists
+                const statsContainer = document.querySelector('.stats-section');
+                if (statsContainer) {
+                    window.SocialProofWidgets.animateStats(statsContainer);
+                }
             }
         });
 

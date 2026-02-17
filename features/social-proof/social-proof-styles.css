@@ -1,0 +1,263 @@
+/* ========================================
+   SOCIAL PROOF STYLES
+   ======================================== */
+
+/* Live Activity Notification */
+.social-proof-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 350px;
+    transform: translateX(-400px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 9998;
+    border-left: 4px solid #10b981;
+}
+
+.social-proof-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-header {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.notification-action {
+    font-size: 13px;
+    color: #666;
+}
+
+.notification-time {
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.notification-close:hover {
+    color: #333;
+}
+
+/* Review Rotator */
+#review-rotator {
+    min-height: 200px;
+    position: relative;
+}
+
+.review-card {
+    background: var(--color-gray-50);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.review-stars {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.review-text {
+    font-size: 1.125rem;
+    font-style: italic;
+    color: var(--color-gray-700);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.review-author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.review-author strong {
+    color: var(--color-gray-700);
+}
+
+.review-author span {
+    color: var(--color-gray-500);
+    font-size: 0.875rem;
+}
+
+/* Trust Badges */
+.trust-badges {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border: 1px solid var(--color-gray-200);
+    border-radius: 8px;
+}
+
+.badge-icon {
+    font-size: 2rem;
+}
+
+.badge-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.badge-text strong {
+    color: var(--color-gray-700);
+    font-size: 0.938rem;
+}
+
+.badge-text span {
+    color: var(--color-gray-500);
+    font-size: 0.813rem;
+}
+
+/* Exit Popup Styles */
+.exit-popup {
+    text-align: center;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.exit-popup-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.exit-popup h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.exit-popup-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-gray-600);
+    margin-bottom: 2rem;
+}
+
+.exit-popup-offer {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.offer-badge {
+    background: #fbbf24;
+    color: #1f2937;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.offer-features {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    text-align: left;
+}
+
+.offer-features li {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.exit-form input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--color-gray-300);
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.exit-popup-note {
+    font-size: 0.875rem;
+    color: var(--color-gray-500);
+    margin-top: 1rem;
+}
+
+.exit-popup-close-text {
+    background: none;
+    border: none;
+    color: var(--color-gray-500);
+    font-size: 0.875rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    text-decoration: underline;
+}
+
+.exit-popup-close-text:hover {
+    color: var(--color-gray-700);
+}
+
+.exit-success {
+    padding: 2rem;
+}
+
+.exit-success .success-icon {
+    width: 60px;
+    height: 60px;
+    background: #10b981;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    .social-proof-notification {
+        left: 10px;
+        right: 10px;
+        max-width: calc(100% - 20px);
+    }
+
+    .trust-badges {
+        grid-template-columns: 1fr;
+    }
+}
