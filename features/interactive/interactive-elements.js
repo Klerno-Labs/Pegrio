@@ -226,10 +226,6 @@ class InteractiveElements {
                             <input type="checkbox" data-weeks="1">
                             <span>Copywriting</span>
                         </label>
-                        <label class="checkbox-option">
-                            <input type="checkbox" data-weeks="0.5">
-                            <span>Photography/Video</span>
-                        </label>
                     </div>
 
                     <div class="pages-input">

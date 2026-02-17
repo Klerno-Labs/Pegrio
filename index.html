@@ -968,36 +968,63 @@
             }
         });
 
-        // Update form submission to use Stripe
+        // Update form submission to schedule discovery call (not direct payment)
         const originalSubmitQuote = window.FormHandler?.submitQuote;
         if (originalSubmitQuote && window.FormHandler) {
             window.FormHandler.submitQuote = async function(formData) {
                 // Get selected package info
                 const selectedPackage = this.selectedPackage;
-                const selectedPayment = document.querySelector('input[name="payment-type"]:checked');
 
                 if (!selectedPackage) {
                     window.ToastNotification?.show('Please select a package first', 'error');
                     return;
                 }
 
-                // Prepare data for Stripe checkout
-                const checkoutData = {
-                    name: selectedPackage.name,
-                    price: selectedPackage.price,
-                    paymentType: selectedPayment?.value || 'full',
-                    email: formData.email,
-                    customerName: formData.name,
-                    business: formData.business,
-                    message: formData.message
-                };
+                // Save quote to database first (so we have their info)
+                try {
+                    const saveResponse = await fetch('/api/save-quote', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            customerName: formData.name,
+                            customerEmail: formData.email,
+                            businessName: formData.business,
+                            phone: formData.phone,
+                            packageName: selectedPackage.name,
+                            packagePrice: selectedPackage.price,
+                            paymentType: 'pending', // Will be determined after call
+                            message: formData.message,
+                            source: 'website'
+                        })
+                    });
 
-                // Redirect to Stripe Checkout
-                if (window.StripeIntegration) {
-                    await window.StripeIntegration.checkout(checkoutData);
+                    if (saveResponse.ok) {
+                        console.log('Quote saved successfully');
+                    }
+                } catch (error) {
+                    console.error('Error saving quote:', error);
+                    // Continue to Calendly even if save fails
+                }
+
+                // Open Calendly to schedule FREE discovery call
+                if (window.CalendlyIntegration) {
+                    window.CalendlyIntegration.openPopup({
+                        name: formData.name,
+                        email: formData.email,
+                        package: selectedPackage.name,
+                        source: 'quote_form',
+                        medium: 'popup'
+                    });
+
+                    // Show success message
+                    if (window.ToastNotification) {
+                        window.ToastNotification.show('Great! Please select a time for your FREE discovery call.', 'success');
+                    }
                 } else {
-                    console.error('Stripe not initialized');
-                    window.ToastNotification?.show('Payment system not ready. Please try again.', 'error');
+                    console.error('Calendly not initialized');
+                    window.ToastNotification?.show('Scheduling system not ready. Please try again.', 'error');
                 }
             };
         }
