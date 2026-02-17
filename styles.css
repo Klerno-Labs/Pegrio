@@ -95,6 +95,7 @@ body {
    ======================================== */
 
 .custom-cursor {
+    display: none !important; /* Disabled - too distracting */
     position: fixed;
     top: 0;
     left: 0;
@@ -111,6 +112,7 @@ body {
 }
 
 .custom-cursor-dot {
+    display: none !important; /* Disabled - too distracting */
     position: fixed;
     top: 0;
     left: 0;

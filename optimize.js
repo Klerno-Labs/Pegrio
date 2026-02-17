@@ -115,9 +115,10 @@ const scheduleWork = window.requestIdleCallback || function(cb) {
 // Defer non-critical initializations
 scheduleWork(() => {
     // Initialize fancy features only when browser is idle
-    if (window.CustomCursor && window.innerWidth > 768) {
-        new CustomCursor();
-    }
+    // Custom cursor disabled - too distracting for users
+    // if (window.CustomCursor && window.innerWidth > 768) {
+    //     new CustomCursor();
+    // }
 
     if (window.ScrollProgress) {
         new ScrollProgress();
