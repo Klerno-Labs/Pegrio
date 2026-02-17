@@ -14,6 +14,11 @@
     <meta property="og:title" content="AI-Powered Business Websites | Professional Sites That Drive Results">
     <meta property="og:description" content="Get a stunning, AI-powered website in 2-4 weeks. Fixed pricing, no surprises. Perfect for restaurants, salons & fitness studios.">
     <meta property="og:image" content="https://pegrio.com/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Pegrio - Professional AI-Powered Websites">
+    <meta property="og:site_name" content="Pegrio">
+    <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
@@ -21,9 +26,19 @@
     <meta property="twitter:title" content="AI-Powered Business Websites | Professional Sites That Drive Results">
     <meta property="twitter:description" content="Get a stunning, AI-powered website in 2-4 weeks. Fixed pricing, no surprises.">
     <meta property="twitter:image" content="https://pegrio.com/og-image.jpg">
+    <meta property="twitter:image:alt" content="Pegrio - Professional AI-Powered Websites">
+    <meta property="twitter:site" content="@pegrio">
+    <meta property="twitter:creator" content="@pegrio">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://pegrio.com/">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pegrio">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
@@ -32,10 +47,14 @@
     <!-- New Premium Chatbot CSS -->
     <link rel="stylesheet" href="chatbot/ui/chatbot-premium.css">
     <link rel="stylesheet" href="chatbot/ui/chatbot-animations.css">
+    <!-- Performance Optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&h=1080&fit=crop&auto=format&q=60" fetchpriority="high">
+    <meta name="theme-color" content="#0071e3">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -139,11 +158,16 @@
 </head>
 <body>
     <script src="script.js" defer></script>
+    <script src="analytics.js" defer></script>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" role="region" aria-live="polite" aria-label="Notifications"></div>
+
     <!-- Hero Section -->
-    <header class="hero">
+    <header class="hero" role="banner">
         <div class="hero-background">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&h=1080&fit=crop&auto=format&q=60" alt="Modern business workspace" class="hero-bg-image">
-            <div class="hero-overlay"></div>
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&h=1080&fit=crop&auto=format&q=60" alt="Modern business workspace" class="hero-bg-image" loading="eager">
+            <div class="hero-overlay" aria-hidden="true"></div>
         </div>
         <div class="container">
             <div class="hero-content">
@@ -168,16 +192,16 @@
     </header>
 
     <!-- Packages Section -->
-    <section id="packages" class="packages section">
+    <section id="packages" class="packages section" aria-labelledby="packages-heading">
         <div class="container">
-            <h2 class="section-title reveal">Choose Your Package</h2>
+            <h2 id="packages-heading" class="section-title reveal">Choose Your Package</h2>
             <p class="section-subtitle reveal">Clear pricing. Clear deliverables. No surprises.</p>
 
             <div class="pricing-grid">
                 <!-- Essential Package -->
                 <div class="pricing-card reveal">
                     <div class="pricing-card-bg">
-                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=600&fit=crop&auto=format&q=60" alt="Cozy cafe interior" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=600&fit=crop&auto=format&q=60" alt="Cozy cafe interior" loading="lazy" decoding="async">
                     </div>
                     <div class="card-header">
                         <div class="tier-icon">🥉</div>
@@ -224,7 +248,7 @@
                 <!-- Professional Package (Most Popular) -->
                 <div class="pricing-card featured reveal">
                     <div class="pricing-card-bg">
-                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop&auto=format&q=60" alt="Bustling restaurant kitchen" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop&auto=format&q=60" alt="Bustling restaurant kitchen" loading="lazy" decoding="async">
                     </div>
                     <div class="popular-badge">⭐ Most Popular</div>
                     <div class="card-header">
@@ -277,7 +301,7 @@
                 <!-- Premium Package -->
                 <div class="pricing-card reveal">
                     <div class="pricing-card-bg">
-                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=600&fit=crop&auto=format&q=60" alt="Luxury fine dining setup" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=600&fit=crop&auto=format&q=60" alt="Luxury fine dining setup" loading="lazy" decoding="async">
                     </div>
                     <div class="card-header">
                         <div class="tier-icon">🥇</div>
@@ -417,61 +441,61 @@
 
             <div class="faq-container">
                 <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
                         <span>How long does it take to get my website?</span>
-                        <span class="faq-icon">+</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-1" role="region">
                         <p><strong>Essential:</strong> 1-2 weeks | <strong>Professional:</strong> 2-3 weeks | <strong>Premium:</strong> 3-4 weeks. Rush delivery available for additional fee.</p>
                     </div>
                 </div>
 
                 <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
                         <span>What if I don't like the design?</span>
-                        <span class="faq-icon">+</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-2" role="region">
                         <p>We include 2-4 revision rounds (unlimited for Premium). We won't launch until you love it. In 3 years, we've never had a client we couldn't make happy.</p>
                     </div>
                 </div>
 
                 <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
                         <span>Do I own the website once it's done?</span>
-                        <span class="faq-icon">+</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-3" role="region">
                         <p><strong>Yes, 100%.</strong> You own all code, design, and content. No ongoing fees required (except hosting at $15-30/month). Transfer to any provider you want.</p>
                     </div>
                 </div>
 
                 <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
                         <span>What's included in the AI chatbot?</span>
-                        <span class="faq-icon">+</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-4" role="region">
                         <p>The AI chatbot (Professional & Premium) answers questions 24/7, takes bookings, handles menu inquiries, addresses dietary restrictions, and captures leads. You're seeing it in action now!</p>
                     </div>
                 </div>
 
                 <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-5">
                         <span>Can I update the website myself?</span>
-                        <span class="faq-icon">+</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-5" role="region">
                         <p>Yes! We provide training and video tutorials for basic updates (text, photos, content). For complex changes, ongoing support is $100/month or $75/hour à la carte.</p>
                     </div>
                 </div>
 
                 <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-6">
                         <span>Do you offer refunds if I'm not satisfied?</span>
-                        <span class="faq-icon">+</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
                     </button>
-                    <div class="faq-answer">
+                    <div class="faq-answer" id="faq-answer-6" role="region">
                         <p>Full deposit refund if we can't deliver as promised, or if you cancel before design starts (minus $200 setup fee). Once design begins, we work until you're happy. Zero refunds issued in 3 years and 100+ clients.</p>
                     </div>
                 </div>
@@ -533,7 +557,7 @@
             <div class="demo-grid">
                 <div class="demo-card reveal">
                     <div class="demo-preview">
-                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&h=600&fit=crop&auto=format&q=60" alt="Delicious tacos" class="demo-preview-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&h=600&fit=crop&auto=format&q=60" alt="Delicious tacos" class="demo-preview-img" loading="lazy" decoding="async">
                         <div class="demo-tier-badge">Essential</div>
                         <div class="demo-placeholder">
                             <p>La Casa de Sabor</p>
@@ -548,7 +572,7 @@
 
                 <div class="demo-card featured reveal">
                     <div class="demo-preview">
-                        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&h=600&fit=crop&auto=format&q=60" alt="Authentic Indian cuisine" class="demo-preview-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&h=600&fit=crop&auto=format&q=60" alt="Authentic Indian cuisine" class="demo-preview-img" loading="lazy" decoding="async">
                         <div class="demo-tier-badge popular">Professional</div>
                         <div class="demo-placeholder">
                             <p>Spice Symphony</p>
@@ -563,7 +587,7 @@
 
                 <div class="demo-card reveal">
                     <div class="demo-preview">
-                        <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&h=600&fit=crop&auto=format&q=60" alt="Japanese izakaya cuisine" class="demo-preview-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&h=600&fit=crop&auto=format&q=60" alt="Japanese izakaya cuisine" class="demo-preview-img" loading="lazy" decoding="async">
                         <div class="demo-tier-badge">Premium</div>
                         <div class="demo-placeholder">
                             <p>Yuki Izakaya</p>
@@ -591,7 +615,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
@@ -659,10 +683,10 @@
     </footer>
 
     <!-- Quote Request Modal -->
-    <div id="payment-modal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close">&times;</button>
-            <h2>Get Your Free Quote</h2>
+    <div id="payment-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-content" role="document">
+            <button class="modal-close" aria-label="Close quote request form">&times;</button>
+            <h2 id="modal-title">Get Your Free Quote</h2>
             <p class="modal-subtitle">Tell us about your project and we'll send you a detailed proposal within 24 hours</p>
 
             <div id="payment-form">

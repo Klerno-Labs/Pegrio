@@ -96,10 +96,123 @@ class ScrollProgress {
     }
 }
 
+// ========================================
+// TOAST NOTIFICATION SYSTEM
+// ========================================
+
+const ToastNotification = {
+    container: null,
+
+    init() {
+        this.container = document.querySelector('.toast-container');
+        if (!this.container) {
+            this.container = document.createElement('div');
+            this.container.className = 'toast-container';
+            this.container.setAttribute('role', 'region');
+            this.container.setAttribute('aria-live', 'polite');
+            this.container.setAttribute('aria-label', 'Notifications');
+            document.body.appendChild(this.container);
+        }
+    },
+
+    show(message, type = 'info', duration = 5000) {
+        if (!this.container) this.init();
+
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.setAttribute('role', 'alert');
+
+        const icons = {
+            success: '✓',
+            error: '✕',
+            warning: '⚠',
+            info: 'ℹ'
+        };
+
+        const titles = {
+            success: 'Success',
+            error: 'Error',
+            warning: 'Warning',
+            info: 'Information'
+        };
+
+        toast.innerHTML = `
+            <span class="toast-icon" aria-hidden="true">${icons[type] || icons.info}</span>
+            <div class="toast-content">
+                <div class="toast-title">${titles[type] || titles.info}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close" aria-label="Close notification">&times;</button>
+        `;
+
+        this.container.appendChild(toast);
+
+        // Show with animation
+        requestAnimationFrame(() => {
+            toast.classList.add('show');
+        });
+
+        // Close button handler
+        const closeBtn = toast.querySelector('.toast-close');
+        closeBtn.addEventListener('click', () => this.remove(toast));
+
+        // Auto-remove
+        if (duration > 0) {
+            setTimeout(() => this.remove(toast), duration);
+        }
+
+        return toast;
+    },
+
+    remove(toast) {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.parentElement.removeChild(toast);
+            }
+        }, 500);
+    },
+
+    success(message, duration) {
+        return this.show(message, 'success', duration);
+    },
+
+    error(message, duration) {
+        return this.show(message, 'error', duration);
+    },
+
+    warning(message, duration) {
+        return this.show(message, 'warning', duration);
+    },
+
+    info(message, duration) {
+        return this.show(message, 'info', duration);
+    }
+};
+
+// ========================================
+// SERVICE WORKER REGISTRATION (PWA)
+// ========================================
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                if (window.location.hostname === 'localhost') {
+                    console.log('PWA: Service Worker registered');
+                }
+            })
+            .catch(error => {
+                console.error('PWA: Service Worker registration failed:', error);
+            });
+    });
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
-    // new CustomCursor(); // Disabled - too distracting
-    // new ScrollProgress(); // Disabled for performance
+    ToastNotification.init();
+    new CustomCursor();
+    new ScrollProgress();
 });
 
 // ========================================
@@ -168,146 +281,293 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ========================================
-// MODAL FUNCTIONALITY
+// MODAL FUNCTIONALITY - Enhanced Accessibility
 // ========================================
 
-const modal = document.getElementById('payment-modal');
-const packageButtons = document.querySelectorAll('[data-package]');
-const closeModal = document.querySelector('.modal-close');
+const ModalManager = {
+    modal: null,
+    lastFocusedElement: null,
+    focusableElements: null,
 
-packageButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.preventDefault();
-        const packageName = button.dataset.package;
-        const packagePrice = button.dataset.price;
-        openPaymentModal(packageName, packagePrice);
-    });
-});
+    init() {
+        this.modal = document.getElementById('payment-modal');
+        if (!this.modal) return;
 
-if (closeModal) {
-    closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-}
+        const closeButton = this.modal.querySelector('.modal-close');
+        const packageButtons = document.querySelectorAll('[data-package]');
 
-if (modal) {
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
+        // Package button handlers
+        packageButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const packageName = button.dataset.package;
+                const packagePrice = button.dataset.price;
+                this.open(packageName, packagePrice);
+            });
+        });
+
+        // Close button handler
+        if (closeButton) {
+            closeButton.addEventListener('click', () => this.close());
         }
-    });
-}
 
-function openPaymentModal(packageName, price) {
-    const modal = document.getElementById('payment-modal');
-    const packageNameEl = document.getElementById('selected-package-name');
-    const packagePriceEl = document.getElementById('selected-package-price');
+        // Click outside to close
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) {
+                this.close();
+            }
+        });
 
-    if (packageNameEl) {
-        packageNameEl.textContent = packageName.charAt(0).toUpperCase() + packageName.slice(1) + ' Package';
+        // Escape key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.modal.style.display === 'flex') {
+                this.close();
+            }
+        });
+
+        // Focus trap
+        this.modal.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                this.handleFocusTrap(e);
+            }
+        });
+    },
+
+    open(packageName, price) {
+        this.lastFocusedElement = document.activeElement;
+
+        const packageNameEl = document.getElementById('selected-package-name');
+        const packagePriceEl = document.getElementById('selected-package-price');
+
+        if (packageNameEl) {
+            packageNameEl.textContent = packageName.charAt(0).toUpperCase() + packageName.slice(1) + ' Package';
+        }
+        if (packagePriceEl) {
+            packagePriceEl.textContent = '$' + parseInt(price).toLocaleString();
+        }
+
+        this.updatePaymentPrices(parseInt(price));
+        this.modal.style.display = 'flex';
+        this.modal.setAttribute('aria-hidden', 'false');
+
+        // Get focusable elements
+        this.focusableElements = this.modal.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+
+        // Focus first element
+        if (this.focusableElements.length > 0) {
+            setTimeout(() => this.focusableElements[0].focus(), 100);
+        }
+    },
+
+    close() {
+        this.modal.style.display = 'none';
+        this.modal.setAttribute('aria-hidden', 'true');
+
+        // Return focus to trigger element
+        if (this.lastFocusedElement) {
+            this.lastFocusedElement.focus();
+        }
+    },
+
+    handleFocusTrap(e) {
+        if (!this.focusableElements || this.focusableElements.length === 0) return;
+
+        const firstElement = this.focusableElements[0];
+        const lastElement = this.focusableElements[this.focusableElements.length - 1];
+
+        if (e.shiftKey) {
+            // Shift + Tab
+            if (document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+            }
+        } else {
+            // Tab
+            if (document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+            }
+        }
+    },
+
+    updatePaymentPrices(basePrice) {
+        const fullPrice = Math.round(basePrice * 0.95);
+        const splitPrice = Math.round(basePrice / 2);
+        const monthlyPrice = Math.round(basePrice / 3);
+
+        const fullPriceEl = document.getElementById('full-price');
+        const splitPriceEl = document.getElementById('split-price');
+        const monthlyPriceEl = document.getElementById('monthly-price');
+
+        if (fullPriceEl) fullPriceEl.textContent = '$' + fullPrice.toLocaleString();
+        if (splitPriceEl) splitPriceEl.textContent = '$' + splitPrice.toLocaleString();
+        if (monthlyPriceEl) monthlyPriceEl.textContent = '$' + monthlyPrice.toLocaleString() + '/mo';
     }
-    if (packagePriceEl) {
-        packagePriceEl.textContent = '$' + parseInt(price).toLocaleString();
-    }
+};
 
-    updatePaymentPrices(parseInt(price));
-    modal.style.display = 'flex';
-}
+// Initialize modal manager
+document.addEventListener('DOMContentLoaded', () => {
+    ModalManager.init();
+});
 
 // ========================================
 // PAYMENT TYPE SELECTOR
 // ========================================
 
-const paymentTypeButtons = document.querySelectorAll('.payment-type-btn');
-paymentTypeButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-        paymentTypeButtons.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
+document.addEventListener('DOMContentLoaded', () => {
+    const paymentTypeButtons = document.querySelectorAll('.payment-type-btn');
+    paymentTypeButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            paymentTypeButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
     });
 });
 
-function updatePaymentPrices(basePrice) {
-    const fullPrice = Math.round(basePrice * 0.95);
-    const splitPrice = Math.round(basePrice / 2);
-    const monthlyPrice = Math.round(basePrice / 3);
-
-    const fullPriceEl = document.getElementById('full-price');
-    const splitPriceEl = document.getElementById('split-price');
-    const monthlyPriceEl = document.getElementById('monthly-price');
-
-    if (fullPriceEl) fullPriceEl.textContent = '$' + fullPrice.toLocaleString();
-    if (splitPriceEl) splitPriceEl.textContent = '$' + splitPrice.toLocaleString();
-    if (monthlyPriceEl) monthlyPriceEl.textContent = '$' + monthlyPrice.toLocaleString() + '/mo';
-}
-
 // ========================================
-// QUOTE FORM SUBMISSION
+// FORM VALIDATION & SUBMISSION
 // ========================================
 
-const quoteForm = document.getElementById('quote-form');
-if (quoteForm) {
+const FormHandler = {
+    validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email.toLowerCase());
+    },
+
+    validatePhone(phone) {
+        // Allow empty or valid phone numbers
+        if (!phone) return true;
+        const re = /^[\d\s\-\(\)]+$/;
+        return re.test(phone) && phone.replace(/\D/g, '').length >= 10;
+    },
+
+    showFieldError(field, message) {
+        field.setCustomValidity(message);
+        field.reportValidity();
+        field.classList.add('error');
+
+        field.addEventListener('input', function clearError() {
+            field.setCustomValidity('');
+            field.classList.remove('error');
+            field.removeEventListener('input', clearError);
+        }, { once: true });
+    },
+
+    async submitQuote(formData) {
+        // Production: Replace with your actual API endpoint
+        // const response = await fetch('/api/quote', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(formData)
+        // });
+        // return await response.json();
+
+        // Demo: Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        return { success: true };
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const quoteForm = document.getElementById('quote-form');
+    if (!quoteForm) return;
+
     quoteForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
         const submitButton = document.getElementById('checkout-button');
         const originalText = submitButton.textContent;
 
-        // Get selected payment type
-        const selectedPaymentType = document.querySelector('.payment-type-btn.active').dataset.type;
-        const packageName = document.getElementById('selected-package-name').textContent;
-        const packagePrice = document.getElementById('selected-package-price').textContent;
+        // Get form fields
+        const nameField = document.getElementById('quote-name');
+        const businessField = document.getElementById('quote-business');
+        const emailField = document.getElementById('quote-email');
+        const phoneField = document.getElementById('quote-phone');
+
+        // Validate email
+        if (!FormHandler.validateEmail(emailField.value)) {
+            FormHandler.showFieldError(emailField, 'Please enter a valid email address');
+            return;
+        }
+
+        // Validate phone if provided
+        if (phoneField.value && !FormHandler.validatePhone(phoneField.value)) {
+            FormHandler.showFieldError(phoneField, 'Please enter a valid phone number (10+ digits)');
+            return;
+        }
 
         // Get form data
+        const selectedPaymentType = document.querySelector('.payment-type-btn.active');
         const formData = {
-            package: packageName,
-            price: packagePrice,
-            paymentType: selectedPaymentType,
-            name: document.getElementById('quote-name').value,
-            business: document.getElementById('quote-business').value,
-            email: document.getElementById('quote-email').value,
-            phone: document.getElementById('quote-phone').value,
-            message: document.getElementById('quote-message').value,
-            timestamp: new Date().toISOString()
+            package: document.getElementById('selected-package-name')?.textContent || '',
+            price: document.getElementById('selected-package-price')?.textContent || '',
+            paymentType: selectedPaymentType?.dataset.type || 'full',
+            name: nameField.value.trim(),
+            business: businessField.value.trim(),
+            email: emailField.value.trim(),
+            phone: phoneField.value.trim(),
+            message: document.getElementById('quote-message')?.value.trim() || '',
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent,
+            referrer: document.referrer || 'direct'
         };
 
         // Update button to show loading
         submitButton.disabled = true;
-        submitButton.textContent = 'Sending...';
+        submitButton.textContent = '✨ Sending...';
+        submitButton.style.opacity = '0.7';
 
         try {
-            // Simulate API call (replace with actual endpoint)
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            const result = await FormHandler.submitQuote(formData);
 
-            // Log to console (in production, send to backend)
-            console.log('Quote Request:', formData);
-
-            // Show success message
+            // Show success state
             submitButton.textContent = '✓ Request Sent!';
             submitButton.style.background = '#10b981';
+            submitButton.style.opacity = '1';
 
-            // Close modal after success
+            // Close modal and show toast notification
             setTimeout(() => {
-                modal.style.display = 'none';
+                if (ModalManager && ModalManager.close) {
+                    ModalManager.close();
+                }
                 submitButton.textContent = originalText;
                 submitButton.style.background = '';
                 submitButton.disabled = false;
                 quoteForm.reset();
 
-                // Show success alert
-                alert('Thank you! We\'ll send you a detailed proposal within 24 hours. Check your email (' + formData.email + ') soon!');
+                // Show professional toast notification
+                ToastNotification.success(
+                    `Thank you, ${formData.name}! We'll send you a detailed proposal within 24 hours. Check your email (${formData.email}) soon!`,
+                    7000
+                );
+
+                // Track conversion
+                if (window.Analytics) {
+                    Analytics.trackFormSubmission(formData);
+                }
             }, 2000);
 
         } catch (error) {
-            console.error('Error submitting quote:', error);
-            submitButton.textContent = 'Error - Try Again';
-            submitButton.disabled = false;
+            // Show error state
+            submitButton.textContent = '✕ Error - Please Try Again';
+            submitButton.style.background = '#ef4444';
+            submitButton.style.opacity = '1';
+
+            ToastNotification.error(
+                'Something went wrong. Please try again or contact us directly at hello@pegrio.com',
+                6000
+            );
 
             setTimeout(() => {
                 submitButton.textContent = originalText;
+                submitButton.style.background = '';
+                submitButton.disabled = false;
             }, 3000);
         }
     });
-}
+});
 
 // ========================================
 // ENHANCED MAGNETIC BUTTON EFFECT
@@ -451,27 +711,55 @@ window.addEventListener('load', () => {
 });
 
 // ========================================
-// FAQ ACCORDION
+// ========================================
+// FAQ ACCORDION - Enhanced Accessibility
 // ========================================
 
-function toggleFAQ(button) {
-    const faqItem = button.parentElement;
-    const wasActive = faqItem.classList.contains('active');
+function initFAQAccordion() {
+    const faqButtons = document.querySelectorAll('.faq-question');
 
-    // Close all FAQ items
-    document.querySelectorAll('.faq-item').forEach(item => {
-        item.classList.remove('active');
+    faqButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const faqItem = this.closest('.faq-item');
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = this.querySelector('.faq-icon');
+            const wasActive = faqItem.classList.contains('active');
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const itemButton = item.querySelector('.faq-question');
+                const itemAnswer = item.querySelector('.faq-answer');
+                const itemIcon = item.querySelector('.faq-icon');
+
+                item.classList.remove('active');
+                itemAnswer.style.maxHeight = null;
+                itemIcon.textContent = '+';
+                itemButton.setAttribute('aria-expanded', 'false');
+            });
+
+            // Open clicked item if it wasn't active
+            if (!wasActive) {
+                faqItem.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                icon.textContent = '−';
+                this.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        // Keyboard navigation support
+        button.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
     });
-
-    // Open clicked item if it wasn't active
-    if (!wasActive) {
-        faqItem.classList.add('active');
-    }
 }
 
-// ========================================
-// CONSOLE MESSAGE
-// ========================================
-
-console.log('%c✨ Top 0.01% UI/UX Showcase', 'font-size: 20px; font-weight: bold; color: #0071e3;');
-console.log('%cBuilt with AI-powered design and premium interactions', 'font-size: 12px; color: #6e6e73;');
+// Initialize FAQ accordion when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFAQAccordion);
+} else {
+    initFAQAccordion();
+}

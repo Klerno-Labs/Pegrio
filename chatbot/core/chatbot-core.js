@@ -24,7 +24,9 @@ const ChatbotCore = {
             return;
         }
 
-        console.log('%c🤖 Initializing Advanced Chatbot System...', 'font-size: 14px; font-weight: bold; color: #667EEA;');
+        if (ChatbotConfig.DEBUG_MODE) {
+            console.log('%c🤖 Initializing Advanced Chatbot System...', 'font-size: 14px; font-weight: bold; color: #667EEA;');
+        }
 
         try {
             // Initialize UI
@@ -46,8 +48,10 @@ const ChatbotCore = {
 
             this.isInitialized = true;
 
-            console.log('%c✅ Chatbot Initialized Successfully!', 'font-size: 14px; color: #30d158;');
-            console.log('%cModules loaded: NLP Engine, Conversation Flow, Lead Qualifier, Recommendation, Form Integrator, UI', 'font-size: 12px; color: #8e8e93;');
+            if (ChatbotConfig.DEBUG_MODE) {
+                console.log('%c✅ Chatbot Initialized Successfully!', 'font-size: 14px; color: #30d158;');
+                console.log('%cModules loaded: NLP Engine, Conversation Flow, Lead Qualifier, Recommendation, Form Integrator, UI', 'font-size: 12px; color: #8e8e93;');
+            }
 
         } catch (error) {
             console.error('Failed to initialize chatbot:', error);
