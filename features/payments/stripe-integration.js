@@ -98,6 +98,37 @@ class StripeIntegration {
                 });
             }
 
+            // Save quote to database FIRST
+            try {
+                const saveResponse = await fetch('/api/save-quote', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        customerName: packageData.customerName,
+                        customerEmail: packageData.email,
+                        businessName: packageData.business,
+                        phone: packageData.phone,
+                        packageName: packageData.name,
+                        packagePrice: packageData.price,
+                        paymentType: packageData.paymentType || 'full',
+                        message: packageData.message,
+                        source: 'website'
+                    })
+                });
+
+                if (saveResponse.ok) {
+                    const { quoteId } = await saveResponse.json();
+                    console.log('Quote saved with ID:', quoteId);
+                } else {
+                    console.warn('Failed to save quote, continuing to checkout...');
+                }
+            } catch (error) {
+                console.error('Error saving quote:', error);
+                // Continue to checkout even if save fails
+            }
+
             // Create checkout session via API
             const response = await fetch('/api/create-checkout-session', {
                 method: 'POST',

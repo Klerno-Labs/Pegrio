@@ -161,8 +161,13 @@ async function handleCheckoutCompleted(session) {
         sessionId
     });
 
-    // TODO: Save to database (Supabase)
-    // await saveOrderToDatabase({ sessionId, email, amount, metadata });
+    // Update quote in database
+    await updateQuotePaymentStatus({
+        sessionId,
+        email,
+        amount: amount / 100,
+        status: 'paid'
+    });
 
     console.log(`✅ Checkout processed for ${email}`);
 }
@@ -365,5 +370,40 @@ async function sendAdminNotification(data) {
         console.log(`✅ Admin notification sent`);
     } catch (error) {
         console.error(`❌ Failed to send admin notification:`, error);
+    }
+}
+
+/**
+ * Update quote payment status in database
+ */
+async function updateQuotePaymentStatus(data) {
+    const { sessionId, email, amount, status } = data;
+
+    try {
+        const { sql } = await import('@vercel/postgres');
+
+        // Update quote with matching email to paid status
+        await sql`
+            UPDATE quotes
+            SET
+                payment_status = ${status},
+                stripe_session_id = ${sessionId},
+                amount_paid = ${Math.round(amount * 100)},
+                paid_at = CURRENT_TIMESTAMP,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE customer_email = ${email}
+                AND payment_status = 'pending'
+                AND created_at = (
+                    SELECT MAX(created_at)
+                    FROM quotes
+                    WHERE customer_email = ${email}
+                    AND payment_status = 'pending'
+                )
+        `;
+
+        console.log(`✅ Quote updated for ${email}: ${status}`);
+    } catch (error) {
+        console.error(`❌ Failed to update quote status:`, error);
+        // Don't throw - payment succeeded even if database update fails
     }
 }
