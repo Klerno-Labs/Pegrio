@@ -804,5 +804,61 @@
 
     <!-- Core Orchestrator (MUST BE LAST!) -->
     <script src="chatbot/core/chatbot-core.js"></script>
+
+    <!-- ========================================
+         CORE INFRASTRUCTURE & PAYMENTS
+         ======================================== -->
+
+    <!-- Core Scripts -->
+    <script src="core/config.js"></script>
+    <script src="core/event-bus.js"></script>
+
+    <!-- Stripe Integration -->
+    <script src="features/payments/stripe-integration.js"></script>
+
+    <!-- Initialize Stripe on page load -->
+    <script>
+        // Initialize Stripe when needed
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Pre-load Stripe for faster checkout
+            if (window.StripeIntegration) {
+                await window.StripeIntegration.init();
+            }
+        });
+
+        // Update form submission to use Stripe
+        const originalSubmitQuote = window.FormHandler?.submitQuote;
+        if (originalSubmitQuote && window.FormHandler) {
+            window.FormHandler.submitQuote = async function(formData) {
+                // Get selected package info
+                const selectedPackage = this.selectedPackage;
+                const selectedPayment = document.querySelector('input[name="payment-type"]:checked');
+
+                if (!selectedPackage) {
+                    window.ToastNotification?.show('Please select a package first', 'error');
+                    return;
+                }
+
+                // Prepare data for Stripe checkout
+                const checkoutData = {
+                    name: selectedPackage.name,
+                    price: selectedPackage.price,
+                    paymentType: selectedPayment?.value || 'full',
+                    email: formData.email,
+                    customerName: formData.name,
+                    business: formData.business,
+                    message: formData.message
+                };
+
+                // Redirect to Stripe Checkout
+                if (window.StripeIntegration) {
+                    await window.StripeIntegration.checkout(checkoutData);
+                } else {
+                    console.error('Stripe not initialized');
+                    window.ToastNotification?.show('Payment system not ready. Please try again.', 'error');
+                }
+            };
+        }
+    </script>
 </body>
 </html>

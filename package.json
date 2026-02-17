@@ -1,11 +1,33 @@
 {
-  "name": "my-menu",
-  "version": "1.0.0",
-  "description": "Static restaurant website pricing page",
+  "name": "pegrio",
+  "version": "2.0.0",
+  "description": "AI-Powered Business Websites - Enterprise SaaS Platform",
+  "main": "index.html",
   "scripts": {
-    "build": "echo 'Static site ready for deployment'"
+    "dev": "vercel dev",
+    "build": "echo 'No build step needed - static site'",
+    "deploy": "vercel --prod",
+    "install-deps": "npm install",
+    "test": "echo 'Tests coming in Phase 7'"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "web-design",
+    "ai",
+    "saas",
+    "stripe",
+    "payments"
+  ],
+  "author": "Pegrio",
+  "license": "MIT",
+  "dependencies": {
+    "stripe": "^14.15.0",
+    "resend": "^3.2.0",
+    "@supabase/supabase-js": "^2.39.7"
+  },
+  "devDependencies": {
+    "vercel": "^33.4.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
