@@ -836,6 +836,26 @@
     <script src="features/social-proof/social-proof-widgets.js"></script>
     <link rel="stylesheet" href="features/social-proof/social-proof-styles.css">
 
+    <!-- ========================================
+         PHASE 2: VISUAL & ENGAGEMENT
+         ======================================== -->
+
+    <!-- GSAP Animations -->
+    <script src="features/animations/gsap-controller.js"></script>
+    <link rel="stylesheet" href="features/animations/gsap-styles.css">
+
+    <!-- Video Player -->
+    <script src="features/video/video-player.js"></script>
+    <link rel="stylesheet" href="features/video/video-styles.css">
+
+    <!-- Interactive Elements -->
+    <script src="features/interactive/interactive-elements.js"></script>
+    <link rel="stylesheet" href="features/interactive/interactive-styles.css">
+
+    <!-- Image Optimization -->
+    <script src="features/optimization/image-optimizer.js"></script>
+    <link rel="stylesheet" href="features/optimization/image-styles.css">
+
     <!-- Initialize Integrations -->
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -911,6 +931,40 @@
                 if (statsContainer) {
                     window.SocialProofWidgets.animateStats(statsContainer);
                 }
+            }
+
+            // ========================================
+            // PHASE 2: VISUAL & ENGAGEMENT
+            // ========================================
+
+            // Initialize GSAP Animations
+            if (window.GSAPController) {
+                await window.GSAPController.init();
+            }
+
+            // Initialize Video Player
+            if (window.VideoPlayer) {
+                await window.VideoPlayer.init();
+            }
+
+            // Initialize Interactive Elements
+            if (window.InteractiveElements) {
+                window.InteractiveElements.init();
+            }
+
+            // Initialize Image Optimizer
+            if (window.ImageOptimizer) {
+                await window.ImageOptimizer.init();
+
+                // Monitor image performance
+                window.ImageOptimizer.monitorPerformance();
+
+                // Preload critical images
+                const criticalImages = [
+                    '/images/hero-background.jpg'
+                    // Add more critical images as needed
+                ];
+                window.ImageOptimizer.preloadImages(criticalImages);
             }
         });
 

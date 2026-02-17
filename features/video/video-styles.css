@@ -1,0 +1,445 @@
+/* ========================================
+   VIDEO PLAYER STYLES
+   Background videos, testimonials, controls
+   ======================================== */
+
+/* ========================================
+   BACKGROUND VIDEO CONTAINER
+   ======================================== */
+
+.hero-video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+}
+
+.background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    object-fit: cover;
+}
+
+/* Video overlay for readability */
+.hero-video-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.7) 0%, rgba(118, 75, 162, 0.7) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+/* ========================================
+   VIDEO FALLBACK IMAGE
+   ======================================== */
+
+.video-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* ========================================
+   VIDEO CONTROLS
+   ======================================== */
+
+.video-control-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.video-control-btn:hover {
+    background: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.video-control-btn:focus {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 2px;
+}
+
+.video-control-btn svg {
+    width: 20px;
+    height: 20px;
+    color: var(--color-gray-700);
+}
+
+/* ========================================
+   TESTIMONIAL VIDEO
+   ======================================== */
+
+.testimonial-video {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.testimonial-video:hover {
+    transform: scale(1.02);
+}
+
+.testimonial-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* ========================================
+   VIDEO THUMBNAIL
+   ======================================== */
+
+.video-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.video-thumbnail::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease;
+}
+
+.testimonial-video:hover .video-thumbnail::before {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   PLAY BUTTON
+   ======================================== */
+
+.play-button {
+    position: relative;
+    z-index: 2;
+    width: 68px;
+    height: 48px;
+    transition: all 0.3s ease;
+}
+
+.testimonial-video:hover .play-button {
+    transform: scale(1.15);
+}
+
+.play-button svg {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* ========================================
+   VIDEO LOADING STATE
+   ======================================== */
+
+.video-loading {
+    position: relative;
+}
+
+.video-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 3;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========================================
+   VIDEO GRID (for multiple videos)
+   ======================================== */
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.video-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.video-card-content {
+    padding: 1.5rem;
+}
+
+.video-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-gray-700);
+}
+
+.video-card-description {
+    font-size: 0.938rem;
+    color: var(--color-gray-600);
+    line-height: 1.6;
+}
+
+.video-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 0.813rem;
+    color: var(--color-gray-500);
+}
+
+.video-duration {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.video-views {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* ========================================
+   INLINE VIDEO PLAYER
+   ======================================== */
+
+.inline-video-player {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.inline-video-player video {
+    width: 100%;
+    display: block;
+}
+
+/* Custom controls for inline player */
+.video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.inline-video-player:hover .video-controls {
+    opacity: 1;
+}
+
+.play-pause-btn,
+.mute-btn,
+.fullscreen-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.play-pause-btn:hover,
+.mute-btn:hover,
+.fullscreen-btn:hover {
+    transform: scale(1.1);
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-filled {
+    height: 100%;
+    background: white;
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.1s ease;
+}
+
+.time-display {
+    color: white;
+    font-size: 0.813rem;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ========================================
+   RESPONSIVE VIDEOS
+   ======================================== */
+
+@media (max-width: 768px) {
+    .hero-video-container {
+        height: 70vh;
+        min-height: 400px;
+    }
+
+    .video-control-btn {
+        width: 40px;
+        height: 40px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .video-control-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .video-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .play-button {
+        width: 54px;
+        height: 38px;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+/* Hide videos if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .background-video {
+        display: none;
+    }
+
+    .video-fallback {
+        display: block !important;
+        opacity: 1 !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .video-control-btn {
+        border: 2px solid currentColor;
+    }
+
+    .play-button svg path {
+        stroke: currentColor;
+        stroke-width: 1px;
+    }
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+/* Use GPU acceleration for video transforms */
+.background-video,
+.testimonial-video,
+.video-thumbnail {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Lazy loading indicator */
+video[data-src] {
+    background: var(--color-gray-200);
+    min-height: 200px;
+}
+
+video[data-src]::after {
+    content: 'Loading...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-gray-500);
+    font-size: 0.875rem;
+}

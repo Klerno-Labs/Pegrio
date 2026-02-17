@@ -1,0 +1,511 @@
+/* ========================================
+   INTERACTIVE ELEMENTS STYLES
+   ROI calculator, timeline estimator, comparison slider
+   ======================================== */
+
+/* ========================================
+   CALCULATOR CARD
+   ======================================== */
+
+.calculator-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.calculator-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-gray-700);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.calculator-subtitle {
+    font-size: 1.063rem;
+    color: var(--color-gray-500);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* ========================================
+   CALCULATOR INPUTS
+   ======================================== */
+
+.calculator-inputs {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin-bottom: 0.5rem;
+    font-size: 0.938rem;
+}
+
+.input-group input[type="number"],
+.input-group select {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--color-gray-300);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.input-group input[type="number"]:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: var(--color-blue);
+}
+
+.input-group input[type="range"] {
+    width: 100%;
+    height: 6px;
+    background: var(--color-gray-200);
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.input-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--color-blue);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.input-group input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.input-group input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--color-blue);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s;
+}
+
+.input-group input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.2);
+}
+
+.range-value {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--color-blue);
+}
+
+/* ========================================
+   CALCULATOR RESULTS
+   ======================================== */
+
+.calculator-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.result-card {
+    padding: 1.25rem;
+    background: var(--color-gray-50);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.result-card.highlight {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: scale(1.05);
+}
+
+.result-card.success {
+    background: #10b981;
+    color: white;
+}
+
+.result-label {
+    font-size: 0.813rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.result-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.value-updated {
+    animation: pulse-value 0.3s ease;
+}
+
+@keyframes pulse-value {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.calculator-note {
+    text-align: center;
+    font-size: 0.813rem;
+    color: var(--color-gray-500);
+    font-style: italic;
+}
+
+/* ========================================
+   TIMELINE ESTIMATOR
+   ======================================== */
+
+.estimator-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.option-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: var(--color-gray-50);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.checkbox-option:hover {
+    background: var(--color-gray-100);
+}
+
+.checkbox-option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 0.75rem;
+    cursor: pointer;
+    accent-color: var(--color-blue);
+}
+
+.checkbox-option input[type="checkbox"]:checked + span {
+    font-weight: 600;
+    color: var(--color-blue);
+}
+
+.checkbox-option:has(input:checked) {
+    background: rgba(102, 126, 234, 0.1);
+    border-color: var(--color-blue);
+}
+
+.pages-input label {
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.pages-input select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--color-gray-300);
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* ========================================
+   TIMELINE RESULT
+   ======================================== */
+
+.timeline-result {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.timeline-visual {
+    text-align: center;
+}
+
+.timeline-bar {
+    width: 100%;
+    height: 30px;
+    background: var(--color-gray-200);
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.timeline-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    color: white;
+    font-weight: 600;
+}
+
+.timeline-label {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gray-700);
+}
+
+.timeline-label span {
+    color: var(--color-blue);
+}
+
+.timeline-breakdown h4 {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    color: var(--color-gray-700);
+}
+
+.timeline-breakdown ul {
+    list-style: none;
+    padding: 0;
+}
+
+.timeline-breakdown li {
+    padding: 0.75rem 0;
+    padding-left: 2rem;
+    position: relative;
+    color: var(--color-gray-600);
+}
+
+.timeline-breakdown li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    background: var(--color-blue);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* ========================================
+   BEFORE/AFTER SLIDER
+   ======================================== */
+
+.before-after-slider {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: col-resize;
+    user-select: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.before-image,
+.after-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+}
+
+.before-image {
+    position: relative;
+}
+
+.after-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.after-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: inset(0 50% 0 0);
+    transition: clip-path 0.1s ease;
+}
+
+.before-after-slider.dragging .after-image {
+    transition: none;
+}
+
+.slider-handle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: white;
+    transform: translateX(-50%);
+    z-index: 10;
+    transition: left 0.1s ease;
+    cursor: col-resize;
+}
+
+.before-after-slider.dragging .slider-handle {
+    transition: none;
+}
+
+.slider-handle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-handle svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.slider-label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    z-index: 5;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .calculator-card {
+        padding: 1.5rem;
+    }
+
+    .calculator-title {
+        font-size: 1.5rem;
+    }
+
+    .calculator-results {
+        grid-template-columns: 1fr;
+    }
+
+    .result-card.highlight {
+        transform: scale(1);
+    }
+
+    .option-group {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-result {
+        gap: 1.5rem;
+    }
+
+    .before-after-slider {
+        border-radius: 8px;
+    }
+
+    .slider-handle::before {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+.checkbox-option:focus-within {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 2px;
+}
+
+.slider-handle:focus {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 4px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .calculator-card {
+        border: 2px solid currentColor;
+    }
+
+    .result-card {
+        border: 1px solid currentColor;
+    }
+
+    .slider-handle::before {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .value-updated,
+    .timeline-progress,
+    .slider-handle,
+    .after-image {
+        animation: none !important;
+        transition: none !important;
+    }
+}

@@ -1,0 +1,413 @@
+/* ========================================
+   IMAGE OPTIMIZATION STYLES
+   Lazy loading, blur-up, responsive images
+   ======================================== */
+
+/* ========================================
+   LAZY LOADING STATES
+   ======================================== */
+
+img[data-src],
+img[loading="lazy"] {
+    background: var(--color-gray-200);
+    min-height: 200px;
+}
+
+img.loading {
+    opacity: 0.5;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+img.loaded {
+    animation: fadeIn 0.5s ease;
+}
+
+img.error {
+    background: var(--color-gray-300);
+    display: inline-block;
+    position: relative;
+}
+
+img.error::after {
+    content: '⚠️ Failed to load';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-gray-500);
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ========================================
+   BLUR-UP PLACEHOLDER
+   ======================================== */
+
+img.blur-placeholder {
+    filter: blur(20px);
+    transform: scale(1.05);
+    transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+img.blur-loaded {
+    filter: blur(0);
+    transform: scale(1);
+}
+
+/* ========================================
+   RESPONSIVE IMAGES
+   ======================================== */
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Picture element */
+picture {
+    display: block;
+    line-height: 0;
+}
+
+picture img {
+    width: 100%;
+    height: auto;
+}
+
+/* ========================================
+   IMAGE CONTAINERS
+   ======================================== */
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-gray-200);
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Aspect ratio containers */
+.aspect-ratio-16-9 {
+    aspect-ratio: 16 / 9;
+}
+
+.aspect-ratio-4-3 {
+    aspect-ratio: 4 / 3;
+}
+
+.aspect-ratio-1-1 {
+    aspect-ratio: 1 / 1;
+}
+
+.aspect-ratio-21-9 {
+    aspect-ratio: 21 / 9;
+}
+
+/* Fallback for browsers without aspect-ratio support */
+@supports not (aspect-ratio: 16 / 9) {
+    .aspect-ratio-16-9 {
+        padding-bottom: 56.25%;
+        position: relative;
+    }
+
+    .aspect-ratio-16-9 img {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .aspect-ratio-4-3 {
+        padding-bottom: 75%;
+        position: relative;
+    }
+
+    .aspect-ratio-4-3 img {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .aspect-ratio-1-1 {
+        padding-bottom: 100%;
+        position: relative;
+    }
+
+    .aspect-ratio-1-1 img {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+/* ========================================
+   IMAGE LOADING SKELETON
+   ======================================== */
+
+.image-skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-gray-200) 0%,
+        var(--color-gray-300) 50%,
+        var(--color-gray-200) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* ========================================
+   PROGRESSIVE IMAGE LOADING
+   ======================================== */
+
+.progressive-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.progressive-image-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(10px);
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+.progressive-image-actual {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.progressive-image-actual.loaded {
+    opacity: 1;
+}
+
+/* ========================================
+   IMAGE GRID
+   ======================================== */
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.image-grid-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 1 / 1;
+    background: var(--color-gray-200);
+}
+
+.image-grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.image-grid-item:hover img {
+    transform: scale(1.05);
+}
+
+/* ========================================
+   LIGHTBOX IMAGES
+   ======================================== */
+
+.lightbox-trigger {
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+}
+
+.lightbox-trigger:hover {
+    transform: scale(1.02);
+}
+
+/* ========================================
+   WEBP SUPPORT INDICATOR
+   ======================================== */
+
+html.webp img[data-webp-src] {
+    /* WebP supported - use data-webp-src */
+}
+
+html.no-webp img[data-webp-src] {
+    /* WebP not supported - use data-src fallback */
+}
+
+/* ========================================
+   IMAGE OPTIMIZATION BADGES
+   ======================================== */
+
+.optimized-image {
+    position: relative;
+}
+
+.optimization-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(16, 185, 129, 0.9);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 3;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 640px) {
+    .image-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 0.5rem;
+    }
+
+    img[data-src],
+    img[loading="lazy"] {
+        min-height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+    img[data-src] {
+        /* Force load all images for print */
+        opacity: 1;
+        background: transparent;
+    }
+
+    .image-skeleton,
+    .image-loading {
+        display: none;
+    }
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+/* GPU acceleration for transforms */
+img.loading,
+img.loaded,
+img.blur-placeholder,
+.progressive-image-placeholder,
+.progressive-image-actual {
+    will-change: transform, filter, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Remove will-change after animation completes */
+img.loaded.animation-complete {
+    will-change: auto;
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+/* Ensure images have alt text */
+img:not([alt]) {
+    outline: 2px solid red;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    img.loading {
+        border: 2px solid currentColor;
+    }
+
+    .image-skeleton {
+        background: currentColor;
+        opacity: 0.3;
+    }
+}
+
+/* Reduced motion - disable animations */
+@media (prefers-reduced-motion: reduce) {
+    img.loading,
+    img.loaded,
+    img.blur-placeholder,
+    .progressive-image-actual,
+    .image-skeleton {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    img.blur-placeholder {
+        filter: none;
+    }
+}
+
+/* ========================================
+   DARK MODE SUPPORT
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+    img[data-src],
+    img[loading="lazy"],
+    .image-container,
+    .image-skeleton {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .image-skeleton {
+        background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(255, 255, 255, 0.05) 100%
+        );
+    }
+}
