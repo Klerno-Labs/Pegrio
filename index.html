@@ -816,13 +816,36 @@
     <!-- Stripe Integration -->
     <script src="features/payments/stripe-integration.js"></script>
 
-    <!-- Initialize Stripe on page load -->
+    <!-- Calendly Integration -->
+    <script src="features/booking/calendly-integration.js"></script>
+
+    <!-- Initialize Integrations -->
     <script>
-        // Initialize Stripe when needed
         document.addEventListener('DOMContentLoaded', async () => {
             // Pre-load Stripe for faster checkout
             if (window.StripeIntegration) {
                 await window.StripeIntegration.init();
+            }
+
+            // Initialize Calendly
+            if (window.CalendlyIntegration) {
+                await window.CalendlyIntegration.init();
+
+                // Enhance buttons with data-action="schedule-call"
+                window.CalendlyIntegration.enhanceExistingButtons();
+
+                // Add click handlers to "Schedule Call" buttons
+                const scheduleButtons = document.querySelectorAll('.btn-schedule-call');
+                scheduleButtons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        window.CalendlyIntegration.openPopup({
+                            package: button.dataset.package || '',
+                            source: button.dataset.source || 'button',
+                            medium: 'click'
+                        });
+                    });
+                });
             }
         });
 
