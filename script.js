@@ -417,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    const paymentTypeButtons = document.querySelectorAll('.payment-type-btn');
+    const paymentTypeButtons = document.querySelectorAll('.payment-type-card');
     paymentTypeButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             paymentTypeButtons.forEach(b => b.classList.remove('active'));
@@ -499,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Get form data
-        const selectedPaymentType = document.querySelector('.payment-type-btn.active');
+        const selectedPaymentType = document.querySelector('.payment-type-card.active');
         const formData = {
             package: document.getElementById('selected-package-name')?.textContent || '',
             price: document.getElementById('selected-package-price')?.textContent || '',
@@ -716,39 +716,47 @@ window.addEventListener('load', () => {
 // ========================================
 
 function initFAQAccordion() {
-    const faqButtons = document.querySelectorAll('.faq-question-btn');
+    const faqQuestions = document.querySelectorAll('.faq-question');
 
-    faqButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const faqCard = this.closest('.faq-card');
-            const answerPanel = faqCard.querySelector('.faq-answer-panel');
-            const wasActive = faqCard.classList.contains('active');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const faqItem = this.closest('.faq-item');
+            const toggle = faqItem.querySelector('.faq-toggle');
+            const wasActive = faqItem.classList.contains('active');
 
-            // Close all FAQ cards
-            document.querySelectorAll('.faq-card').forEach(card => {
-                const cardButton = card.querySelector('.faq-question-btn');
-                const cardAnswer = card.querySelector('.faq-answer-panel');
-
-                card.classList.remove('active');
-                cardAnswer.style.maxHeight = null;
-                cardButton.setAttribute('aria-expanded', 'false');
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const itemToggle = item.querySelector('.faq-toggle');
+                item.classList.remove('active');
+                itemToggle?.setAttribute('aria-expanded', 'false');
             });
 
-            // Open clicked card if it wasn't active
+            // Open clicked item if it wasn't active
             if (!wasActive) {
-                faqCard.classList.add('active');
-                answerPanel.style.maxHeight = answerPanel.scrollHeight + 'px';
-                this.setAttribute('aria-expanded', 'true');
+                faqItem.classList.add('active');
+                toggle?.setAttribute('aria-expanded', 'true');
+
+                // Track FAQ interaction
+                if (window.Analytics) {
+                    const questionText = faqItem.querySelector('h3')?.textContent || '';
+                    window.Analytics.trackEvent('FAQ_Opened', {
+                        event_category: 'engagement',
+                        event_label: questionText
+                    });
+                }
             }
         });
 
         // Keyboard navigation support
-        button.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click();
-            }
-        });
+        const toggle = question.querySelector('.faq-toggle');
+        if (toggle) {
+            toggle.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    question.click();
+                }
+            });
+        }
     });
 }
 
