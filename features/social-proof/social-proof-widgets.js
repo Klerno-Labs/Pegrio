@@ -269,12 +269,12 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 /* ========================================
-   AUTO-INIT
+   AUTO-INIT (DISABLED - popups too distracting)
    ======================================== */
 
-// Initialize on page load
-if (typeof window !== 'undefined') {
-    document.addEventListener('DOMContentLoaded', () => {
-        window.SocialProofWidgets?.init();
-    });
-}
+// Initialize on page load (DISABLED)
+// if (typeof window !== 'undefined') {
+//     document.addEventListener('DOMContentLoaded', () => {
+//         window.SocialProofWidgets?.init();
+//     });
+// }
