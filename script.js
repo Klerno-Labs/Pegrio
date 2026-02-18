@@ -712,37 +712,32 @@ window.addEventListener('load', () => {
 
 // ========================================
 // ========================================
-// FAQ ACCORDION - Enhanced Accessibility
+// FAQ ACCORDION - Beautiful Upgraded Version
 // ========================================
 
 function initFAQAccordion() {
-    const faqButtons = document.querySelectorAll('.faq-question');
+    const faqButtons = document.querySelectorAll('.faq-question-btn');
 
     faqButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const faqItem = this.closest('.faq-item');
-            const answer = faqItem.querySelector('.faq-answer');
-            const icon = this.querySelector('.faq-icon');
-            const wasActive = faqItem.classList.contains('active');
-            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            const faqCard = this.closest('.faq-card');
+            const answerPanel = faqCard.querySelector('.faq-answer-panel');
+            const wasActive = faqCard.classList.contains('active');
 
-            // Close all FAQ items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                const itemButton = item.querySelector('.faq-question');
-                const itemAnswer = item.querySelector('.faq-answer');
-                const itemIcon = item.querySelector('.faq-icon');
+            // Close all FAQ cards
+            document.querySelectorAll('.faq-card').forEach(card => {
+                const cardButton = card.querySelector('.faq-question-btn');
+                const cardAnswer = card.querySelector('.faq-answer-panel');
 
-                item.classList.remove('active');
-                itemAnswer.style.maxHeight = null;
-                itemIcon.textContent = '+';
-                itemButton.setAttribute('aria-expanded', 'false');
+                card.classList.remove('active');
+                cardAnswer.style.maxHeight = null;
+                cardButton.setAttribute('aria-expanded', 'false');
             });
 
-            // Open clicked item if it wasn't active
+            // Open clicked card if it wasn't active
             if (!wasActive) {
-                faqItem.classList.add('active');
-                answer.style.maxHeight = answer.scrollHeight + 'px';
-                icon.textContent = '−';
+                faqCard.classList.add('active');
+                answerPanel.style.maxHeight = answerPanel.scrollHeight + 'px';
                 this.setAttribute('aria-expanded', 'true');
             }
         });
