@@ -80,7 +80,7 @@ INSERT INTO quotes (
     'Doe''s Restaurant',
     '555-0123',
     'Professional Package',
-    249900, -- $2,499.00 in cents
+    500000, -- $5,000.00 in cents
     'full',
     'Looking forward to working together!',
     'pending',
@@ -92,7 +92,7 @@ INSERT INTO quotes (
     'Smith''s Cafe',
     '555-0456',
     'Premium Package',
-    499900, -- $4,999.00 in cents
+    800000, -- $8,000.00 in cents
     'deposit',
     'Need help with my restaurant website.',
     'paid',
