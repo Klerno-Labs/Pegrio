@@ -348,6 +348,157 @@
                 min-width: 800px;
             }
         }
+        /* Quote Details Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content-large {
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .quote-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .quote-detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .quote-detail-section h3 {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quote-detail-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .quote-detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .quote-detail-label {
+            font-weight: 600;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .quote-detail-value {
+            color: #111827;
+            font-size: 1rem;
+        }
+
+        .quote-detail-value.large {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .quote-message-box {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin-top: 0.5rem;
+        }
+
+        /* Make table rows clickable */
+        #quotesTableBody tr {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #quotesTableBody tr:hover {
+            background: #f9fafb;
+        }
+
     </style>
 </head>
 <body>
@@ -452,6 +603,20 @@
                         <!-- Quotes will be inserted here -->
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quote Details Modal -->
+    <div id="quoteModal" class="modal" style="display: none;">
+        <div class="modal-backdrop" onclick="closeQuoteModal()"></div>
+        <div class="modal-content-large">
+            <div class="modal-header">
+                <h2>Quote Details</h2>
+                <button class="modal-close" onclick="closeQuoteModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="quoteDetailsBody">
+                <!-- Quote details will be inserted here -->
             </div>
         </div>
     </div>
@@ -580,16 +745,159 @@
                     <td>#${quote.id}</td>
                     <td>${new Date(quote.created_at).toLocaleDateString()}</td>
                     <td>${quote.customer_name}</td>
-                    <td><a href="mailto:${quote.customer_email}" class="email-link">${quote.customer_email}</a></td>
+                    <td><a href="mailto:${quote.customer_email}" class="email-link" onclick="event.stopPropagation()">${quote.customer_email}</a></td>
                     <td>${quote.business_name || '-'}</td>
                     <td><strong>${quote.package}</strong></td>
                     <td>$${(quote.package_price / 100).toLocaleString()}</td>
                     <td><span class="status-badge ${quote.payment_status}">${quote.payment_status}</span></td>
                     <td><div class="message-preview">${quote.message || '-'}</div></td>
                 `;
+
+                // Store quote data and add click handler
+                row.dataset.quoteData = JSON.stringify(quote);
+                row.addEventListener('click', () => showQuoteDetails(quote));
+
                 tbody.appendChild(row);
             });
         }
+
+        // Show quote details modal
+        function showQuoteDetails(quote) {
+            const modal = document.getElementById('quoteModal');
+            const body = document.getElementById('quoteDetailsBody');
+
+            const createdDate = new Date(quote.created_at).toLocaleString();
+            const paidDate = quote.paid_at ? new Date(quote.paid_at).toLocaleString() : '-';
+
+            body.innerHTML = `
+                <div class="quote-detail-section">
+                    <h3>📋 Quote Information</h3>
+                    <div class="quote-detail-grid">
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Quote ID</div>
+                            <div class="quote-detail-value large">#${quote.id}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Status</div>
+                            <div class="quote-detail-value">
+                                <span class="status-badge ${quote.payment_status}">${quote.payment_status}</span>
+                            </div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Package</div>
+                            <div class="quote-detail-value large">${quote.package}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Price</div>
+                            <div class="quote-detail-value large">$${(quote.package_price / 100).toLocaleString()}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Payment Type</div>
+                            <div class="quote-detail-value">${quote.payment_type || 'full'}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Amount Paid</div>
+                            <div class="quote-detail-value">$${((quote.amount_paid || 0) / 100).toLocaleString()}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-detail-section">
+                    <h3>👤 Customer Information</h3>
+                    <div class="quote-detail-grid">
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Name</div>
+                            <div class="quote-detail-value">${quote.customer_name}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Email</div>
+                            <div class="quote-detail-value">
+                                <a href="mailto:${quote.customer_email}" class="email-link">${quote.customer_email}</a>
+                            </div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Business</div>
+                            <div class="quote-detail-value">${quote.business_name || '-'}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Phone</div>
+                            <div class="quote-detail-value">${quote.phone || '-'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                ${quote.message ? `
+                <div class="quote-detail-section">
+                    <h3>💬 Customer Message</h3>
+                    <div class="quote-message-box">${quote.message}</div>
+                </div>
+                ` : ''}
+
+                <div class="quote-detail-section">
+                    <h3>📊 Marketing & Source</h3>
+                    <div class="quote-detail-grid">
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Source</div>
+                            <div class="quote-detail-value">${quote.source || '-'}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">UTM Source</div>
+                            <div class="quote-detail-value">${quote.utm_source || '-'}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">UTM Medium</div>
+                            <div class="quote-detail-value">${quote.utm_medium || '-'}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">UTM Campaign</div>
+                            <div class="quote-detail-value">${quote.utm_campaign || '-'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-detail-section">
+                    <h3>🔧 Technical Details</h3>
+                    <div class="quote-detail-grid">
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">IP Address</div>
+                            <div class="quote-detail-value">${quote.ip_address || '-'}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Stripe Session</div>
+                            <div class="quote-detail-value">${quote.stripe_session_id || '-'}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Created</div>
+                            <div class="quote-detail-value">${createdDate}</div>
+                        </div>
+                        <div class="quote-detail-item">
+                            <div class="quote-detail-label">Paid At</div>
+                            <div class="quote-detail-value">${paidDate}</div>
+                        </div>
+                    </div>
+                    ${quote.user_agent ? `
+                    <div class="quote-detail-item" style="margin-top: 1rem;">
+                        <div class="quote-detail-label">User Agent</div>
+                        <div class="quote-detail-value" style="font-size: 0.875rem; color: #6b7280;">${quote.user_agent}</div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+
+            modal.style.display = 'flex';
+        }
+
+        // Close quote details modal
+        function closeQuoteModal() {
+            document.getElementById('quoteModal').style.display = 'none';
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeQuoteModal();
+            }
+        });
 
         // Filter change listeners
         document.getElementById('filterStatus')?.addEventListener('change', loadQuotes);
