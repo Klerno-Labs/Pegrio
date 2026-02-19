@@ -4,19 +4,6 @@
   "installCommand": "npm install",
   "framework": null,
   "outputDirectory": ".",
-  "redirects": [
-    {
-      "source": "/:path((?!api).*)*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.pegrio.com"
-        }
-      ],
-      "destination": "https://pegrio.com/:path*",
-      "permanent": true
-    }
-  ],
   "rewrites": [
     {
       "source": "/website-1",
