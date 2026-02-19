@@ -99,6 +99,9 @@ class StripeIntegration {
             }
 
             // Save quote to database FIRST
+            let quoteSaved = false;
+            let quoteId = null;
+
             try {
                 const saveResponse = await fetch('/api/save-quote', {
                     method: 'POST',
@@ -119,8 +122,10 @@ class StripeIntegration {
                 });
 
                 if (saveResponse.ok) {
-                    const { quoteId } = await saveResponse.json();
-                    console.log('Quote saved with ID:', quoteId);
+                    const data = await saveResponse.json();
+                    quoteId = data.quoteId;
+                    quoteSaved = true;
+                    console.log('✅ Quote saved with ID:', quoteId);
                 } else {
                     console.warn('Failed to save quote, continuing to checkout...');
                 }
@@ -167,10 +172,23 @@ class StripeIntegration {
         } catch (error) {
             console.error('Checkout error:', error);
 
-            // Show error notification
+            // If quote was saved, show success message even if Stripe failed
+            if (quoteSaved) {
+                if (window.ToastNotification) {
+                    window.ToastNotification.show(
+                        `✅ Quote #${quoteId} saved! We'll contact you shortly to complete payment.`,
+                        'success'
+                    );
+                } else {
+                    alert(`✅ Quote #${quoteId} saved successfully!\n\nWe received your quote request and will contact you shortly at ${packageData.email} to complete payment.\n\nThank you!`);
+                }
+                return; // Don't show error if quote was saved
+            }
+
+            // Show error notification only if quote wasn't saved
             if (window.ToastNotification) {
                 window.ToastNotification.show(
-                    'Payment failed. Please try again or contact support.',
+                    'Failed to submit quote. Please try again or contact support.',
                     'error'
                 );
             }

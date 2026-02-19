@@ -556,9 +556,13 @@
 
             <!-- Filters -->
             <div class="filters">
+                <div class="filter-group" style="flex: 2;">
+                    <label>🔍 Search</label>
+                    <input type="text" id="searchInput" placeholder="Search by name, email, business..." oninput="filterQuotes()">
+                </div>
                 <div class="filter-group">
                     <label>Status</label>
-                    <select id="filterStatus">
+                    <select id="filterStatus" onchange="filterQuotes()">
                         <option value="">All Statuses</option>
                         <option value="pending">Pending</option>
                         <option value="paid">Paid</option>
@@ -567,7 +571,7 @@
                 </div>
                 <div class="filter-group">
                     <label>Package</label>
-                    <select id="filterPackage">
+                    <select id="filterPackage" onchange="filterQuotes()">
                         <option value="">All Packages</option>
                         <option value="Essential">Essential</option>
                         <option value="Professional">Professional</option>
@@ -588,14 +592,14 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Date</th>
-                            <th>Customer</th>
-                            <th>Email</th>
-                            <th>Business</th>
-                            <th>Package</th>
-                            <th>Price</th>
-                            <th>Status</th>
+                            <th onclick="sortQuotes('id')" style="cursor: pointer;" title="Click to sort">ID ⇅</th>
+                            <th onclick="sortQuotes('created_at')" style="cursor: pointer;" title="Click to sort">Date ⇅</th>
+                            <th onclick="sortQuotes('customer_name')" style="cursor: pointer;" title="Click to sort">Customer ⇅</th>
+                            <th onclick="sortQuotes('customer_email')" style="cursor: pointer;" title="Click to sort">Email ⇅</th>
+                            <th onclick="sortQuotes('business_name')" style="cursor: pointer;" title="Click to sort">Business ⇅</th>
+                            <th onclick="sortQuotes('package')" style="cursor: pointer;" title="Click to sort">Package ⇅</th>
+                            <th onclick="sortQuotes('package_price')" style="cursor: pointer;" title="Click to sort">Price ⇅</th>
+                            <th onclick="sortQuotes('payment_status')" style="cursor: pointer;" title="Click to sort">Status ⇅</th>
                             <th>Message</th>
                         </tr>
                     </thead>
@@ -702,11 +706,14 @@
 
                 const data = await response.json();
 
+                // Store all quotes for filtering
+                allQuotes = data.quotes;
+
                 // Update stats
                 updateStats(data.stats);
 
-                // Update table
-                updateTable(data.quotes);
+                // Update table (apply any active filters)
+                filterQuotes();
 
                 // Show table
                 document.getElementById('loadingState').style.display = 'none';
@@ -899,9 +906,76 @@
             }
         });
 
-        // Filter change listeners
-        document.getElementById('filterStatus')?.addEventListener('change', loadQuotes);
-        document.getElementById('filterPackage')?.addEventListener('change', loadQuotes);
+        // Store all quotes for client-side filtering
+        let allQuotes = [];
+
+        // Filter quotes (client-side search/filter)
+        function filterQuotes() {
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            const statusFilter = document.getElementById('filterStatus')?.value || '';
+            const packageFilter = document.getElementById('filterPackage')?.value || '';
+
+            const filtered = allQuotes.filter(quote => {
+                // Search filter
+                const matchesSearch = !searchTerm ||
+                    quote.customer_name.toLowerCase().includes(searchTerm) ||
+                    quote.customer_email.toLowerCase().includes(searchTerm) ||
+                    (quote.business_name && quote.business_name.toLowerCase().includes(searchTerm)) ||
+                    quote.package.toLowerCase().includes(searchTerm);
+
+                // Status filter
+                const matchesStatus = !statusFilter || quote.payment_status === statusFilter;
+
+                // Package filter
+                const matchesPackage = !packageFilter || quote.package.includes(packageFilter);
+
+                return matchesSearch && matchesStatus && matchesPackage;
+            });
+
+            updateTable(filtered);
+        }
+
+        // Sort quotes by column
+        let currentSort = { column: 'created_at', order: 'desc' };
+
+        function sortQuotes(column) {
+            // Toggle sort order if clicking same column
+            if (currentSort.column === column) {
+                currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.order = 'asc';
+            }
+
+            allQuotes.sort((a, b) => {
+                let aVal = a[column];
+                let bVal = b[column];
+
+                // Handle dates
+                if (column === 'created_at') {
+                    aVal = new Date(aVal);
+                    bVal = new Date(bVal);
+                }
+
+                // Handle numbers
+                if (column === 'id' || column === 'package_price') {
+                    aVal = Number(aVal);
+                    bVal = Number(bVal);
+                }
+
+                // Handle strings (case insensitive)
+                if (typeof aVal === 'string') {
+                    aVal = aVal.toLowerCase();
+                    bVal = bVal.toLowerCase();
+                }
+
+                if (aVal < bVal) return currentSort.order === 'asc' ? -1 : 1;
+                if (aVal > bVal) return currentSort.order === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            filterQuotes(); // Re-apply filters after sorting
+        }
     </script>
 </body>
 </html>
