@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import ScrollReveal from '@/components/ScrollReveal'
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -35,25 +36,32 @@ export default function FAQSection() {
   return (
     <section className="section bg-gray-bg">
       <div className="container max-w-3xl">
-        <h2 className="text-center mb-16">Common Questions</h2>
+        <ScrollReveal>
+          <h2 className="text-center mb-16">Common Questions</h2>
+        </ScrollReveal>
 
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <div key={index} className="card">
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full text-left flex items-center justify-between gap-4"
-              >
-                <h3 className="text-lg">{faq.question}</h3>
-                <span className="text-2xl text-blue-accent flex-shrink-0">
-                  {openIndex === index ? '−' : '+'}
-                </span>
-              </button>
+            <ScrollReveal key={index} animation="fade-up" delay={index * 60}>
+              <div className="card">
+                <button
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                  className="w-full text-left flex items-center justify-between gap-4"
+                >
+                  <h3 className="text-lg">{faq.question}</h3>
+                  <span
+                    className="text-2xl text-blue-accent flex-shrink-0 transition-transform duration-200"
+                    style={{ transform: openIndex === index ? 'rotate(45deg)' : 'none' }}
+                  >
+                    +
+                  </span>
+                </button>
 
-              {openIndex === index && (
-                <p className="mt-4 text-gray-muted leading-relaxed">{faq.answer}</p>
-              )}
-            </div>
+                {openIndex === index && (
+                  <p className="mt-4 text-gray-muted leading-relaxed">{faq.answer}</p>
+                )}
+              </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

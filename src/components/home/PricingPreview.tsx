@@ -1,5 +1,7 @@
 'use client'
 
+import ScrollReveal from '@/components/ScrollReveal'
+
 export default function PricingPreview() {
   const openCalendly = () => {
     if (typeof window !== 'undefined' && (window as any).Calendly) {
@@ -56,55 +58,60 @@ export default function PricingPreview() {
   ]
 
   return (
-    <section className="section bg-white" id="pricing-preview">
+    <section className="section bg-white bg-grid" id="pricing-preview">
       <div className="container">
-        <h2 className="text-center mb-4">Straightforward Pricing. No Surprises.</h2>
+        <ScrollReveal>
+          <h2 className="text-center mb-4">Straightforward Pricing. No Surprises.</h2>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          {tiers.map((tier) => (
-            <div
-              key={tier.name}
-              className={`card relative ${tier.featured ? 'ring-2 ring-blue-accent' : ''}`}
-            >
-              {tier.featured && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-accent text-white px-4 py-1 rounded-full text-sm font-semibold">
-                  MOST POPULAR
-                </div>
-              )}
-
-              <div className="text-center mb-6">
-                <h3 className="mb-2">{tier.name}</h3>
-                <div className="text-4xl font-bold text-navy mb-1">{tier.price}</div>
-                <div className="text-sm text-gray-muted">{tier.tagline}</div>
-              </div>
-
-              <ul className="space-y-3 mb-8">
-                {tier.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-2 text-sm">
-                    <span className="text-blue-accent mt-1">✓</span>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                onClick={openCalendly}
-                className={tier.featured ? 'btn-primary w-full' : 'btn-secondary w-full'}
+          {tiers.map((tier, i) => (
+            <ScrollReveal key={tier.name} animation="fade-up" delay={i * 100}>
+              <div
+                className={`card relative h-full flex flex-col ${tier.featured ? 'ring-2 ring-blue-accent' : ''}`}
               >
-                {tier.cta}
-              </button>
-            </div>
+                {tier.featured && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-accent text-white px-4 py-1 rounded-full text-sm font-semibold">
+                    MOST POPULAR
+                  </div>
+                )}
+
+                <div className="text-center mb-6">
+                  <h3 className="mb-2">{tier.name}</h3>
+                  <div className="text-4xl font-bold text-navy mb-1">{tier.price}</div>
+                  <div className="text-sm text-gray-muted">{tier.tagline}</div>
+                </div>
+
+                <ul className="space-y-3 mb-8 flex-grow">
+                  {tier.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2 text-sm">
+                      <span className="text-blue-accent mt-1">✓</span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={openCalendly}
+                  className={tier.featured ? 'btn-primary w-full' : 'btn-secondary w-full'}
+                >
+                  {tier.cta}
+                </button>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <p className="text-gray-muted mb-4">
-            Not sure which is right for you?{' '}
-            <button onClick={openCalendly} className="text-blue-accent hover:underline font-semibold">
-              Book a free 15-minute call.
-            </button>
-          </p>
-        </div>
+        <ScrollReveal animation="fade-in" delay={400}>
+          <div className="text-center mt-12">
+            <p className="text-gray-muted mb-4">
+              Not sure which is right for you?{' '}
+              <button onClick={openCalendly} className="text-blue-accent link-underline font-semibold">
+                Book a free 15-minute call.
+              </button>
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )

@@ -1,5 +1,7 @@
 'use client'
 
+import ScrollReveal from '@/components/ScrollReveal'
+
 export default function HowItWorksSection() {
   const openCalendly = () => {
     if (typeof window !== 'undefined' && (window as any).Calendly) {
@@ -30,25 +32,31 @@ export default function HowItWorksSection() {
   return (
     <section className="section bg-gray-bg">
       <div className="container">
-        <h2 className="text-center mb-16">Simple Process. Real Results.</h2>
+        <ScrollReveal>
+          <h2 className="text-center mb-16">Simple Process. Real Results.</h2>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {steps.map((step) => (
-            <div key={step.number} className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-accent text-white text-2xl font-bold mb-4">
-                {step.number}
+          {steps.map((step, i) => (
+            <ScrollReveal key={step.number} animation="fade-up" delay={i * 120}>
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-accent text-white text-2xl font-bold mb-4">
+                  {step.number}
+                </div>
+                <h3 className="mb-3">{step.title}</h3>
+                <p className="text-gray-muted">{step.description}</p>
               </div>
-              <h3 className="mb-3">{step.title}</h3>
-              <p className="text-gray-muted">{step.description}</p>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
 
-        <div className="text-center">
-          <button onClick={openCalendly} className="btn-primary text-lg px-8 py-4">
-            Start With a Free Audit
-          </button>
-        </div>
+        <ScrollReveal animation="fade-up" delay={400}>
+          <div className="text-center">
+            <button onClick={openCalendly} className="btn-primary text-lg px-8 py-4">
+              Start With a Free Audit
+            </button>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )

@@ -10,6 +10,7 @@ import TrustSection from '@/components/home/TrustSection'
 import FAQSection from '@/components/home/FAQSection'
 import FinalCTA from '@/components/home/FinalCTA'
 import ScrollPopup from '@/components/home/ScrollPopup'
+import SectionDivider from '@/components/SectionDivider'
 
 export const metadata: Metadata = {
   title: 'Houston Website Design for Local Businesses | Pegrio',
@@ -51,11 +52,17 @@ export default function Home() {
 
       <HeroSection />
       <SocialProofBar />
+      <SectionDivider type="wave" from="#F8F5F0" to="#FFFFFF" />
       <IndustriesSection />
+      <SectionDivider type="angle" from="#FFFFFF" to="#F8F5F0" />
       <HowItWorksSection />
+      <SectionDivider type="curve" from="#F8F5F0" to="#FFFFFF" />
       <PricingPreview />
+      <SectionDivider type="wave" from="#FFFFFF" to="#F8F5F0" />
       <PortfolioPreview />
+      <SectionDivider type="angle" from="#F8F5F0" to="#FFFFFF" />
       <TrustSection />
+      <SectionDivider type="curve" from="#FFFFFF" to="#F8F5F0" />
       <FAQSection />
       <FinalCTA />
       <ScrollPopup />
