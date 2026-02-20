@@ -9,10 +9,10 @@ export default function PortfolioGrid() {
   const projects = [
     {
       id: 0,
-      name: '3rd Coast Smoke Company',
+      name: 'THC Plus',
       industry: 'Retail',
       package: 'Enterprise Package',
-      result: 'Full custom Next.js e-commerce site for a Houston smoke shop — age verification, product browsing, modern gradient design, and error monitoring with Sentry',
+      result: 'Full custom Next.js e-commerce site for a Houston hemp retailer — age verification, product browsing, modern gradient design, and error monitoring with Sentry',
       demoUrl: 'https://shopthcplus.com',
       services: [
         'Custom Next.js + Tailwind CSS build',

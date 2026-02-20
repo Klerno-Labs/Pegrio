@@ -6,7 +6,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 export default function PortfolioPreview() {
   const projects = [
     {
-      name: '3rd Coast Smoke Company',
+      name: 'THC Plus',
       industry: 'Retail',
       demoUrl: 'https://shopthcplus.com',
       result: 'Full custom Next.js e-commerce site with age verification, product catalog, and modern gradient design — live in Houston',
