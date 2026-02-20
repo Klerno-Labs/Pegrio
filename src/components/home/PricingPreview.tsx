@@ -1,0 +1,111 @@
+'use client'
+
+export default function PricingPreview() {
+  const openCalendly = () => {
+    if (typeof window !== 'undefined' && (window as any).Calendly) {
+      (window as any).Calendly.initPopupWidget({
+        url: 'https://calendly.com/c-hatfield309/30min'
+      })
+    }
+  }
+
+  const tiers = [
+    {
+      name: 'STARTER',
+      price: '$2,000',
+      tagline: 'one-time',
+      features: [
+        '5-page website (Home, About, Services, Contact, Blog)',
+        'Mobile-responsive design',
+        'Basic on-page SEO (meta tags, schema markup, XML sitemap)',
+        'Contact form + Google Maps integration',
+        'Speed optimization (90+ PageSpeed target)',
+        '30-day post-launch support',
+      ],
+      cta: 'Get Started',
+      featured: false,
+    },
+    {
+      name: 'GROWTH',
+      price: '$5,000',
+      tagline: 'one-time',
+      features: [
+        'Up to 10 pages with fully custom design (no templates)',
+        'Full on-page SEO + schema markup + robots.txt',
+        'Blog / CMS system (client can update content themselves)',
+        'Google Analytics 4 + heatmap setup',
+        '60-day post-launch support with weekly check-ins',
+      ],
+      cta: 'Get Started',
+      featured: true,
+    },
+    {
+      name: 'ENTERPRISE',
+      price: '$8,000+',
+      tagline: 'starting at',
+      features: [
+        'Full custom build — no templates, no shortcuts',
+        'E-commerce or booking/CRM integration',
+        '2-hour strategy session included before any design work',
+        "Performance guarantee — we fix it if it doesn't generate results",
+        'Priority turnaround and dedicated support',
+      ],
+      cta: "Let's Talk",
+      featured: false,
+    },
+  ]
+
+  return (
+    <section className="section bg-white" id="pricing-preview">
+      <div className="container">
+        <h2 className="text-center mb-4">Straightforward Pricing. No Surprises.</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          {tiers.map((tier) => (
+            <div
+              key={tier.name}
+              className={`card relative ${tier.featured ? 'ring-2 ring-blue-accent' : ''}`}
+            >
+              {tier.featured && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-accent text-white px-4 py-1 rounded-full text-sm font-semibold">
+                  MOST POPULAR
+                </div>
+              )}
+
+              <div className="text-center mb-6">
+                <h3 className="mb-2">{tier.name}</h3>
+                <div className="text-4xl font-bold text-navy mb-1">{tier.price}</div>
+                <div className="text-sm text-gray-muted">{tier.tagline}</div>
+              </div>
+
+              <ul className="space-y-3 mb-8">
+                {tier.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2 text-sm">
+                    <span className="text-blue-accent mt-1">✓</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                onClick={openCalendly}
+                className={tier.featured ? 'btn-primary w-full' : 'btn-secondary w-full'}
+              >
+                {tier.cta}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <p className="text-gray-muted mb-4">
+            Not sure which is right for you?{' '}
+            <button onClick={openCalendly} className="text-blue-accent hover:underline font-semibold">
+              Book a free 15-minute call.
+            </button>
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}

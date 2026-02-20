@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Google Fonts - Inter with font-display: swap */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-gray-text antialiased;
+  }
+
+  h1 {
+    @apply text-h1-mobile md:text-h1-desktop;
+  }
+
+  h2 {
+    @apply text-h2-mobile md:text-h2-desktop;
+  }
+
+  h3 {
+    @apply text-h3-mobile md:text-h3-desktop;
+  }
+
+  p {
+    @apply text-body;
+  }
+}
+
+@layer components {
+  /* Primary Button */
+  .btn-primary {
+    @apply bg-blue-accent text-white rounded-lg px-6 py-3 font-semibold
+           hover:bg-blue-accent/90 transition-all duration-200
+           inline-block text-center cursor-pointer;
+  }
+
+  /* Secondary Button */
+  .btn-secondary {
+    @apply bg-transparent border-2 border-blue-accent text-blue-accent
+           rounded-lg px-6 py-3 font-semibold
+           hover:bg-blue-accent hover:text-white transition-all duration-200
+           inline-block text-center cursor-pointer;
+  }
+
+  /* Card */
+  .card {
+    @apply bg-white rounded-xl shadow-card p-6
+           hover:shadow-card-hover transition-shadow duration-200;
+  }
+
+  /* Section Container */
+  .section {
+    @apply py-section-mobile md:py-section;
+  }
+
+  /* Content Container */
+  .container {
+    @apply max-w-content mx-auto px-4 md:px-6 lg:px-8;
+  }
+}
+
+/* Calendly modal styles */
+.calendly-inline-widget {
+  min-width: 320px;
+  height: 700px;
+}
+
+/* Scroll popup animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.popup-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
