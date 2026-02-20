@@ -39,10 +39,13 @@ export default function Footer() {
         </div>
 
         {/* Legal */}
-        <div className="border-t border-gray-700 pt-8">
+        <div className="border-t border-gray-700 pt-8 flex items-center justify-between">
           <p className="text-gray-400 text-sm">
             © {currentYear} Pegrio LLC. All rights reserved.
           </p>
+          <Link href="/admin/login" className="text-gray-600 hover:text-gray-400 text-xs transition-colors">
+            Admin
+          </Link>
         </div>
       </div>
     </footer>
