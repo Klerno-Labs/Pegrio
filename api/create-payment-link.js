@@ -9,10 +9,16 @@
  */
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const crypto = require('crypto');
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    // Auth check (cookie or Bearer)
+    if (!isValidAuth(req)) {
+        return res.status(401).json({ error: 'Unauthorized' });
     }
 
     try {
@@ -93,4 +99,21 @@ export default async function handler(req, res) {
             message: error.message
         });
     }
+}
+
+function isValidAuth(req) {
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) return false;
+
+    // Cookie auth
+    const cookieHeader = req.headers.cookie || '';
+    const match = cookieHeader.match(/pegrio_admin_token=([^;]+)/);
+    if (match) {
+        const expectedHash = crypto.createHash('sha256').update(adminPassword).digest('hex');
+        if (match[1] === expectedHash) return true;
+    }
+
+    // Bearer token
+    const authToken = req.headers.authorization;
+    return authToken === `Bearer ${adminPassword}`;
 }

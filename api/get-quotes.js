@@ -4,10 +4,11 @@
    ======================================== */
 
 import { sql } from '@vercel/postgres';
+import crypto from 'crypto';
 
 /**
  * Get all quotes from database
- * Supports filtering and pagination
+ * Supports filtering, search, and pagination
  */
 export default async function handler(req, res) {
     // Only allow GET
@@ -16,9 +17,8 @@ export default async function handler(req, res) {
     }
 
     try {
-        // Simple authentication check
-        const authToken = req.headers.authorization;
-        if (!isValidAuth(authToken)) {
+        // Check authentication (cookie or Bearer token)
+        if (!isValidAuth(req)) {
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
@@ -26,6 +26,7 @@ export default async function handler(req, res) {
         const {
             status,        // Filter by payment status
             package: pkg,  // Filter by package
+            search,        // Search by name, email, or business
             limit = '100', // Limit results
             offset = '0',  // Pagination offset
             sort = 'created_at', // Sort field
@@ -44,6 +45,12 @@ export default async function handler(req, res) {
         if (pkg) {
             conditions.push(`package = $${params.length + 1}`);
             params.push(pkg);
+        }
+
+        if (search) {
+            const searchParam = `%${search}%`;
+            conditions.push(`(customer_name ILIKE $${params.length + 1} OR customer_email ILIKE $${params.length + 1} OR business_name ILIKE $${params.length + 1})`);
+            params.push(searchParam);
         }
 
         const whereClause = conditions.length > 0
@@ -145,17 +152,21 @@ export default async function handler(req, res) {
 }
 
 /**
- * Simple authentication check
- * In production, use proper JWT or session-based auth
+ * Authentication check - supports both cookie and Bearer token
  */
-function isValidAuth(authToken) {
-    // For now, check against a simple admin password from env
+function isValidAuth(req) {
     const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) return false;
 
-    if (!adminPassword) {
-        console.warn('ADMIN_PASSWORD not set - using default (INSECURE!)');
-        return authToken === 'Bearer admin123'; // Default for development
+    // Check cookie first (admin dashboard)
+    const cookieHeader = req.headers.cookie || '';
+    const match = cookieHeader.match(/pegrio_admin_token=([^;]+)/);
+    if (match) {
+        const expectedHash = crypto.createHash('sha256').update(adminPassword).digest('hex');
+        if (match[1] === expectedHash) return true;
     }
 
+    // Fall back to Bearer token
+    const authToken = req.headers.authorization;
     return authToken === `Bearer ${adminPassword}`;
 }

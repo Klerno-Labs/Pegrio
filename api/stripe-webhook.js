@@ -120,6 +120,7 @@ export default async function handler(req, res) {
 
 /**
  * Handle checkout session completed
+ * Works for both direct checkout sessions AND payment links
  */
 async function handleCheckoutCompleted(session) {
     console.log('💰 Checkout completed:', session.id);
@@ -128,48 +129,69 @@ async function handleCheckoutCompleted(session) {
         id: sessionId,
         customer_email: email,
         amount_total: amount,
-        metadata
+        metadata,
+        payment_link: paymentLinkId
     } = session;
+
+    // Metadata may come from checkout session or payment link
+    let resolvedMetadata = metadata || {};
+
+    // If this came from a payment link, fetch the payment link metadata
+    if (paymentLinkId && (!resolvedMetadata.packageName)) {
+        try {
+            const paymentLink = await stripe.paymentLinks.retrieve(paymentLinkId);
+            resolvedMetadata = { ...resolvedMetadata, ...paymentLink.metadata };
+        } catch (err) {
+            console.error('Failed to fetch payment link metadata:', err.message);
+        }
+    }
 
     const {
         packageName,
         customerName,
+        customerEmail: metadataEmail,
         business,
         paymentType,
-        originalPrice
-    } = metadata;
+        originalPrice,
+        quoteId
+    } = resolvedMetadata;
+
+    const resolvedEmail = email || metadataEmail;
 
     // Send confirmation email to customer
-    await sendCustomerConfirmation({
-        email,
-        customerName,
-        packageName,
-        amount: amount / 100,
-        originalPrice: originalPrice ? parseInt(originalPrice) : amount / 100,
-        paymentType,
-        sessionId
-    });
+    if (resolvedEmail) {
+        await sendCustomerConfirmation({
+            email: resolvedEmail,
+            customerName,
+            packageName: packageName || 'Website Package',
+            amount: amount / 100,
+            originalPrice: originalPrice ? parseInt(originalPrice) : amount / 100,
+            paymentType,
+            sessionId
+        });
+    }
 
     // Send notification email to admin
     await sendAdminNotification({
-        email,
+        email: resolvedEmail,
         customerName,
         business,
-        packageName,
+        packageName: packageName || 'Website Package',
         amount: amount / 100,
         paymentType,
         sessionId
     });
 
-    // Update quote in database
+    // Update quote in database — prefer quoteId match, fall back to email
     await updateQuotePaymentStatus({
+        quoteId,
         sessionId,
-        email,
+        email: resolvedEmail,
         amount: amount / 100,
         status: 'paid'
     });
 
-    console.log(`✅ Checkout processed for ${email}`);
+    console.log(`✅ Checkout processed for ${resolvedEmail}`);
 }
 
 /**
@@ -375,35 +397,49 @@ async function sendAdminNotification(data) {
 
 /**
  * Update quote payment status in database
+ * Prefers quoteId match, falls back to email match
  */
 async function updateQuotePaymentStatus(data) {
-    const { sessionId, email, amount, status } = data;
+    const { quoteId, sessionId, email, amount, status } = data;
 
     try {
         const { sql } = await import('@vercel/postgres');
 
-        // Update quote with matching email to paid status
-        await sql`
-            UPDATE quotes
-            SET
-                payment_status = ${status},
-                stripe_session_id = ${sessionId},
-                amount_paid = ${Math.round(amount * 100)},
-                paid_at = CURRENT_TIMESTAMP,
-                updated_at = CURRENT_TIMESTAMP
-            WHERE customer_email = ${email}
-                AND payment_status = 'pending'
-                AND created_at = (
-                    SELECT MAX(created_at)
-                    FROM quotes
-                    WHERE customer_email = ${email}
+        if (quoteId) {
+            // Direct match by quote ID (from payment link metadata)
+            await sql`
+                UPDATE quotes
+                SET
+                    payment_status = ${status},
+                    stripe_session_id = ${sessionId},
+                    amount_paid = ${Math.round(amount * 100)},
+                    paid_at = CURRENT_TIMESTAMP,
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE id = ${parseInt(quoteId)}
+            `;
+            console.log(`✅ Quote #${quoteId} updated: ${status}`);
+        } else if (email) {
+            // Fall back to email match (most recent pending quote)
+            await sql`
+                UPDATE quotes
+                SET
+                    payment_status = ${status},
+                    stripe_session_id = ${sessionId},
+                    amount_paid = ${Math.round(amount * 100)},
+                    paid_at = CURRENT_TIMESTAMP,
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE customer_email = ${email}
                     AND payment_status = 'pending'
-                )
-        `;
-
-        console.log(`✅ Quote updated for ${email}: ${status}`);
+                    AND created_at = (
+                        SELECT MAX(created_at)
+                        FROM quotes
+                        WHERE customer_email = ${email}
+                        AND payment_status = 'pending'
+                    )
+            `;
+            console.log(`✅ Quote updated for ${email}: ${status}`);
+        }
     } catch (error) {
         console.error(`❌ Failed to update quote status:`, error);
-        // Don't throw - payment succeeded even if database update fails
     }
 }

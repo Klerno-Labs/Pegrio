@@ -2,16 +2,34 @@
 
 import { useState } from 'react'
 
+const budgetToPrice: Record<string, number> = {
+  'under-2000': 1500,
+  '2000-5000': 2000,
+  '5000-8000': 5000,
+  '8000-plus': 8000,
+}
+
+const budgetToPackage: Record<string, string> = {
+  'under-2000': 'Starter Package',
+  '2000-5000': 'Starter Package',
+  '5000-8000': 'Growth Package',
+  '8000-plus': 'Enterprise Package',
+}
+
 export default function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setSubmitError('')
 
     const formData = new FormData(e.currentTarget)
     const data = {
       firstName: formData.get('firstName') as string,
+      email: formData.get('email') as string,
       businessName: formData.get('businessName') as string,
       websiteUrl: formData.get('websiteUrl') as string,
       need: formData.get('need') as string,
@@ -19,11 +37,17 @@ export default function ContactForm() {
       message: formData.get('message') as string,
     }
 
-    // Basic validation
+    // Validation
     const newErrors: Record<string, string> = {}
 
     if (!data.firstName.trim()) {
       newErrors.firstName = 'First name is required'
+    }
+
+    if (!data.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      newErrors.email = 'Please enter a valid email'
     }
 
     if (!data.businessName.trim()) {
@@ -47,12 +71,35 @@ export default function ContactForm() {
       return
     }
 
-    // Here you would send to your backend API
-    console.log('Form submitted:', data)
-
-    // For now, just show success
-    setIsSubmitted(true)
+    setIsLoading(true)
     setErrors({})
+
+    try {
+      const res = await fetch('/api/save-quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: data.firstName,
+          customerEmail: data.email,
+          businessName: data.businessName,
+          packageName: budgetToPackage[data.budget] || 'Custom',
+          packagePrice: budgetToPrice[data.budget] || 0,
+          paymentType: 'full',
+          message: `Need: ${data.need}\nBudget: ${data.budget}\nWebsite: ${data.websiteUrl || 'N/A'}\n\n${data.message}`,
+          source: 'contact_form',
+        }),
+      })
+
+      if (res.ok) {
+        setIsSubmitted(true)
+      } else {
+        setSubmitError('Something went wrong. Please try again.')
+      }
+    } catch {
+      setSubmitError('Something went wrong. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   if (isSubmitted) {
@@ -61,7 +108,7 @@ export default function ContactForm() {
         <div className="text-5xl mb-4">✓</div>
         <h3 className="text-2xl font-bold mb-2">Thanks!</h3>
         <p className="text-gray-muted">
-          We'll be in touch within 1 business day.
+          We&apos;ll be in touch within 1 business day.
         </p>
       </div>
     )
@@ -84,6 +131,25 @@ export default function ContactForm() {
         />
         {errors.firstName && (
           <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>
+        )}
+      </div>
+
+      {/* Email */}
+      <div>
+        <label htmlFor="email" className="block font-semibold mb-2">
+          Email <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="you@example.com"
+          className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-accent ${
+            errors.email ? 'border-red-500' : 'border-gray-300'
+          }`}
+        />
+        {errors.email && (
+          <p className="text-red-500 text-sm mt-1">{errors.email}</p>
         )}
       </div>
 
@@ -162,8 +228,8 @@ export default function ContactForm() {
             Select a range
           </option>
           <option value="under-2000">Under $2,000</option>
-          <option value="2000-5000">$2,000–$5,000</option>
-          <option value="5000-8000">$5,000–$8,000</option>
+          <option value="2000-5000">$2,000 - $5,000</option>
+          <option value="5000-8000">$5,000 - $8,000</option>
           <option value="8000-plus">$8,000+</option>
         </select>
         {errors.budget && (
@@ -189,9 +255,20 @@ export default function ContactForm() {
         )}
       </div>
 
+      {/* Error message */}
+      {submitError && (
+        <div className="bg-red-50 text-red-600 text-sm px-4 py-3 rounded-lg">
+          {submitError}
+        </div>
+      )}
+
       {/* Submit Button */}
-      <button type="submit" className="btn-primary w-full text-lg">
-        Send Message
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="btn-primary w-full text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {isLoading ? 'Sending...' : 'Send Message'}
       </button>
     </form>
   )

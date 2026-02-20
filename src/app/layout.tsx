@@ -1,9 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
-import CalendlyModal from '@/components/CalendlyModal'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -29,12 +26,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body>
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
-        <CalendlyModal />
-      </body>
+      <body>{children}</body>
     </html>
   )
 }
