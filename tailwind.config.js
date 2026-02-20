@@ -9,16 +9,26 @@ module.exports = {
     extend: {
       colors: {
         navy: {
-          DEFAULT: '#0D1B2A',
-          dark: '#0A1520',
+          DEFAULT: '#1A0A2E',
+          dark: '#120720',
         },
+        purple: {
+          accent: '#6B3FA0',
+          light: '#EDE5F7',
+          deep: '#4A2B70',
+        },
+        // Keep blue-accent alias pointing to purple for component compatibility
         blue: {
-          accent: '#2D6A9F',
-          light: '#BDD7EE',
+          accent: '#6B3FA0',
+          light: '#EDE5F7',
+        },
+        cream: {
+          DEFAULT: '#F5F0E8',
+          dark: '#E8E0D4',
         },
         success: '#E2EFDA',
         gray: {
-          bg: '#F9FAFB',
+          bg: '#F8F5F0',
           text: '#1A1A1A',
           muted: '#6B7280',
         },

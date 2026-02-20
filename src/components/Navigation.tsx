@@ -39,8 +39,9 @@ export default function Navigation() {
       <div className="container mx-auto">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-navy">
-            Pegrio
+          <Link href="/" className="flex items-baseline gap-1.5">
+            <span className="text-2xl font-extrabold text-navy tracking-tight">Pegrio</span>
+            <span className="hidden sm:inline text-xs font-medium text-purple-accent tracking-wide uppercase">Web Development</span>
           </Link>
 
           {/* Desktop Navigation */}

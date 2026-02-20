@@ -8,6 +8,7 @@ interface Project {
   industry: string
   package: string
   result: string
+  demoUrl?: string
   services: string[]
 }
 
@@ -16,25 +17,39 @@ export default function ProjectCard({ project }: { project: Project }) {
 
   return (
     <>
-      <div className="card">
+      <div className="card flex flex-col">
         <div className="mb-4">
           <h3 className="text-xl mb-2">{project.name}</h3>
-          <span className="inline-block bg-blue-light text-blue-accent px-3 py-1 rounded-full text-sm font-medium">
-            {project.industry}
-          </span>
+          <div className="flex flex-wrap gap-2">
+            <span className="inline-block bg-blue-light text-blue-accent px-3 py-1 rounded-full text-sm font-medium">
+              {project.industry}
+            </span>
+            <span className="inline-block bg-gray-200 text-gray-text px-3 py-1 rounded-full text-sm font-medium">
+              {project.package}
+            </span>
+          </div>
         </div>
 
-        <div className="mb-4">
-          <div className="text-sm text-gray-muted mb-2">{project.package}</div>
-          <p className="text-gray-text">{project.result}</p>
-        </div>
+        <p className="text-gray-muted mb-6 flex-grow">{project.result}</p>
 
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="btn-secondary w-full"
-        >
-          View Project
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="btn-secondary flex-1"
+          >
+            View Details
+          </button>
+          {project.demoUrl && (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary flex-1 text-center"
+            >
+              Live Demo →
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Modal */}
@@ -58,7 +73,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 
               <h2 className="text-3xl font-bold mb-2">{project.name}</h2>
 
-              <div className="flex gap-3 mb-6">
+              <div className="flex flex-wrap gap-3 mb-6">
                 <span className="inline-block bg-blue-light text-blue-accent px-3 py-1 rounded-full text-sm font-medium">
                   {project.industry}
                 </span>
@@ -86,10 +101,21 @@ export default function ProjectCard({ project }: { project: Project }) {
                 </ul>
               </div>
 
-              <div className="bg-success p-6 rounded-lg">
-                <h3 className="font-bold text-lg mb-2">Result Achieved</h3>
+              <div className="bg-success p-6 rounded-lg mb-6">
+                <h3 className="font-bold text-lg mb-2">Result</h3>
                 <p className="text-gray-text">{project.result}</p>
               </div>
+
+              {project.demoUrl && (
+                <a
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary w-full text-center block text-lg"
+                >
+                  View Live Demo →
+                </a>
+              )}
             </div>
           </div>
         </div>

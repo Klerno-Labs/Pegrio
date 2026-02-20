@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gallery - See our restaurant, dishes, and dining experience at Yuki Izakaya">
+    <title>Gallery - Yuki Izakaya</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+
+    <style>
+        .gallery-hero {
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 80px;
+        }
+
+        .gallery-hero h1 {
+            color: white;
+            font-size: 4rem;
+            text-align: center;
+        }
+
+        .gallery-section {
+            padding: var(--spacing-xl) 0;
+            background: var(--bg-light);
+        }
+
+        .gallery-tabs {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            background: white;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: var(--spacing-md);
+            color: white;
+            transform: translateY(100%);
+            transition: transform var(--transition-normal);
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-item h3 {
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .gallery-item.hidden {
+            display: none;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Yuki Izakaya <span class="japanese">雪居酒屋</span></h1>
+                </a>
+            </div>
+
+            <nav class="nav" id="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="order.html">Order Online</a></li>
+                    <li><a href="rewards.html">Rewards</a></li>
+                    <li><a href="account.html">Account</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="btn-icon cart-btn" id="cartBtn">
+                        🛒 <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <button class="btn-primary" id="loginBtn">Sign In</button>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="gallery-hero">
+        <div class="container">
+            <h1>Gallery</h1>
+            <p style="color: white; font-size: 1.25rem; text-align: center;">Experience Yuki Izakaya Through Photos</p>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery-section">
+        <div class="container">
+            <!-- Tabs -->
+            <div class="gallery-tabs">
+                <button class="tab-btn active" data-category="all">All Photos</button>
+                <button class="tab-btn" data-category="food">Our Dishes</button>
+                <button class="tab-btn" data-category="restaurant">Restaurant</button>
+                <button class="tab-btn" data-category="chef">Kitchen & Chef</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Food Images -->
+                <div class="gallery-item" data-category="food">
+                    <img src="assets/images/tonkotsu-ramen.jpg" alt="Tonkotsu Ramen" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Tonkotsu Ramen</h3>
+                        <p>Rich pork bone broth</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="food">
+                    <img src="assets/images/sushi-platter.jpg" alt="Sushi Platter" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Premium Sushi Platter</h3>
+                        <p>Chef's selection</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="food">
+                    <img src="assets/images/chirashi-bowl.jpg" alt="Chirashi Bowl" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Chirashi Bowl</h3>
+                        <p>Fresh sashimi over rice</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="food">
+                    <img src="assets/images/gyoza.jpg" alt="Gyoza" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Gyoza</h3>
+                        <p>Pan-fried dumplings</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="food">
+                    <img src="assets/images/dragon-roll.jpg" alt="Dragon Roll" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Dragon Roll</h3>
+                        <p>Eel and avocado</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="food">
+                    <img src="assets/images/sashimi-platter.jpg" alt="Sashimi Platter" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Sashimi Platter</h3>
+                        <p>Fresh catches daily</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="food">
+                    <img src="assets/images/udon-noodles.jpg" alt="Udon Noodles" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Udon Noodles</h3>
+                        <p>Thick Japanese noodles</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="food">
+                    <img src="assets/images/bento-box.jpg" alt="Bento Box" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Bento Box</h3>
+                        <p>Complete lunch set</p>
+                    </div>
+                </div>
+
+                <!-- Restaurant Images -->
+                <div class="gallery-item" data-category="restaurant">
+                    <img src="assets/images/restaurant-interior.jpg" alt="Restaurant Interior" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Main Dining Area</h3>
+                        <p>Warm and inviting atmosphere</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="restaurant">
+                    <img src="assets/images/dining-area.jpg" alt="Dining Area" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Dining Space</h3>
+                        <p>Perfect for gatherings</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="restaurant">
+                    <img src="assets/images/bar-area.jpg" alt="Bar Area" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Bar Area</h3>
+                        <p>Craft cocktails and sake</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="restaurant">
+                    <img src="assets/images/private-dining.jpg" alt="Private Dining" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Private Dining Room</h3>
+                        <p>Intimate gatherings</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="restaurant">
+                    <img src="assets/images/exterior-night.jpg" alt="Exterior at Night" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Exterior at Night</h3>
+                        <p>Welcome to Yuki Izakaya</p>
+                    </div>
+                </div>
+
+                <!-- Chef & Kitchen Images -->
+                <div class="gallery-item" data-category="chef">
+                    <img src="assets/images/chef-cooking.jpg" alt="Chef Cooking" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Chef at Work</h3>
+                        <p>Precision and artistry</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="chef">
+                    <img src="assets/images/kitchen-action.jpg" alt="Kitchen Action" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Kitchen in Action</h3>
+                        <p>Where magic happens</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="chef">
+                    <img src="assets/images/sushi-chef-making.jpg" alt="Sushi Making" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Sushi Craftsmanship</h3>
+                        <p>Years of training</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="chef">
+                    <img src="assets/images/food-plating.jpg" alt="Food Plating" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Artful Plating</h3>
+                        <p>Every detail matters</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="chef">
+                    <img src="assets/images/team-photo.jpg" alt="Our Team" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <h3>Our Team</h3>
+                        <p>Passionate and dedicated</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">×</button>
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Yuki Izakaya <span class="japanese">雪居酒屋</span></h3>
+                    <p>Authentic Japanese cuisine crafted with passion and tradition.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <p>📍 123 Sakura Street<br>Downtown, ST 12345</p>
+                    <p>📞 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Yuki Izakaya. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Gallery filtering
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.dataset.category;
+
+                // Update active button
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Filter items
+                galleryItems.forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const img = this.querySelector('img');
+                lightboxImg.src = img.src;
+                lightboxImg.alt = img.alt;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

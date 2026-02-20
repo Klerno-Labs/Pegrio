@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Yuki Rewards - Earn points and get exclusive rewards at Yuki Izakaya">
+    <title>Rewards Program - Yuki Izakaya</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/rewards.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Yuki Izakaya <span class="japanese">雪居酒屋</span></h1>
+                </a>
+            </div>
+
+            <nav class="nav" id="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="order.html">Order Online</a></li>
+                    <li><a href="rewards.html" class="active">Rewards</a></li>
+                    <li><a href="account.html">Account</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="btn-icon cart-btn" id="cartBtn" aria-label="Shopping cart">
+                        🛒 <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <button class="btn-primary" id="loginBtn">Sign In</button>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Rewards Hero -->
+    <section class="rewards-hero">
+        <div class="container">
+            <h1>Yuki Rewards Program</h1>
+            <p>Earn points with every order and unlock exclusive rewards</p>
+        </div>
+    </section>
+
+    <!-- Points Balance (for logged in users) -->
+    <section id="pointsBalance" class="points-balance" style="display: none;">
+        <div class="container">
+            <div class="balance-card">
+                <div class="balance-info">
+                    <h2>Your Points</h2>
+                    <div class="points-large" id="currentPoints">0</div>
+                    <p class="balance-tier">Member Tier: <strong id="userTier">Bronze</strong></p>
+                </div>
+                <div class="balance-progress">
+                    <h3>Progress to Next Tier</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="tierProgress" style="width: 0%"></div>
+                    </div>
+                    <p id="progressText">0 more points to Silver tier</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Order Food</h3>
+                    <p>Place an order online or in-store</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Earn Points</h3>
+                    <p>Get 10 points for every $1 spent</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Redeem Rewards</h3>
+                    <p>Use points for discounts and free items</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Tiers -->
+    <section class="tiers-section">
+        <div class="container">
+            <h2>Membership Tiers</h2>
+            <div class="tiers-grid">
+                <div class="tier-card bronze">
+                    <div class="tier-header">
+                        <div class="tier-icon">🥉</div>
+                        <h3>Bronze</h3>
+                        <p class="tier-requirement">0 - 999 points</p>
+                    </div>
+                    <div class="tier-benefits">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>✓ Earn 10 points per $1</li>
+                            <li>✓ Birthday reward</li>
+                            <li>✓ Exclusive offers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tier-card silver">
+                    <div class="tier-header">
+                        <div class="tier-icon">🥈</div>
+                        <h3>Silver</h3>
+                        <p class="tier-requirement">1,000 - 2,499 points</p>
+                    </div>
+                    <div class="tier-benefits">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>✓ Earn 12 points per $1</li>
+                            <li>✓ Free delivery</li>
+                            <li>✓ Early access to new menu</li>
+                            <li>✓ Priority support</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tier-card gold">
+                    <div class="tier-badge">Popular</div>
+                    <div class="tier-header">
+                        <div class="tier-icon">🥇</div>
+                        <h3>Gold</h3>
+                        <p class="tier-requirement">2,500+ points</p>
+                    </div>
+                    <div class="tier-benefits">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>✓ Earn 15 points per $1</li>
+                            <li>✓ Free delivery always</li>
+                            <li>✓ VIP events access</li>
+                            <li>✓ Personal chef recommendations</li>
+                            <li>✓ Special birthday gift</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Rewards -->
+    <section class="rewards-catalog">
+        <div class="container">
+            <h2>Redeem Your Points</h2>
+            <div class="rewards-grid" id="rewardsGrid">
+
+                <div class="reward-card" data-points="500">
+                    <div class="reward-image" style="background-color: #e8f5e9;">
+                        <span class="reward-emoji">🍜</span>
+                    </div>
+                    <div class="reward-content">
+                        <h3>$5 Off</h3>
+                        <p>Any order over $25</p>
+                        <div class="reward-footer">
+                            <span class="reward-cost">500 points</span>
+                            <button class="btn-redeem" data-points="500" data-reward="$5 Off">Redeem</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reward-card" data-points="750">
+                    <div class="reward-image" style="background-color: #fff3e0;">
+                        <span class="reward-emoji">🍱</span>
+                    </div>
+                    <div class="reward-content">
+                        <h3>Free Appetizer</h3>
+                        <p>Gyoza or Edamame</p>
+                        <div class="reward-footer">
+                            <span class="reward-cost">750 points</span>
+                            <button class="btn-redeem" data-points="750" data-reward="Free Appetizer">Redeem</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reward-card" data-points="1000">
+                    <div class="reward-image" style="background-color: #e3f2fd;">
+                        <span class="reward-emoji">🚚</span>
+                    </div>
+                    <div class="reward-content">
+                        <h3>Free Delivery</h3>
+                        <p>Valid for 30 days</p>
+                        <div class="reward-footer">
+                            <span class="reward-cost">1,000 points</span>
+                            <button class="btn-redeem" data-points="1000" data-reward="Free Delivery">Redeem</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reward-card" data-points="1500">
+                    <div class="reward-image" style="background-color: #fce4ec;">
+                        <span class="reward-emoji">🍣</span>
+                    </div>
+                    <div class="reward-content">
+                        <h3>Free Sushi Roll</h3>
+                        <p>Any roll from our menu</p>
+                        <div class="reward-footer">
+                            <span class="reward-cost">1,500 points</span>
+                            <button class="btn-redeem" data-points="1500" data-reward="Free Sushi Roll">Redeem</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reward-card" data-points="2000">
+                    <div class="reward-image" style="background-color: #f3e5f5;">
+                        <span class="reward-emoji">🎂</span>
+                    </div>
+                    <div class="reward-content">
+                        <h3>$20 Off</h3>
+                        <p>Any order over $50</p>
+                        <div class="reward-footer">
+                            <span class="reward-cost">2,000 points</span>
+                            <button class="btn-redeem" data-points="2000" data-reward="$20 Off">Redeem</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reward-card special" data-points="5000">
+                    <div class="reward-badge">VIP</div>
+                    <div class="reward-image" style="background-color: #fff8e1;">
+                        <span class="reward-emoji">👨‍🍳</span>
+                    </div>
+                    <div class="reward-content">
+                        <h3>Chef's Table Experience</h3>
+                        <p>Private dining for 2 with chef</p>
+                        <div class="reward-footer">
+                            <span class="reward-cost">5,000 points</span>
+                            <button class="btn-redeem" data-points="5000" data-reward="Chef's Table">Redeem</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Join CTA -->
+    <section class="join-cta">
+        <div class="container">
+            <h2>Join Yuki Rewards Today</h2>
+            <p>Start earning points with your first order!</p>
+            <a href="account.html" class="btn-primary btn-lg">Sign Up Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Yuki Izakaya <span class="japanese">雪居酒屋</span></h3>
+                    <p>Authentic Japanese cuisine crafted with passion and tradition.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="order.html">Order Online</a></li>
+                        <li><a href="rewards.html">Rewards Program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <p>📍 123 Sakura Street<br>Downtown, ST 12345</p>
+                    <p>📞 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Yuki Izakaya. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="overlay" id="cartOverlay"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/rewards.js"></script>
+</body>
+</html>

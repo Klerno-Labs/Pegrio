@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete your order from Spice Symphony. Secure checkout with multiple payment options.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Checkout - Spice Symphony</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="25" cy="25" r="24" fill="#C95D3F" stroke="#E6A834" stroke-width="2"/>
+                            <path d="M25 8 C30 15, 35 22, 25 30 C15 22, 20 15, 25 8 Z" fill="#E6A834"/>
+                            <circle cx="25" cy="32" r="3" fill="#87AE73"/>
+                            <path d="M15 35 Q25 28, 35 35" stroke="#E6A834" stroke-width="2" fill="none"/>
+                            <circle cx="20" cy="18" r="2" fill="#87AE73"/>
+                            <circle cx="30" cy="18" r="2" fill="#87AE73"/>
+                            <circle cx="25" cy="23" r="2" fill="#87AE73"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-main">Spice Symphony</span>
+                        <span class="logo-tagline">Authentic Indian Cuisine</span>
+                    </div>
+                </a>
+
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <a href="cart.html" class="cart-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Checkout</h1>
+            <div class="checkout-steps">
+                <div class="step completed">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Cart</span>
+                </div>
+                <div class="step active">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Information</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Payment</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <span class="step-label">Confirmation</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Content -->
+    <section class="checkout-section">
+        <div class="container">
+            <div class="checkout-wrapper">
+                <!-- Checkout Form -->
+                <div class="checkout-form">
+                    <form id="checkout-form">
+                        <!-- Contact Information -->
+                        <div class="form-section">
+                            <h3>Contact Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first-name">First Name *</label>
+                                    <input type="text" id="first-name" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Last Name *</label>
+                                    <input type="text" id="last-name" name="lastName" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+                            </div>
+                        </div>
+
+                        <!-- Delivery/Pickup Options -->
+                        <div class="form-section">
+                            <h3>Fulfillment Method</h3>
+                            <div class="fulfillment-options">
+                                <label class="radio-card">
+                                    <input type="radio" name="fulfillment" value="delivery" checked>
+                                    <div class="radio-card-content">
+                                        <div class="radio-card-icon">🚗</div>
+                                        <div>
+                                            <strong>Delivery</strong>
+                                            <p>Delivered in 30-45 minutes</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="fulfillment" value="pickup">
+                                    <div class="radio-card-content">
+                                        <div class="radio-card-icon">🏪</div>
+                                        <div>
+                                            <strong>Pickup</strong>
+                                            <p>Ready in 15-20 minutes</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Delivery Address (shown when delivery is selected) -->
+                        <div class="form-section" id="delivery-section">
+                            <h3>Delivery Address</h3>
+                            <div class="form-group">
+                                <label for="address">Street Address *</label>
+                                <input type="text" id="address" name="address" placeholder="123 Main St">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City *</label>
+                                    <input type="text" id="city" name="city">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State *</label>
+                                    <input type="text" id="state" name="state" maxlength="2" placeholder="CA">
+                                </div>
+                                <div class="form-group">
+                                    <label for="zip">ZIP Code *</label>
+                                    <input type="text" id="zip" name="zip" pattern="[0-9]{5}" placeholder="12345">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-instructions">Delivery Instructions (Optional)</label>
+                                <textarea id="delivery-instructions" name="deliveryInstructions" rows="3" placeholder="Apartment number, gate code, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Special Instructions -->
+                        <div class="form-section">
+                            <h3>Special Instructions</h3>
+                            <div class="form-group">
+                                <label for="special-instructions">Order Notes (Optional)</label>
+                                <textarea id="special-instructions" name="specialInstructions" rows="3" placeholder="Allergies, extra sauce, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="form-section">
+                            <h3>Payment Method</h3>
+                            <div class="payment-options">
+                                <label class="radio-card">
+                                    <input type="radio" name="payment" value="card" checked>
+                                    <div class="radio-card-content">
+                                        <div class="radio-card-icon">💳</div>
+                                        <div>
+                                            <strong>Credit/Debit Card</strong>
+                                            <p>Visa, Mastercard, Amex</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="payment" value="cash">
+                                    <div class="radio-card-content">
+                                        <div class="radio-card-icon">💵</div>
+                                        <div>
+                                            <strong>Cash</strong>
+                                            <p>Pay on delivery/pickup</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div id="card-details" class="card-details">
+                                <div class="form-group">
+                                    <label for="card-number">Card Number *</label>
+                                    <input type="text" id="card-number" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="card-expiry">Expiry Date *</label>
+                                        <input type="text" id="card-expiry" name="cardExpiry" placeholder="MM/YY" maxlength="5">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="card-cvc">CVC *</label>
+                                        <input type="text" id="card-cvc" name="cardCvc" placeholder="123" maxlength="4">
+                                    </div>
+                                </div>
+                                <div class="security-notice">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                                        <rect x="3" y="7" width="10" height="7" rx="1"/>
+                                        <path d="M5 7V5a3 3 0 0 1 6 0v2"/>
+                                    </svg>
+                                    Your payment information is secure and encrypted
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit-order">
+                            Place Order
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary-sticky">
+                    <h3>Order Summary</h3>
+                    <div class="summary-items" id="summary-items">
+                        <!-- Dynamically populated -->
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="checkout-subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (8.5%):</span>
+                        <span id="checkout-tax">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span id="fee-label">Delivery Fee:</span>
+                        <span id="checkout-fee">$4.99</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row summary-total">
+                        <span>Total:</span>
+                        <span id="checkout-total">$0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Spice Symphony</h4>
+                    <p>Bringing authentic Mexican flavors to your table since 2010.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>📞 (555) 123-4567</li>
+                        <li>✉️ info@lacasadelsol.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Spice Symphony. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="js/checkout.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

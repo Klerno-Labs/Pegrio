@@ -9,7 +9,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {/* Logo and Tagline */}
           <div>
-            <div className="text-2xl font-bold mb-4">Pegrio</div>
+            <div className="flex items-baseline gap-1.5 mb-4">
+              <span className="text-2xl font-extrabold tracking-tight">Pegrio</span>
+              <span className="text-xs font-medium text-purple-light tracking-wide uppercase">Web Development</span>
+            </div>
             <p className="text-gray-300 max-w-md">
               High-performance websites for local businesses — Houston, Katy, and nationwide.
             </p>

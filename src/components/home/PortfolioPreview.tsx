@@ -13,9 +13,10 @@ export default function PortfolioPreview() {
       result: 'High-end custom design with online booking integration — matches the caliber of their brand and clientele',
     },
     {
-      name: 'The Oak Table Restaurant',
+      name: 'Yuki Izakaya',
       industry: 'Restaurants & Food',
-      result: 'Mobile-first redesign with updated menu, hours, and reservation link — loads in under 2 seconds',
+      demoUrl: '/demos/demo-enterprise/index.html',
+      result: 'Premium Japanese restaurant site with AI chatbot, loyalty rewards, admin dashboard, and full e-commerce',
     },
   ]
 
@@ -35,6 +36,17 @@ export default function PortfolioPreview() {
               </div>
 
               <p className="text-gray-muted mb-4">{project.result}</p>
+
+              {project.demoUrl && (
+                <a
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-accent font-semibold hover:underline text-sm"
+                >
+                  View Live Demo →
+                </a>
+              )}
             </div>
           ))}
         </div>
