@@ -6,9 +6,10 @@ import ScrollReveal from '@/components/ScrollReveal'
 export default function PortfolioPreview() {
   const projects = [
     {
-      name: 'Reliable Plumbing Co.',
-      industry: 'Home Services',
-      result: 'New site ranking on page 1 for "plumber Katy TX" within 60 days of launch',
+      name: '3rd Coast Smoke Company',
+      industry: 'Retail',
+      demoUrl: 'https://shopthcplus.com',
+      result: 'Full custom Next.js e-commerce site with age verification, product catalog, and modern gradient design — live in Houston',
     },
     {
       name: 'Lumière Med Spa',

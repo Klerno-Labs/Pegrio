@@ -8,6 +8,22 @@ export default function PortfolioGrid() {
 
   const projects = [
     {
+      id: 0,
+      name: '3rd Coast Smoke Company',
+      industry: 'Retail',
+      package: 'Enterprise Package',
+      result: 'Full custom Next.js e-commerce site for a Houston smoke shop — age verification, product browsing, modern gradient design, and error monitoring with Sentry',
+      demoUrl: 'https://shopthcplus.com',
+      services: [
+        'Custom Next.js + Tailwind CSS build',
+        'Age verification gate (21+)',
+        'Product catalog with browsing',
+        'Mobile-responsive modern design',
+        'Sentry error monitoring integration',
+        'SEO optimization with structured data',
+      ],
+    },
+    {
       id: 1,
       name: 'Reliable Plumbing Co.',
       industry: 'Home Services',
@@ -111,7 +127,7 @@ export default function PortfolioGrid() {
     },
   ]
 
-  const filters = ['All', 'Home Services', 'Med Spas', 'Restaurants']
+  const filters = ['All', 'Retail', 'Home Services', 'Med Spas', 'Restaurants']
 
   const filteredProjects = activeFilter === 'All'
     ? projects
