@@ -3,7 +3,7 @@
    Fetch all quotes for admin dashboard
    ======================================== */
 
-import { sql } from '@vercel/postgres';
+import { sql } from './_db.js';
 import crypto from 'crypto';
 
 /**

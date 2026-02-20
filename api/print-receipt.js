@@ -3,6 +3,8 @@
    Sends receipt to thermal printer via PrintNode
    ======================================== */
 
+import { sql } from './_db.js';
+
 /**
  * Print receipt when order is fulfilled
  * Integrates with PrintNode for thermal printing
@@ -20,7 +22,6 @@ export default async function handler(req, res) {
         }
 
         // Get quote from database
-        const { sql } = await import('@vercel/postgres');
         const result = await sql`
             SELECT 
                 id,

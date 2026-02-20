@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres'
+import { sql } from './_db.js'
 import crypto from 'crypto'
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)

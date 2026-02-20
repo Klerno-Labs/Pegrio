@@ -3,7 +3,7 @@
    Store quote submissions in Vercel Postgres
    ======================================== */
 
-import { sql } from '@vercel/postgres';
+import { sql } from './_db.js';
 
 /**
  * Save quote to database

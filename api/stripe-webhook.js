@@ -3,6 +3,8 @@
    Handles Stripe events (payments, subscriptions)
    ======================================== */
 
+import { sql } from './_db.js';
+
 /**
  * Webhook handler for Stripe events
  * Processes payment confirmations, subscription changes, etc.
@@ -403,7 +405,7 @@ async function updateQuotePaymentStatus(data) {
     const { quoteId, sessionId, email, amount, status } = data;
 
     try {
-        const { sql } = await import('@vercel/postgres');
+        // sql imported from _db.js at top of file
 
         if (quoteId) {
             // Direct match by quote ID (from payment link metadata)

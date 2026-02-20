@@ -46,15 +46,15 @@ export default function ScrollPopup() {
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-end md:items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full popup-slide-up">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full popup-slide-up relative">
+        <button
+          onClick={handleClose}
+          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 text-xl transition-colors"
+          aria-label="Close"
+        >
+          ×
+        </button>
         <div className="p-6">
-          <button
-            onClick={handleClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl"
-            aria-label="Close"
-          >
-            ×
-          </button>
 
           {!isSubmitted ? (
             <>
