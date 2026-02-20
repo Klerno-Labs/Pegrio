@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     description: 'See websites Pegrio has built for plumbers, HVAC companies, roofers, med spas, and restaurants in Houston and nationwide.',
     url: 'https://www.pegrio.com/work',
   },
+  alternates: {
+    canonical: 'https://www.pegrio.com/work',
+  },
 }
 
 export default function WorkPage() {

@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     description: 'Pegrio is a Houston-based website agency founded by Chris Hatfield. Serving Katy, Houston, and clients across the US with high-performance, lead-generating websites.',
     url: 'https://www.pegrio.com/about',
   },
+  alternates: {
+    canonical: 'https://www.pegrio.com/about',
+  },
 }
 
 export default function AboutPage() {

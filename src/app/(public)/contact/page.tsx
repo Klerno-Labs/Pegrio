@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     description: "Book a free 15-minute website audit with Pegrio. No pitch — just honest feedback on what your website is missing and what it's costing your business.",
     url: 'https://www.pegrio.com/contact',
   },
+  alternates: {
+    canonical: 'https://www.pegrio.com/contact',
+  },
 }
 
 export default function ContactPage() {

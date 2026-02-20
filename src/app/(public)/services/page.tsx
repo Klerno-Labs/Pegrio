@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     description: 'Fixed-price website packages for local businesses. Starter from $2,000, Growth at $5,000, Enterprise from $8,000.',
     url: 'https://www.pegrio.com/services',
   },
+  alternates: {
+    canonical: 'https://www.pegrio.com/services',
+  },
 }
 
 export default function ServicesPage() {
