@@ -14,6 +14,15 @@ export default function PortfolioGrid() {
       package: 'Enterprise Package',
       result: 'Full custom Next.js e-commerce site for a Houston hemp retailer — age verification, product browsing, modern gradient design, and error monitoring with Sentry',
       demoUrl: 'https://shopthcplus.com',
+      beforeUrl: 'https://3rdcoastsmokecompany.com',
+      beforeAfter: [
+        { label: 'Platform', before: 'GoDaddy Builder', after: 'Custom Next.js' },
+        { label: 'Design', before: 'Generic template', after: 'Fully custom' },
+        { label: 'CSS Size', before: '~200KB bloated', after: '<20KB optimized' },
+        { label: 'Features', before: 'Contact form only', after: 'E-commerce + age gate' },
+        { label: 'Error Tracking', before: 'None', after: 'Sentry monitoring' },
+        { label: 'Mobile UX', before: 'Basic responsive', after: 'Mobile-first design' },
+      ],
       services: [
         'Custom Next.js + Tailwind CSS build',
         'Age verification gate (21+)',

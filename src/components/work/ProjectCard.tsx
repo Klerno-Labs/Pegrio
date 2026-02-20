@@ -2,6 +2,12 @@
 
 import { useState } from 'react'
 
+interface BeforeAfter {
+  label: string
+  before: string
+  after: string
+}
+
 interface Project {
   id: number
   name: string
@@ -9,6 +15,8 @@ interface Project {
   package: string
   result: string
   demoUrl?: string
+  beforeUrl?: string
+  beforeAfter?: BeforeAfter[]
   services: string[]
 }
 
@@ -46,7 +54,7 @@ export default function ProjectCard({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="btn-primary flex-1 text-center"
             >
-              Live Demo →
+              Live Site →
             </a>
           )}
         </div>
@@ -89,6 +97,53 @@ export default function ProjectCard({ project }: { project: Project }) {
                 </p>
               </div>
 
+              {/* Before / After Comparison */}
+              {project.beforeAfter && project.beforeAfter.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="font-bold text-lg mb-3">Before vs. After</h3>
+                  <div className="rounded-lg overflow-hidden border border-gray-200">
+                    {/* Header */}
+                    <div className="grid grid-cols-3 bg-gray-100 text-sm font-semibold text-gray-text">
+                      <div className="p-3" />
+                      <div className="p-3 text-center text-red-500">Before</div>
+                      <div className="p-3 text-center text-green-600">After</div>
+                    </div>
+                    {/* Rows */}
+                    {project.beforeAfter.map((row) => (
+                      <div key={row.label} className="grid grid-cols-3 border-t border-gray-200 text-sm">
+                        <div className="p-3 font-medium text-gray-text">{row.label}</div>
+                        <div className="p-3 text-center text-gray-muted">{row.before}</div>
+                        <div className="p-3 text-center font-semibold text-gray-text">{row.after}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Links to both sites */}
+                  <div className="grid grid-cols-2 gap-3 mt-4">
+                    {project.beforeUrl && (
+                      <a
+                        href={project.beforeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-center py-2 px-4 rounded-lg border border-gray-300 text-gray-muted text-sm hover:bg-gray-50 transition-colors"
+                      >
+                        View Old Site →
+                      </a>
+                    )}
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-center py-2 px-4 rounded-lg bg-blue-accent text-white text-sm hover:bg-blue-accent/90 transition-colors"
+                      >
+                        View New Site →
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
+
               <div className="mb-6">
                 <h3 className="font-bold text-lg mb-3">Services Included</h3>
                 <ul className="space-y-2">
@@ -106,14 +161,15 @@ export default function ProjectCard({ project }: { project: Project }) {
                 <p className="text-gray-text">{project.result}</p>
               </div>
 
-              {project.demoUrl && (
+              {/* Show full-width CTA only if no before/after links shown */}
+              {project.demoUrl && !project.beforeAfter && (
                 <a
                   href={project.demoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary w-full text-center block text-lg"
                 >
-                  View Live Demo →
+                  View Live Site →
                 </a>
               )}
             </div>
