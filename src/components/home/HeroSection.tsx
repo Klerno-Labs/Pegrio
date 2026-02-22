@@ -1,6 +1,10 @@
 'use client'
 
+import { motion, useReducedMotion } from 'framer-motion'
+
 export default function HeroSection() {
+  const shouldReduceMotion = useReducedMotion()
+
   const openCalendly = () => {
     if (typeof window !== 'undefined' && (window as any).Calendly) {
       (window as any).Calendly.initPopupWidget({
@@ -18,24 +22,56 @@ export default function HeroSection() {
 
   return (
     <section className="bg-navy text-white relative overflow-hidden">
-      {/* Subtle geometric pattern overlay */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)`
-        }} />
+      {/* Dot-grid background pattern */}
+      <div className="absolute inset-0 bg-dots opacity-30" />
+
+      {/* Subtle radial glow */}
+      <div className="absolute inset-0">
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(107,63,160,0.1) 0%, transparent 70%)' }}
+        />
       </div>
 
       <div className="container relative py-20 md:py-32">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="mb-6">
-            Your Website Should Be Generating Leads. Is It?
-          </h1>
+          {/* Social proof chip */}
+          <motion.div
+            initial={shouldReduceMotion ? {} : { opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8"
+          >
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-sm text-gray-300 font-medium">Trusted by Houston businesses</span>
+          </motion.div>
 
-          <p className="text-xl md:text-2xl mb-10 text-gray-300 leading-relaxed">
+          <motion.h1
+            initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-6 font-display"
+          >
+            Your Website Should Be{' '}
+            <span className="gradient-text">Generating Leads.</span>{' '}
+            Is It?
+          </motion.h1>
+
+          <motion.p
+            initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="text-xl md:text-2xl mb-10 text-gray-300 leading-relaxed"
+          >
             We build high-performance websites for home service businesses, med spas, and restaurants in Houston, Katy, and across the US — designed to rank on Google and convert visitors into customers.
-          </p>
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <motion.div
+            initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          >
             <button
               onClick={openCalendly}
               className="btn-primary text-lg px-8 py-4 w-full sm:w-auto"
@@ -49,7 +85,7 @@ export default function HeroSection() {
             >
               See Our Work →
             </button>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

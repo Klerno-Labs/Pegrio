@@ -9,22 +9,29 @@ module.exports = {
     extend: {
       colors: {
         navy: {
-          DEFAULT: '#1A0A2E',
-          dark: '#120720',
+          DEFAULT: '#1a1a2e',
+          deep: '#1a1a2e',
+          mid: '#16213e',
+          dark: '#0f3460',
         },
         purple: {
           accent: '#6B3FA0',
-          light: '#EDE5F7',
-          deep: '#4A2B70',
+          light: '#E8D5F5',
         },
-        // Keep blue-accent alias pointing to purple for component compatibility
         blue: {
           accent: '#6B3FA0',
-          light: '#EDE5F7',
+          light: '#E8D5F5',
         },
         cream: {
-          DEFAULT: '#F5F0E8',
-          dark: '#E8E0D4',
+          DEFAULT: '#F8F5F0',
+          light: '#FDF9F3',
+        },
+        green: {
+          trust: '#E2EFDA',
+        },
+        gold: {
+          premium: '#C9A84C',
+          light: '#F5EFD7',
         },
         success: '#E2EFDA',
         gray: {
@@ -34,32 +41,35 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['var(--font-sora)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-jetbrains)', 'monospace'],
       },
       fontSize: {
-        'h1-desktop': ['48px', { lineHeight: '1.15', fontWeight: '700' }],
-        'h1-mobile': ['36px', { lineHeight: '1.15', fontWeight: '700' }],
+        'h1-desktop': ['clamp(48px, 5vw, 72px)', { lineHeight: '1.1', fontWeight: '800' }],
+        'h1-mobile': ['36px', { lineHeight: '1.15', fontWeight: '800' }],
         'h2-desktop': ['36px', { lineHeight: '1.2', fontWeight: '700' }],
         'h2-mobile': ['28px', { lineHeight: '1.2', fontWeight: '700' }],
-        'h3-desktop': ['24px', { lineHeight: '1.3', fontWeight: '600' }],
-        'h3-mobile': ['20px', { lineHeight: '1.3', fontWeight: '600' }],
+        'h3-desktop': ['24px', { lineHeight: '1.3', fontWeight: '700' }],
+        'h3-mobile': ['20px', { lineHeight: '1.3', fontWeight: '700' }],
         body: ['16px', { lineHeight: '1.6', fontWeight: '400' }],
         small: ['14px', { lineHeight: '1.5', fontWeight: '400' }],
       },
       spacing: {
-        // 8px base unit
-        section: '5rem', // 80px for desktop section padding
-        'section-mobile': '3rem', // 48px for mobile section padding
+        section: '7.5rem',          /* 120px desktop */
+        'section-mobile': '4rem',   /* 64px mobile */
       },
       maxWidth: {
-        content: '1200px',
+        content: '1280px',
       },
       borderRadius: {
-        DEFAULT: '8px',
+        DEFAULT: '16px',
+        hero: '24px',
+        sm: '8px',
       },
       boxShadow: {
         card: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-        'card-hover': '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+        'card-hover': '0 12px 28px -4px rgba(107, 63, 160, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.06)',
       },
       transitionDuration: {
         DEFAULT: '200ms',

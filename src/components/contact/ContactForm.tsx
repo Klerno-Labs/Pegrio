@@ -203,6 +203,7 @@ export default function ContactForm() {
           </option>
           <option value="new-website">New Website</option>
           <option value="redesign">Website Redesign</option>
+          <option value="industry-app">Industry App</option>
           <option value="maintenance">Monthly Maintenance</option>
           <option value="not-sure">Not Sure</option>
         </select>

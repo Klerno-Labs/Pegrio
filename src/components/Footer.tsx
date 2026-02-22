@@ -10,11 +10,11 @@ export default function Footer() {
           {/* Logo and Tagline */}
           <div>
             <div className="flex items-baseline gap-1.5 mb-4">
-              <span className="text-2xl font-extrabold tracking-tight">Pegrio</span>
-              <span className="text-xs font-medium text-purple-light tracking-wide uppercase">Web Development</span>
+              <span className="text-2xl font-extrabold tracking-tight font-display">Pegrio</span>
+              <span className="text-xs font-medium text-blue-light tracking-wide uppercase">Web Development</span>
             </div>
             <p className="text-gray-300 max-w-md">
-              High-performance websites for local businesses — Houston, Katy, and nationwide.
+              High-performance websites and industry apps for local businesses — Houston, Katy, and nationwide.
             </p>
           </div>
 
@@ -22,8 +22,11 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Quick Links</h3>
             <div className="flex flex-col gap-2">
-              <Link href="/services" className="text-gray-300 hover:text-white transition-colors">
-                Services
+              <Link href="/websites" className="text-gray-300 hover:text-white transition-colors">
+                Websites
+              </Link>
+              <Link href="/apps" className="text-gray-300 hover:text-white transition-colors">
+                Apps
               </Link>
               <Link href="/work" className="text-gray-300 hover:text-white transition-colors">
                 Work
@@ -41,7 +44,7 @@ export default function Footer() {
         {/* Legal */}
         <div className="border-t border-gray-700 pt-8 flex items-center justify-between">
           <p className="text-gray-400 text-sm">
-            © {currentYear} Pegrio LLC. All rights reserved.
+            &copy; {currentYear} Pegrio LLC. All rights reserved.
           </p>
           <Link href="/admin/login" className="text-gray-600 hover:text-gray-400 text-xs transition-colors">
             Admin

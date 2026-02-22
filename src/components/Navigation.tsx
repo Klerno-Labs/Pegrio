@@ -1,11 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +17,11 @@ export default function Navigation() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [pathname])
 
   const openCalendly = () => {
     if (typeof window !== 'undefined' && (window as any).Calendly) {
@@ -24,7 +32,8 @@ export default function Navigation() {
   }
 
   const navLinks = [
-    { href: '/services', label: 'Services' },
+    { href: '/websites', label: 'Websites' },
+    { href: '/apps', label: 'Apps', isNew: true },
     { href: '/work', label: 'Work' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
@@ -33,15 +42,17 @@ export default function Navigation() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
-        isScrolled ? 'bg-white shadow-md' : 'bg-white'
+        isScrolled
+          ? 'bg-white/80 backdrop-blur-lg shadow-md'
+          : 'bg-white'
       }`}
     >
       <div className="container mx-auto">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-extrabold text-navy tracking-tight">Pegrio</span>
-            <span className="hidden sm:inline text-xs font-medium text-purple-accent tracking-wide uppercase">Web Development</span>
+            <span className="text-2xl font-extrabold text-navy tracking-tight font-display">Pegrio</span>
+            <span className="hidden sm:inline text-xs font-medium text-blue-accent tracking-wide uppercase">Web Development</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -50,9 +61,24 @@ export default function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-text hover:text-blue-accent transition-colors font-medium link-underline"
+                className="relative text-gray-text hover:text-blue-accent transition-colors font-medium"
               >
-                {link.label}
+                <span className="flex items-center gap-1.5">
+                  {link.label}
+                  {link.isNew && (
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-gold-premium text-white animate-pulse">
+                      New
+                    </span>
+                  )}
+                </span>
+                {/* Active indicator */}
+                {pathname === link.href && (
+                  <motion.div
+                    layoutId="nav-underline"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-accent"
+                    transition={{ duration: 0.2 }}
+                  />
+                )}
               </Link>
             ))}
             <button
@@ -87,30 +113,66 @@ export default function Navigation() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block py-3 text-gray-text hover:text-blue-accent transition-colors font-medium"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <button
-              onClick={() => {
-                openCalendly()
-                setIsMobileMenuOpen(false)
-              }}
-              className="btn-primary w-full mt-4"
+        {/* Mobile Menu — Full-screen overlay with staggered links */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden overflow-hidden border-t"
             >
-              Book Free Audit
-            </button>
-          </div>
-        )}
+              <div className="py-4">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <Link
+                      href={link.href}
+                      className={`block py-3 font-medium transition-colors ${
+                        pathname === link.href
+                          ? 'text-blue-accent'
+                          : 'text-gray-text hover:text-blue-accent'
+                      }`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span className="flex items-center gap-2">
+                        {link.label}
+                        {link.isNew && (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-gold-premium text-white">
+                            New
+                          </span>
+                        )}
+                        {pathname === link.href && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-accent" />
+                        )}
+                      </span>
+                    </Link>
+                  </motion.div>
+                ))}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: navLinks.length * 0.05 }}
+                >
+                  <button
+                    onClick={() => {
+                      openCalendly()
+                      setIsMobileMenuOpen(false)
+                    }}
+                    className="btn-primary w-full mt-4"
+                  >
+                    Book Free Audit
+                  </button>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   )

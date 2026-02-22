@@ -1,6 +1,8 @@
 'use client'
 
-import ScrollReveal from '@/components/ScrollReveal'
+import Link from 'next/link'
+import MotionReveal from '@/components/MotionReveal'
+import { Smartphone } from 'lucide-react'
 
 export default function PricingPreview() {
   const openCalendly = () => {
@@ -60,13 +62,13 @@ export default function PricingPreview() {
   return (
     <section className="section bg-white bg-grid" id="pricing-preview">
       <div className="container">
-        <ScrollReveal>
+        <MotionReveal>
           <h2 className="text-center mb-4">Straightforward Pricing. No Surprises.</h2>
-        </ScrollReveal>
+        </MotionReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
           {tiers.map((tier, i) => (
-            <ScrollReveal key={tier.name} animation="fade-up" delay={i * 100}>
+            <MotionReveal key={tier.name} animation="fade-up" delay={i * 100}>
               <div
                 className={`card relative h-full flex flex-col ${tier.featured ? 'ring-2 ring-blue-accent' : ''}`}
               >
@@ -98,12 +100,43 @@ export default function PricingPreview() {
                   {tier.cta}
                 </button>
               </div>
-            </ScrollReveal>
+            </MotionReveal>
           ))}
         </div>
 
-        <ScrollReveal animation="fade-in" delay={400}>
-          <div className="text-center mt-12">
+        {/* Industry Apps Card */}
+        <MotionReveal animation="fade-up" delay={400}>
+          <div className="mt-8">
+            <Link href="/apps" className="block">
+              <div className="card border-2 border-gold-premium/30 bg-gradient-to-r from-gold-light/50 to-white hover:border-gold-premium/60 transition-colors">
+                <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+                  <div className="flex-shrink-0">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gold-premium/10">
+                      <Smartphone className="w-8 h-8 text-gold-premium" />
+                    </div>
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex items-center gap-2 justify-center md:justify-start mb-1">
+                      <h3 className="text-xl font-bold text-navy">Industry Apps</h3>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-gold-premium text-white">
+                        New
+                      </span>
+                    </div>
+                    <p className="text-gray-muted">
+                      Custom web apps built for your industry — hemp retail, med spas, restaurants, and more. Launched in days, not months.
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <span className="text-gold-premium font-semibold">Explore Apps →</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </MotionReveal>
+
+        <MotionReveal animation="fade-in" delay={500}>
+          <div className="text-center mt-8">
             <p className="text-gray-muted mb-4">
               Not sure which is right for you?{' '}
               <button onClick={openCalendly} className="text-blue-accent link-underline font-semibold">
@@ -111,7 +144,7 @@ export default function PricingPreview() {
               </button>
             </p>
           </div>
-        </ScrollReveal>
+        </MotionReveal>
       </div>
     </section>
   )

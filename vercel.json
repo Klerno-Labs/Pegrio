@@ -1,5 +1,12 @@
 {
   "framework": "nextjs",
+  "redirects": [
+    {
+      "source": "/services",
+      "destination": "/websites",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

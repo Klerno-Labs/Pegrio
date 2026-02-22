@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import ScrollReveal from '@/components/ScrollReveal'
+import { motion, AnimatePresence } from 'framer-motion'
+import MotionReveal from '@/components/MotionReveal'
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -36,13 +37,13 @@ export default function FAQSection() {
   return (
     <section className="section bg-gray-bg">
       <div className="container max-w-3xl">
-        <ScrollReveal>
+        <MotionReveal>
           <h2 className="text-center mb-16">Common Questions</h2>
-        </ScrollReveal>
+        </MotionReveal>
 
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <ScrollReveal key={index} animation="fade-up" delay={index * 60}>
+            <MotionReveal key={index} animation="fade-up" delay={index * 60}>
               <div className="card">
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -57,11 +58,21 @@ export default function FAQSection() {
                   </span>
                 </button>
 
-                {openIndex === index && (
-                  <p className="mt-4 text-gray-muted leading-relaxed">{faq.answer}</p>
-                )}
+                <AnimatePresence>
+                  {openIndex === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="mt-4 text-gray-muted leading-relaxed">{faq.answer}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            </ScrollReveal>
+            </MotionReveal>
           ))}
         </div>
       </div>

@@ -15,6 +15,15 @@ const nextConfig = {
       allowedOrigins: ['pegrio.com', 'www.pegrio.com', 'localhost:3000'],
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/services',
+        destination: '/websites',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

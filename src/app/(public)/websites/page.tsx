@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import PricingTiers from '@/components/services/PricingTiers'
-import MaintenancePlans from '@/components/services/MaintenancePlans'
+import PricingTiers from '@/components/websites/PricingTiers'
+import MaintenancePlans from '@/components/websites/MaintenancePlans'
 
 export const metadata: Metadata = {
   title: 'Website Design Packages & Pricing | Pegrio',
@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Website Design Packages & Pricing | Pegrio',
     description: 'Fixed-price website packages for local businesses. Starter from $2,000, Growth at $5,000, Enterprise from $8,000.',
-    url: 'https://www.pegrio.com/services',
+    url: 'https://www.pegrio.com/websites',
   },
   alternates: {
-    canonical: 'https://www.pegrio.com/services',
+    canonical: 'https://www.pegrio.com/websites',
   },
 }
 
-export default function ServicesPage() {
+export default function WebsitesPage() {
   return (
     <>
       {/* Page Header */}

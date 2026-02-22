@@ -2,7 +2,7 @@
 
 import MotionReveal from '@/components/MotionReveal'
 
-export default function FinalCTA() {
+export default function AppsCTA() {
   const openCalendly = () => {
     if (typeof window !== 'undefined' && (window as any).Calendly) {
       (window as any).Calendly.initPopupWidget({
@@ -22,13 +22,13 @@ export default function FinalCTA() {
 
       <div className="container text-center relative">
         <MotionReveal animation="scale-in">
-          <h2 className="mb-4">Find Out What Your Website Is Costing You</h2>
+          <h2 className="mb-4">Don&apos;t See Your Industry?</h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Free 15-minute audit. No pitch. Just honest feedback.
+            We build custom apps for any industry. Tell us what your business needs and we&apos;ll make it happen.
           </p>
 
           <button onClick={openCalendly} className="btn-primary text-lg px-8 py-4 bg-white text-navy hover:bg-gray-100">
-            Book My Free Audit
+            Let&apos;s Talk About Your App
           </button>
         </MotionReveal>
       </div>

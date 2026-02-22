@@ -11,6 +11,7 @@ interface BeforeAfter {
 interface Project {
   id: number
   name: string
+  type: 'Website' | 'App'
   industry: string
   package: string
   result: string
@@ -29,6 +30,16 @@ export default function ProjectCard({ project }: { project: Project }) {
         <div className="mb-4">
           <h3 className="text-xl mb-2">{project.name}</h3>
           <div className="flex flex-wrap gap-2">
+            {/* Type badge */}
+            <span
+              className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                project.type === 'App'
+                  ? 'bg-gold-light text-gold-premium'
+                  : 'bg-blue-light text-blue-accent'
+              }`}
+            >
+              {project.type}
+            </span>
             <span className="inline-block bg-blue-light text-blue-accent px-3 py-1 rounded-full text-sm font-medium">
               {project.industry}
             </span>
@@ -82,6 +93,15 @@ export default function ProjectCard({ project }: { project: Project }) {
               <h2 className="text-3xl font-bold mb-2">{project.name}</h2>
 
               <div className="flex flex-wrap gap-3 mb-6">
+                <span
+                  className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                    project.type === 'App'
+                      ? 'bg-gold-light text-gold-premium'
+                      : 'bg-blue-light text-blue-accent'
+                  }`}
+                >
+                  {project.type}
+                </span>
                 <span className="inline-block bg-blue-light text-blue-accent px-3 py-1 rounded-full text-sm font-medium">
                   {project.industry}
                 </span>

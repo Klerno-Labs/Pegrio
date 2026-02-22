@@ -10,6 +10,7 @@ export default function PortfolioGrid() {
     {
       id: 0,
       name: 'THC Plus',
+      type: 'Website' as const,
       industry: 'Retail',
       package: 'Enterprise Package',
       result: 'Full custom Next.js e-commerce site for a Houston hemp retailer — age verification, product browsing, modern gradient design, and error monitoring with Sentry',
@@ -33,8 +34,26 @@ export default function PortfolioGrid() {
       ],
     },
     {
+      id: 8,
+      name: 'THC Plus App',
+      type: 'App' as const,
+      industry: 'Retail',
+      package: 'Industry App',
+      result: 'Full-featured hemp retail management app with real-time inventory, compliance tracking, age verification, and POS integration — built specifically for the hemp industry',
+      demoUrl: 'https://thcplusapp.vercel.app',
+      services: [
+        'Real-time inventory management',
+        'Compliance & age verification',
+        'POS system integration',
+        'Customer loyalty program',
+        'Sales analytics dashboard',
+        'Multi-location support',
+      ],
+    },
+    {
       id: 1,
       name: 'Reliable Plumbing Co.',
+      type: 'Website' as const,
       industry: 'Home Services',
       package: 'Starter Package',
       result: 'New site ranking on page 1 for "plumber Katy TX" within 60 days of launch',
@@ -49,6 +68,7 @@ export default function PortfolioGrid() {
     {
       id: 2,
       name: 'Peak HVAC Solutions',
+      type: 'Website' as const,
       industry: 'Home Services',
       package: 'Growth Package',
       result: 'Rebuilt their outdated site — mobile sessions up significantly, call volume followed',
@@ -63,6 +83,7 @@ export default function PortfolioGrid() {
     {
       id: 3,
       name: 'Summit Roofing Group',
+      type: 'Website' as const,
       industry: 'Home Services',
       package: 'Growth Package',
       result: 'Professional site built and live in 18 days — now their #1 consistent source of new leads',
@@ -77,6 +98,7 @@ export default function PortfolioGrid() {
     {
       id: 4,
       name: 'Lumière Med Spa',
+      type: 'Website' as const,
       industry: 'Med Spas',
       package: 'Enterprise Package',
       result: 'High-end custom design with online booking integration — matches the caliber of their brand and clientele',
@@ -91,6 +113,7 @@ export default function PortfolioGrid() {
     {
       id: 5,
       name: 'La Casa de Sabor',
+      type: 'Website' as const,
       industry: 'Restaurants',
       package: 'Starter Package',
       result: 'Authentic Mexican restaurant site with full menu, gallery, and contact — clean design that matches the brand',
@@ -106,6 +129,7 @@ export default function PortfolioGrid() {
     {
       id: 6,
       name: 'Spice Symphony',
+      type: 'Website' as const,
       industry: 'Restaurants',
       package: 'Growth Package',
       result: 'Full online ordering system with cart, checkout, and order confirmation — built for high-volume takeout',
@@ -121,6 +145,7 @@ export default function PortfolioGrid() {
     {
       id: 7,
       name: 'Yuki Izakaya',
+      type: 'Website' as const,
       industry: 'Restaurants',
       package: 'Enterprise Package',
       result: 'Premium Japanese restaurant site with AI chatbot, loyalty rewards, admin dashboard, and full e-commerce',
@@ -136,22 +161,26 @@ export default function PortfolioGrid() {
     },
   ]
 
-  const filters = ['All', 'Retail', 'Home Services', 'Med Spas', 'Restaurants']
+  const filters = ['All', 'Websites', 'Apps', 'Home Services', 'Med Spas', 'Restaurants', 'Retail']
 
   const filteredProjects = activeFilter === 'All'
     ? projects
+    : activeFilter === 'Websites'
+    ? projects.filter((p) => p.type === 'Website')
+    : activeFilter === 'Apps'
+    ? projects.filter((p) => p.type === 'App')
     : projects.filter((p) => p.industry === activeFilter)
 
   return (
     <section className="section bg-gray-bg">
       <div className="container">
         {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
           {filters.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-6 py-2 rounded-full font-semibold transition-all ${
+              className={`px-5 py-2 rounded-full font-semibold text-sm transition-all ${
                 activeFilter === filter
                   ? 'bg-blue-accent text-white'
                   : 'bg-white text-gray-text hover:bg-gray-100'

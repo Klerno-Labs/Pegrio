@@ -1,5 +1,7 @@
 'use client'
 
+import MotionReveal from '@/components/MotionReveal'
+
 export default function PricingTiers() {
   const openCalendly = () => {
     if (typeof window !== 'undefined' && (window as any).Calendly) {
@@ -59,39 +61,45 @@ export default function PricingTiers() {
     <section className="section bg-gray-bg">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {tiers.map((tier) => (
-            <div
-              key={tier.name}
-              className={`card relative ${tier.featured ? 'ring-2 ring-blue-accent transform md:-translate-y-4' : ''}`}
-            >
-              {tier.featured && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-accent text-white px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap">
-                  MOST POPULAR
-                </div>
-              )}
-
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold mb-2">{tier.name}</h2>
-                <div className="text-5xl font-bold text-navy mb-2">{tier.price}</div>
-                <div className="text-sm text-gray-muted">{tier.subtitle}</div>
-              </div>
-
-              <ul className="space-y-4 mb-8 flex-grow">
-                {tier.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3">
-                    <span className="text-blue-accent text-xl mt-0.5 flex-shrink-0">✓</span>
-                    <span className="text-gray-text">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                onClick={openCalendly}
-                className={tier.featured ? 'btn-primary w-full text-lg' : 'btn-secondary w-full text-lg'}
+          {tiers.map((tier, i) => (
+            <MotionReveal key={tier.name} animation="fade-up" delay={i * 100}>
+              <div
+                className={`card relative ${
+                  tier.featured
+                    ? 'ring-2 ring-blue-accent transform md:-translate-y-4 bg-white/60 backdrop-blur-xl border border-white/30'
+                    : ''
+                }`}
               >
-                {tier.cta}
-              </button>
-            </div>
+                {tier.featured && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-accent text-white px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap overflow-hidden">
+                    <span className="relative z-10">MOST POPULAR</span>
+                    <div className="absolute inset-0 shimmer" />
+                  </div>
+                )}
+
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-bold mb-2">{tier.name}</h2>
+                  <div className="text-5xl font-bold text-navy font-mono mb-2">{tier.price}</div>
+                  <div className="text-sm text-gray-muted">{tier.subtitle}</div>
+                </div>
+
+                <ul className="space-y-4 mb-8 flex-grow">
+                  {tier.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3">
+                      <span className="text-blue-accent text-xl mt-0.5 flex-shrink-0">✓</span>
+                      <span className="text-gray-text">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={openCalendly}
+                  className={tier.featured ? 'btn-primary w-full text-lg' : 'btn-secondary w-full text-lg'}
+                >
+                  {tier.cta}
+                </button>
+              </div>
+            </MotionReveal>
           ))}
         </div>
       </div>

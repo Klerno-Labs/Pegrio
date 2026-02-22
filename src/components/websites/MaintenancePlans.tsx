@@ -18,10 +18,6 @@ export default function MaintenancePlans() {
         'Security updates',
         'Uptime monitoring',
         '1 content edit per month',
-        '—',
-        '—',
-        '—',
-        '—',
       ],
     },
     {
@@ -29,13 +25,9 @@ export default function MaintenancePlans() {
       price: '$197/mo',
       features: [
         'Everything in Basic',
-        'Everything in Basic',
-        'Everything in Basic',
         '3 edits per month',
         'Monthly performance report',
         'Google Business Profile updates',
-        '—',
-        '—',
       ],
     },
     {
@@ -43,11 +35,7 @@ export default function MaintenancePlans() {
       price: '$497/mo',
       features: [
         'Everything in Standard',
-        'Everything in Standard',
-        'Everything in Standard',
         'Unlimited edits',
-        'Everything in Standard',
-        'Everything in Standard',
         'Monthly SEO updates',
         '1 blog post written and published',
         'Quarterly strategy review call',
@@ -148,46 +136,12 @@ export default function MaintenancePlans() {
               </div>
 
               <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <span className="text-blue-accent">✓</span>
-                  <span>Hosting & Security</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-blue-accent">✓</span>
-                  <span>Uptime Monitoring</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-blue-accent">✓</span>
-                  <span>{plan.name === 'Basic' ? '1 content edit/mo' : plan.name === 'Standard' ? '3 edits/mo' : 'Unlimited edits'}</span>
-                </li>
-                {plan.name !== 'Basic' && (
-                  <>
-                    <li className="flex items-center gap-3">
-                      <span className="text-blue-accent">✓</span>
-                      <span>Monthly performance report</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="text-blue-accent">✓</span>
-                      <span>Google Business Profile</span>
-                    </li>
-                  </>
-                )}
-                {plan.name === 'Premium' && (
-                  <>
-                    <li className="flex items-center gap-3">
-                      <span className="text-blue-accent">✓</span>
-                      <span>Monthly SEO updates</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="text-blue-accent">✓</span>
-                      <span>1 blog post per month</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="text-blue-accent">✓</span>
-                      <span>Quarterly strategy calls</span>
-                    </li>
-                  </>
-                )}
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-center gap-3">
+                    <span className="text-blue-accent">✓</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           ))}
