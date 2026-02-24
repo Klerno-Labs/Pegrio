@@ -51,6 +51,54 @@ export default function PortfolioGrid() {
       ],
     },
     {
+      id: 9,
+      name: 'Premier Jewelry',
+      type: 'Website' as const,
+      industry: 'Retail',
+      package: 'Growth Package',
+      result: 'Elegant custom website for a jewelry retailer — showcasing collections with high-end design, product galleries, and seamless mobile experience',
+      services: [
+        'Custom luxury design',
+        'Product collection galleries',
+        'Mobile-responsive layout',
+        'Contact form with inquiry routing',
+        'SEO optimization for local search',
+        'Google Analytics 4 setup',
+      ],
+    },
+    {
+      id: 10,
+      name: 'Thai Way 6',
+      type: 'Website' as const,
+      industry: 'Restaurants',
+      package: 'Starter Package',
+      result: 'Clean, appetizing restaurant website with full menu, location info, and online presence that captures the authentic Thai dining experience',
+      services: [
+        '5-page responsive website',
+        'Full menu with categories',
+        'Photo gallery',
+        'Google Maps integration',
+        'Mobile-first design',
+        'Contact form with hours display',
+      ],
+    },
+    {
+      id: 11,
+      name: 'Perfect Cuts by Tracy',
+      type: 'Website' as const,
+      industry: 'Beauty',
+      package: 'Starter Package',
+      result: 'Professional salon website with service menu, online booking integration, and a design that reflects the personal brand and expertise',
+      services: [
+        '5-page responsive website',
+        'Service menu with pricing',
+        'Online booking integration',
+        'Before/after style gallery',
+        'Mobile-first design',
+        'Local SEO optimization',
+      ],
+    },
+    {
       id: 1,
       name: 'Reliable Plumbing Co.',
       type: 'Website' as const,
@@ -161,7 +209,7 @@ export default function PortfolioGrid() {
     },
   ]
 
-  const filters = ['All', 'Websites', 'Apps', 'Home Services', 'Med Spas', 'Restaurants', 'Retail']
+  const filters = ['All', 'Websites', 'Apps', 'Home Services', 'Med Spas', 'Restaurants', 'Retail', 'Beauty']
 
   const filteredProjects = activeFilter === 'All'
     ? projects
