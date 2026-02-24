@@ -56,6 +56,7 @@ export default function PortfolioGrid() {
       type: 'Website' as const,
       industry: 'Retail',
       package: 'Growth Package',
+      demoUrl: 'https://premier-jewelry.vercel.app',
       result: 'Elegant custom website for a jewelry retailer — showcasing collections with high-end design, product galleries, and seamless mobile experience',
       services: [
         'Custom luxury design',
@@ -72,6 +73,7 @@ export default function PortfolioGrid() {
       type: 'Website' as const,
       industry: 'Restaurants',
       package: 'Starter Package',
+      demoUrl: 'https://thai-way-6.vercel.app',
       result: 'Clean, appetizing restaurant website with full menu, location info, and online presence that captures the authentic Thai dining experience',
       services: [
         '5-page responsive website',
@@ -88,6 +90,7 @@ export default function PortfolioGrid() {
       type: 'Website' as const,
       industry: 'Beauty',
       package: 'Starter Package',
+      demoUrl: 'https://perfect-cuts.vercel.app',
       result: 'Professional salon website with service menu, online booking integration, and a design that reflects the personal brand and expertise',
       services: [
         '5-page responsive website',
