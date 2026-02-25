@@ -52,7 +52,7 @@ export default function PortfolioGrid() {
     },
     {
       id: 9,
-      name: 'Premier Jewelry',
+      name: 'Houston Fine Jewelers',
       type: 'Website' as const,
       industry: 'Retail',
       package: 'Growth Package',
@@ -69,7 +69,7 @@ export default function PortfolioGrid() {
     },
     {
       id: 10,
-      name: 'Thai Way 6',
+      name: 'Golden Orchid Thai',
       type: 'Website' as const,
       industry: 'Restaurants',
       package: 'Starter Package',
@@ -86,7 +86,7 @@ export default function PortfolioGrid() {
     },
     {
       id: 11,
-      name: 'Perfect Cuts by Tracy',
+      name: 'Studio Bliss Salon',
       type: 'Website' as const,
       industry: 'Beauty',
       package: 'Starter Package',
