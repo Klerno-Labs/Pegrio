@@ -4,6 +4,7 @@
    ======================================== */
 
 import { sql } from './_db.js';
+import { createOrder } from './create-order.js';
 
 /**
  * Webhook handler for Stripe events
@@ -132,7 +133,9 @@ async function handleCheckoutCompleted(session) {
         customer_email: email,
         amount_total: amount,
         metadata,
-        payment_link: paymentLinkId
+        payment_link: paymentLinkId,
+        payment_intent: paymentIntent,
+        customer_details,
     } = session;
 
     // Metadata may come from checkout session or payment link
@@ -159,6 +162,22 @@ async function handleCheckoutCompleted(session) {
     } = resolvedMetadata;
 
     const resolvedEmail = email || metadataEmail;
+
+    // ─── WEBSITE BUILD ORDER FLOW ───
+    if (resolvedMetadata.order_type === 'website_build') {
+        await handleWebsiteBuildOrder({
+            session,
+            sessionId,
+            email: resolvedEmail,
+            amount,
+            metadata: resolvedMetadata,
+            paymentIntent,
+            customerDetails: customer_details,
+        });
+        return;
+    }
+
+    // ─── LEGACY FLOW (quotes / general checkout) ───
 
     // Send confirmation email to customer
     if (resolvedEmail) {
@@ -194,6 +213,229 @@ async function handleCheckoutCompleted(session) {
     });
 
     console.log(`✅ Checkout processed for ${resolvedEmail}`);
+}
+
+/**
+ * Handle website build order (from the /order wizard)
+ * Creates order in DB and sends questionnaire email
+ */
+async function handleWebsiteBuildOrder(data) {
+    const { session, sessionId, email, amount, metadata, paymentIntent, customerDetails } = data;
+
+    const tierNum = parseInt(metadata.tier || '1');
+    const tierNames = { 1: 'Starter', 2: 'Growth', 3: 'Enterprise' };
+    const tierName = tierNames[tierNum] || 'Starter';
+    const customerName = customerDetails?.name || metadata.customerName || '';
+    const customerPhone = customerDetails?.phone || '';
+    const businessName = metadata.business || '';
+    const maintenancePlan = metadata.maintenance_plan || 'none';
+
+    let addOns = [];
+    try {
+        addOns = JSON.parse(metadata.add_ons || '[]');
+    } catch (e) {
+        console.error('Failed to parse add_ons metadata:', e.message);
+    }
+
+    const totalAmount = parseInt(metadata.total_amount || '0');
+    const depositAmount = parseInt(metadata.deposit_amount || '0');
+
+    try {
+        // Create the order in the database
+        const order = await createOrder({
+            customer_name: customerName,
+            customer_email: email,
+            business_name: businessName,
+            phone: customerPhone,
+            tier: tierNum,
+            maintenance_plan: maintenancePlan,
+            add_ons: addOns,
+            total_amount: totalAmount,
+            deposit_amount: depositAmount,
+            stripe_session_id: sessionId,
+            stripe_payment_intent: typeof paymentIntent === 'string' ? paymentIntent : paymentIntent?.id || null,
+        });
+
+        console.log(`✅ Website build order #${order.id} created`);
+
+        // ── Forward order to Agency OS ──────────────────────
+        let portalUrl = null;
+        if (process.env.AGENCY_OS_URL && process.env.AGENCY_OS_API_KEY) {
+            try {
+                const agencyRes = await fetch(`${process.env.AGENCY_OS_URL}/api/ingest-order`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': process.env.AGENCY_OS_API_KEY,
+                    },
+                    body: JSON.stringify({
+                        customerName,
+                        customerEmail: email,
+                        customerPhone,
+                        companyName: businessName,
+                        orderId: String(order.id),
+                        tier: tierNum,
+                        packageName: `${tierName} Website Build`,
+                        totalAmount: totalAmount * 100,
+                        depositAmount: depositAmount * 100,
+                        balanceAmount: (totalAmount - depositAmount) * 100,
+                        maintenancePlan,
+                        addOns,
+                        portalToken: order.portal_token,
+                        stripeSessionId: sessionId,
+                        autoStartWorkflow: false,
+                    }),
+                });
+
+                if (agencyRes.ok) {
+                    const agencyData = await agencyRes.json();
+                    console.log(`✅ Order forwarded to Agency OS — project: ${agencyData.data?.projectId}`);
+                    // Use Agency OS portal URL for the questionnaire email
+                    portalUrl = `${process.env.AGENCY_OS_URL}/portal/${order.portal_token}`;
+                } else {
+                    const errText = await agencyRes.text();
+                    console.error(`⚠️ Agency OS ingest failed (${agencyRes.status}):`, errText);
+                }
+            } catch (agencyErr) {
+                console.error('⚠️ Failed to forward order to Agency OS:', agencyErr.message);
+            }
+        }
+
+        // Send questionnaire email to customer
+        if (email) {
+            await sendQuestionnaireEmail({
+                email,
+                customerName,
+                tierName,
+                totalAmount,
+                depositAmount,
+                balanceAmount: totalAmount - depositAmount,
+                portalToken: order.portal_token,
+                maintenancePlan,
+                portalUrl, // if Agency OS responded, use its URL
+            });
+        }
+
+        // Send admin notification for the new order
+        await sendAdminNotification({
+            email,
+            customerName,
+            business: businessName,
+            packageName: `${tierName} Website Build`,
+            amount: depositAmount,
+            paymentType: 'deposit',
+            sessionId,
+        });
+
+    } catch (error) {
+        console.error('❌ Failed to process website build order:', error);
+        throw error;
+    }
+}
+
+/**
+ * Send questionnaire email with portal link
+ */
+async function sendQuestionnaireEmail(data) {
+    const { email, customerName, tierName, totalAmount, depositAmount, balanceAmount, portalToken, maintenancePlan, portalUrl: agencyPortalUrl } = data;
+
+    const domain = process.env.DOMAIN || 'www.pegrio.com';
+    const protocol = domain.includes('localhost') ? 'http' : 'https';
+    // Use Agency OS portal URL if available, otherwise fall back to Pegrio portal
+    const portalUrl = agencyPortalUrl || `${protocol}://${domain}/portal/intake/${portalToken}`;
+
+    try {
+        await resend.emails.send({
+            from: process.env.RESEND_FROM_EMAIL || 'hello@pegrio.com',
+            to: email,
+            subject: `Welcome to Pegrio! Start Your Website Questionnaire`,
+            html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                        .header { background: linear-gradient(135deg, #6B3FA0 0%, #4a2d70 100%); color: white; padding: 40px 30px; text-align: center; border-radius: 12px 12px 0 0; }
+                        .content { background: #ffffff; padding: 30px; border: 1px solid #e0e0e0; border-top: none; border-radius: 0 0 12px 12px; }
+                        .success-icon { font-size: 48px; margin-bottom: 16px; }
+                        .amount { font-size: 28px; font-weight: bold; color: #6B3FA0; margin: 16px 0; }
+                        .details { background: #f8f5ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #6B3FA0; }
+                        .detail-row { margin: 8px 0; }
+                        .detail-label { font-weight: 600; color: #555; }
+                        .btn { display: inline-block; padding: 16px 32px; background: #6B3FA0; color: white !important; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; margin: 24px 0; }
+                        .btn:hover { background: #5a3490; }
+                        .steps { margin-top: 24px; }
+                        .step { display: flex; align-items: flex-start; margin: 12px 0; }
+                        .step-num { background: #6B3FA0; color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; margin-right: 12px; flex-shrink: 0; }
+                        .footer { text-align: center; margin-top: 24px; color: #888; font-size: 13px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <div class="success-icon">&#10003;</div>
+                            <h1 style="margin: 0; font-size: 24px;">Payment Confirmed!</h1>
+                            <p style="margin: 8px 0 0; opacity: 0.9;">Your ${tierName} website build is officially underway.</p>
+                        </div>
+                        <div class="content">
+                            <p>Hi ${customerName || 'there'},</p>
+                            <p>Thank you for choosing Pegrio! We're thrilled to start building your new website.</p>
+
+                            <div class="details">
+                                <div class="detail-row"><span class="detail-label">Package:</span> ${tierName} Website Build</div>
+                                <div class="detail-row"><span class="detail-label">Total Project Cost:</span> $${totalAmount.toLocaleString()}</div>
+                                <div class="detail-row"><span class="detail-label">Deposit Paid:</span> $${depositAmount.toLocaleString()}</div>
+                                <div class="detail-row"><span class="detail-label">Balance Due at Launch:</span> $${balanceAmount.toLocaleString()}</div>
+                                ${maintenancePlan !== 'none' ? `<div class="detail-row"><span class="detail-label">Maintenance Plan:</span> ${maintenancePlan.charAt(0).toUpperCase() + maintenancePlan.slice(1)}</div>` : ''}
+                            </div>
+
+                            <h2 style="color: #6B3FA0; font-size: 20px;">Next Step: Tell Us About Your Business</h2>
+                            <p>Please complete the website questionnaire so we can understand your vision, brand, and goals. This helps us design a website that perfectly represents your business.</p>
+
+                            <div style="text-align: center;">
+                                <a href="${portalUrl}" class="btn">Start Your Website Questionnaire &rarr;</a>
+                            </div>
+
+                            <div class="steps">
+                                <h3 style="font-size: 16px; color: #333;">What Happens Next?</h3>
+                                <div class="step">
+                                    <span class="step-num">1</span>
+                                    <div><strong>Complete the Questionnaire</strong><br/>Tell us about your business, style preferences, and goals.</div>
+                                </div>
+                                <div class="step">
+                                    <span class="step-num">2</span>
+                                    <div><strong>Design Phase</strong><br/>Our team creates mockups for your review and feedback.</div>
+                                </div>
+                                <div class="step">
+                                    <span class="step-num">3</span>
+                                    <div><strong>Development</strong><br/>We build your website with pixel-perfect precision.</div>
+                                </div>
+                                <div class="step">
+                                    <span class="step-num">4</span>
+                                    <div><strong>Launch!</strong><br/>Final review, balance payment, and your site goes live.</div>
+                                </div>
+                            </div>
+
+                            <p style="margin-top: 24px;">If you have any questions, just reply to this email or reach out at <a href="mailto:hello@pegrio.com">hello@pegrio.com</a>.</p>
+
+                            <p>Welcome to the Pegrio family!</p>
+                            <p>Best regards,<br/>The Pegrio Team</p>
+                        </div>
+                        <div class="footer">
+                            <p>Pegrio - AI-Powered Business Websites</p>
+                            <p>hello@pegrio.com | www.pegrio.com</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `
+        });
+
+        console.log(`✅ Questionnaire email sent to ${email}`);
+    } catch (error) {
+        console.error(`❌ Failed to send questionnaire email:`, error);
+    }
 }
 
 /**

@@ -111,13 +111,6 @@
   background-size: 40px 40px;
 }
 
-/* ─── Calendly modal styles ─── */
-
-.calendly-inline-widget {
-  min-width: 320px;
-  height: 700px;
-}
-
 /* ─── Scroll popup animation ─── */
 
 @keyframes slideUp {

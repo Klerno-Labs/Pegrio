@@ -1,16 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import BuildSystem from './BuildSystem'
 
 export default function AboutContent() {
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
-
   return (
     <>
       {/* Page Header */}
@@ -49,12 +42,12 @@ export default function AboutContent() {
           <p className="text-xl text-gray-muted mb-8 max-w-2xl mx-auto">
             Ready to turn your website into a lead generation machine?
           </p>
-          <button
-            onClick={openCalendly}
-            className="btn-primary text-lg px-8 py-4"
+          <Link
+            href="/order"
+            className="btn-primary text-lg px-8 py-4 inline-block"
           >
-            Book Your Free Audit
-          </button>
+            Start Your Project
+          </Link>
         </div>
       </section>
     </>

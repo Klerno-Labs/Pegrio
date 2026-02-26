@@ -1,6 +1,5 @@
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import CalendlyModal from '@/components/CalendlyModal'
 
 export default function PublicLayout({
   children,
@@ -12,7 +11,6 @@ export default function PublicLayout({
       <Navigation />
       <main>{children}</main>
       <Footer />
-      <CalendlyModal />
     </>
   )
 }

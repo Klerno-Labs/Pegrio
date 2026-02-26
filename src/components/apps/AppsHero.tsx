@@ -1,18 +1,11 @@
 'use client'
 
+import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import { industries } from '@/data/apps'
 
 export default function AppsHero() {
   const shouldReduceMotion = useReducedMotion()
-
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
 
   const scrollToApps = () => {
     const el = document.getElementById('app-cards')
@@ -65,9 +58,9 @@ export default function AppsHero() {
             <button onClick={scrollToApps} className="btn-primary text-lg px-8 py-4 w-full sm:w-auto">
               See Available Apps
             </button>
-            <button onClick={openCalendly} className="text-white hover:text-gold-premium transition-colors font-semibold text-lg w-full sm:w-auto">
+            <Link href="/order" className="text-white hover:text-gold-premium transition-colors font-semibold text-lg w-full sm:w-auto text-center">
               Request a Custom App →
-            </button>
+            </Link>
           </motion.div>
         </div>
 

@@ -1,16 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import MotionReveal from '@/components/MotionReveal'
 
 export default function PricingTiers() {
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
-
   const tiers = [
     {
       name: 'STARTER',
@@ -25,6 +18,7 @@ export default function PricingTiers() {
         '30-day post-launch support',
       ],
       cta: 'Get Started',
+      href: '/order?tier=1',
       featured: false,
     },
     {
@@ -39,6 +33,7 @@ export default function PricingTiers() {
         '60-day post-launch support with weekly check-ins',
       ],
       cta: 'Get Started',
+      href: '/order?tier=2',
       featured: true,
     },
     {
@@ -52,7 +47,8 @@ export default function PricingTiers() {
         "Performance guarantee — we fix it if it doesn't generate results",
         'Priority turnaround and dedicated support',
       ],
-      cta: "Let's Talk",
+      cta: 'Get Started',
+      href: '/order?tier=3',
       featured: false,
     },
   ]
@@ -86,18 +82,18 @@ export default function PricingTiers() {
                 <ul className="space-y-4 mb-8 flex-grow">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-3">
-                      <span className="text-blue-accent text-xl mt-0.5 flex-shrink-0">✓</span>
+                      <span className="text-blue-accent text-xl mt-0.5 flex-shrink-0">&#10003;</span>
                       <span className="text-gray-text">{feature}</span>
                     </li>
                   ))}
                 </ul>
 
-                <button
-                  onClick={openCalendly}
-                  className={tier.featured ? 'btn-primary w-full text-lg' : 'btn-secondary w-full text-lg'}
+                <Link
+                  href={tier.href}
+                  className={tier.featured ? 'btn-primary w-full text-lg block' : 'btn-secondary w-full text-lg block'}
                 >
                   {tier.cta}
-                </button>
+                </Link>
               </div>
             </MotionReveal>
           ))}

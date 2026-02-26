@@ -1,16 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import MotionReveal from '@/components/MotionReveal'
 
 export default function HowItWorks() {
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
-
   const steps = [
     { number: '1', title: 'Pick Your Industry', description: 'Choose from our library of industry-specific apps or tell us what you need' },
     { number: '2', title: 'Customize It', description: 'We adapt the app to your brand, workflow, and specific business requirements' },
@@ -46,9 +39,9 @@ export default function HowItWorks() {
 
         <MotionReveal animation="fade-up" delay={500}>
           <div className="text-center">
-            <button onClick={openCalendly} className="btn-primary text-lg px-8 py-4">
+            <Link href="/order" className="btn-primary text-lg px-8 py-4 inline-block">
               Get Started Today
-            </button>
+            </Link>
           </div>
         </MotionReveal>
       </div>

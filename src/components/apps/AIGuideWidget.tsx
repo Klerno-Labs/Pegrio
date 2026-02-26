@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { MessageCircleQuestion, X, ArrowRight, RotateCcw } from 'lucide-react'
 
@@ -72,14 +73,6 @@ export default function AIGuideWidget() {
   const [businessType, setBusinessType] = useState<BusinessType | null>(null)
   const [challenge, setChallenge] = useState<Challenge | null>(null)
 
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
-
   const handleBusinessSelect = (type: BusinessType) => {
     setBusinessType(type)
     setStep(2)
@@ -100,7 +93,7 @@ export default function AIGuideWidget() {
     const key = `${businessType}-${challenge}`
     return recommendations[key] || {
       app: 'Custom App',
-      message: "We'll build one for you. Let's chat about what your business needs.",
+      message: "We'll build one for you. Start your project and tell us what your business needs.",
     }
   }
 
@@ -215,12 +208,13 @@ export default function AIGuideWidget() {
                       </div>
                       <h4 className="font-bold text-navy mb-1">{getRecommendation().app}</h4>
                       <p className="text-sm text-gray-muted mb-5">{getRecommendation().message}</p>
-                      <button
-                        onClick={openCalendly}
-                        className="btn-primary w-full text-sm"
+                      <Link
+                        href="/order"
+                        className="btn-primary w-full text-sm block text-center"
+                        onClick={() => { setIsOpen(false); reset(); }}
                       >
-                        Book a Free Consultation
-                      </button>
+                        Start Your Project
+                      </Link>
                       <button onClick={reset} className="mt-3 text-xs text-gray-muted hover:text-gray-text flex items-center gap-1 mx-auto">
                         <RotateCcw className="w-3 h-3" /> Try again
                       </button>

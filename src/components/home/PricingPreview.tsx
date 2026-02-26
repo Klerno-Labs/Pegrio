@@ -5,14 +5,6 @@ import MotionReveal from '@/components/MotionReveal'
 import { Smartphone } from 'lucide-react'
 
 export default function PricingPreview() {
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
-
   const tiers = [
     {
       name: 'STARTER',
@@ -27,6 +19,7 @@ export default function PricingPreview() {
         '30-day post-launch support',
       ],
       cta: 'Get Started',
+      href: '/order?tier=1',
       featured: false,
     },
     {
@@ -41,6 +34,7 @@ export default function PricingPreview() {
         '60-day post-launch support with weekly check-ins',
       ],
       cta: 'Get Started',
+      href: '/order?tier=2',
       featured: true,
     },
     {
@@ -54,7 +48,8 @@ export default function PricingPreview() {
         "Performance guarantee — we fix it if it doesn't generate results",
         'Priority turnaround and dedicated support',
       ],
-      cta: "Let's Talk",
+      cta: 'Get Started',
+      href: '/order?tier=3',
       featured: false,
     },
   ]
@@ -93,12 +88,12 @@ export default function PricingPreview() {
                   ))}
                 </ul>
 
-                <button
-                  onClick={openCalendly}
-                  className={tier.featured ? 'btn-primary w-full' : 'btn-secondary w-full'}
+                <Link
+                  href={tier.href}
+                  className={tier.featured ? 'btn-primary w-full block text-center' : 'btn-secondary w-full block text-center'}
                 >
                   {tier.cta}
-                </button>
+                </Link>
               </div>
             </MotionReveal>
           ))}
@@ -139,9 +134,9 @@ export default function PricingPreview() {
           <div className="text-center mt-8">
             <p className="text-gray-muted mb-4">
               Not sure which is right for you?{' '}
-              <button onClick={openCalendly} className="text-blue-accent link-underline font-semibold">
-                Book a free 15-minute call.
-              </button>
+              <Link href="/order" className="text-blue-accent link-underline font-semibold">
+                Start your project and we&apos;ll help you decide.
+              </Link>
             </p>
           </div>
         </MotionReveal>

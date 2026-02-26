@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import ContactForm from '@/components/contact/ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Book a Free Website Audit | Pegrio',
-  description: "Book a free 15-minute website audit with Pegrio. No pitch — just honest feedback on what your website is missing and what it's costing your business.",
+  title: 'Get Started | Pegrio',
+  description: "Ready to grow your business online? Start your project with Pegrio or send us a message. We respond within 1 business day.",
   openGraph: {
-    title: 'Book a Free Website Audit | Pegrio',
-    description: "Book a free 15-minute website audit with Pegrio. No pitch — just honest feedback on what your website is missing and what it's costing your business.",
+    title: 'Get Started | Pegrio',
+    description: "Ready to grow your business online? Start your project with Pegrio or send us a message. We respond within 1 business day.",
     url: 'https://www.pegrio.com/contact',
   },
   alternates: {
@@ -22,7 +23,7 @@ export default function ContactPage() {
         <div className="container text-center">
           <h1 className="mb-6">Let's Find Out If Your Website Is Costing You Clients</h1>
           <p className="text-xl text-gray-muted max-w-2xl mx-auto">
-            Book a free 15-minute audit or send a message. We respond within 1 business day.
+            Start your project or send a message. We respond within 1 business day.
           </p>
         </div>
       </section>
@@ -31,24 +32,19 @@ export default function ContactPage() {
       <section className="section bg-gray-bg">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Left Column - Calendly Embed */}
+            {/* Left Column - Start Your Project */}
             <div>
-              <h3 className="mb-4">Book a Free 15-Minute Audit</h3>
+              <h3 className="mb-4">Start Your Project</h3>
               <p className="text-gray-muted mb-6">
-                No pitch. No pressure. We'll look at your current site (or your competitors') and tell you exactly what we'd change and why.
+                No pitch. No pressure. Tell us about your business and we&apos;ll put together a plan tailored to your goals.
               </p>
 
-              {/* Calendly Inline Widget */}
-              <div
-                className="calendly-inline-widget bg-white rounded-xl overflow-hidden shadow-card"
-                data-url="https://calendly.com/c-hatfield309/30min"
-                style={{ minWidth: '320px', height: '700px' }}
-              />
-              <script
-                type="text/javascript"
-                src="https://assets.calendly.com/assets/external/widget.js"
-                async
-              />
+              <Link
+                href="/order"
+                className="btn-primary text-lg px-8 py-4 inline-block"
+              >
+                Get Started
+              </Link>
             </div>
 
             {/* Right Column - Contact Form */}

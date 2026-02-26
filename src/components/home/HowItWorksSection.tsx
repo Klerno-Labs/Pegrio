@@ -1,16 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import MotionReveal from '@/components/MotionReveal'
 
 export default function HowItWorksSection() {
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
-
   const steps = [
     {
       number: '1',
@@ -52,9 +45,9 @@ export default function HowItWorksSection() {
 
         <MotionReveal animation="fade-up" delay={400}>
           <div className="text-center">
-            <button onClick={openCalendly} className="btn-primary text-lg px-8 py-4">
-              Start With a Free Audit
-            </button>
+            <Link href="/order" className="btn-primary text-lg px-8 py-4 inline-block">
+              Start Your Project
+            </Link>
           </div>
         </MotionReveal>
       </div>

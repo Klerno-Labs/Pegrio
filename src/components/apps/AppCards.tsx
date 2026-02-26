@@ -1,18 +1,11 @@
 'use client'
 
+import Link from 'next/link'
 import MotionReveal from '@/components/MotionReveal'
 import { featuredApp } from '@/data/apps'
 import { ExternalLink, Check } from 'lucide-react'
 
 export default function AppCards() {
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
-
   const app = featuredApp
 
   return (
@@ -53,9 +46,9 @@ export default function AppCards() {
                     <ExternalLink className="w-4 h-4" />
                     View Live Demo
                   </a>
-                  <button onClick={openCalendly} className="btn-primary bg-gold-premium hover:bg-gold-premium/90">
+                  <Link href="/order" className="btn-primary bg-gold-premium hover:bg-gold-premium/90 inline-block text-center">
                     Get This App
-                  </button>
+                  </Link>
                 </div>
               </div>
 

@@ -1,17 +1,10 @@
 'use client'
 
+import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 
 export default function HeroSection() {
   const shouldReduceMotion = useReducedMotion()
-
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
 
   const scrollToPortfolio = () => {
     const portfolio = document.getElementById('portfolio-preview')
@@ -72,12 +65,12 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <button
-              onClick={openCalendly}
+            <Link
+              href="/order"
               className="btn-primary text-lg px-8 py-4 w-full sm:w-auto"
             >
-              Get Your Free Website Audit
-            </button>
+              Start Your Project
+            </Link>
 
             <button
               onClick={scrollToPortfolio}

@@ -1,14 +1,8 @@
 'use client'
 
-export default function MaintenancePlans() {
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
+import Link from 'next/link'
 
+export default function MaintenancePlans() {
   const plans = [
     {
       name: 'Basic',
@@ -152,9 +146,9 @@ export default function MaintenancePlans() {
           <p className="text-gray-muted mb-4">
             Not sure which package fits your business?
           </p>
-          <button onClick={openCalendly} className="btn-primary text-lg px-8 py-4">
-            Book a free 15-minute call — no pitch, just clarity.
-          </button>
+          <Link href="/order" className="btn-primary text-lg px-8 py-4 inline-block">
+            Start Your Project
+          </Link>
         </div>
       </div>
     </section>

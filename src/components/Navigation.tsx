@@ -23,14 +23,6 @@ export default function Navigation() {
     setIsMobileMenuOpen(false)
   }, [pathname])
 
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
-
   const navLinks = [
     { href: '/websites', label: 'Websites' },
     { href: '/apps', label: 'Apps', isNew: true },
@@ -81,12 +73,12 @@ export default function Navigation() {
                 )}
               </Link>
             ))}
-            <button
-              onClick={openCalendly}
+            <Link
+              href="/order"
               className="btn-primary"
             >
-              Book Free Audit
-            </button>
+              Get Started
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -159,15 +151,13 @@ export default function Navigation() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: navLinks.length * 0.05 }}
                 >
-                  <button
-                    onClick={() => {
-                      openCalendly()
-                      setIsMobileMenuOpen(false)
-                    }}
-                    className="btn-primary w-full mt-4"
+                  <Link
+                    href="/order"
+                    className="btn-primary w-full mt-4 block text-center"
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Book Free Audit
-                  </button>
+                    Get Started
+                  </Link>
                 </motion.div>
               </div>
             </motion.div>

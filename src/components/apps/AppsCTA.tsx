@@ -1,16 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import MotionReveal from '@/components/MotionReveal'
 
 export default function AppsCTA() {
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && (window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/c-hatfield309/30min'
-      })
-    }
-  }
-
   return (
     <section className="bg-navy text-white py-20 relative overflow-hidden">
       {/* Subtle radial glow */}
@@ -27,9 +20,9 @@ export default function AppsCTA() {
             We build custom apps for any industry. Tell us what your business needs and we&apos;ll make it happen.
           </p>
 
-          <button onClick={openCalendly} className="btn-primary text-lg px-8 py-4 bg-white text-navy hover:bg-gray-100">
-            Let&apos;s Talk About Your App
-          </button>
+          <Link href="/order" className="btn-primary text-lg px-8 py-4 bg-white text-navy hover:bg-gray-100 inline-block">
+            Start Your Project
+          </Link>
         </MotionReveal>
       </div>
     </section>
