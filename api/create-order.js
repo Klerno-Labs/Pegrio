@@ -25,10 +25,11 @@ export async function createOrder(data) {
         deposit_amount,
         stripe_session_id = null,
         stripe_payment_intent = null,
+        portal_token: provided_token = null,
     } = data;
 
-    // Generate unique portal token
-    const portal_token = crypto.randomUUID();
+    // Use pre-generated token from Stripe metadata, or generate a new one
+    const portal_token = provided_token || crypto.randomUUID();
 
     // Set max revisions based on tier (1:1, 2:2, 3:3)
     const max_revisions = Math.min(Math.max(tier, 1), 3);

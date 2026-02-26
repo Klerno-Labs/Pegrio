@@ -9,6 +9,7 @@
  */
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const crypto = require('crypto');
 
 // CORS headers
 const headers = {
@@ -112,6 +113,8 @@ export default async function handler(req, res) {
             sessionMetadata.total_amount = metadata.total_amount || '0';
             sessionMetadata.deposit_amount = metadata.deposit_amount || '0';
             sessionMetadata.balance_amount = metadata.balance_amount || '0';
+            // Shared portal token — both Pegrio and Agency OS use this
+            sessionMetadata.portal_token = crypto.randomUUID();
         }
 
         // Build line items

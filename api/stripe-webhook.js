@@ -241,6 +241,9 @@ async function handleWebsiteBuildOrder(data) {
     const depositAmount = parseInt(metadata.deposit_amount || '0');
 
     try {
+        // Use the portal token from Stripe metadata (shared with Agency OS)
+        const portalToken = metadata.portal_token || null;
+
         // Create the order in the database
         const order = await createOrder({
             customer_name: customerName,
@@ -254,52 +257,15 @@ async function handleWebsiteBuildOrder(data) {
             deposit_amount: depositAmount,
             stripe_session_id: sessionId,
             stripe_payment_intent: typeof paymentIntent === 'string' ? paymentIntent : paymentIntent?.id || null,
+            portal_token: portalToken,
         });
 
         console.log(`✅ Website build order #${order.id} created`);
 
-        // ── Forward order to Agency OS ──────────────────────
-        let portalUrl = null;
-        if (process.env.AGENCY_OS_URL && process.env.AGENCY_OS_API_KEY) {
-            try {
-                const agencyRes = await fetch(`${process.env.AGENCY_OS_URL}/api/ingest-order`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': process.env.AGENCY_OS_API_KEY,
-                    },
-                    body: JSON.stringify({
-                        customerName,
-                        customerEmail: email,
-                        customerPhone,
-                        companyName: businessName,
-                        orderId: String(order.id),
-                        tier: tierNum,
-                        packageName: `${tierName} Website Build`,
-                        totalAmount: totalAmount * 100,
-                        depositAmount: depositAmount * 100,
-                        balanceAmount: (totalAmount - depositAmount) * 100,
-                        maintenancePlan,
-                        addOns,
-                        portalToken: order.portal_token,
-                        stripeSessionId: sessionId,
-                        autoStartWorkflow: false,
-                    }),
-                });
-
-                if (agencyRes.ok) {
-                    const agencyData = await agencyRes.json();
-                    console.log(`✅ Order forwarded to Agency OS — project: ${agencyData.data?.projectId}`);
-                    // Use Agency OS portal URL for the questionnaire email
-                    portalUrl = `${process.env.AGENCY_OS_URL}/portal/${order.portal_token}`;
-                } else {
-                    const errText = await agencyRes.text();
-                    console.error(`⚠️ Agency OS ingest failed (${agencyRes.status}):`, errText);
-                }
-            } catch (agencyErr) {
-                console.error('⚠️ Failed to forward order to Agency OS:', agencyErr.message);
-            }
-        }
+        // Build portal URL — Agency OS receives the same token via its own Stripe webhook
+        const portalUrl = process.env.AGENCY_OS_URL
+            ? `${process.env.AGENCY_OS_URL}/portal/${order.portal_token}`
+            : null;
 
         // Send questionnaire email to customer
         if (email) {
@@ -312,7 +278,7 @@ async function handleWebsiteBuildOrder(data) {
                 balanceAmount: totalAmount - depositAmount,
                 portalToken: order.portal_token,
                 maintenancePlan,
-                portalUrl, // if Agency OS responded, use its URL
+                portalUrl,
             });
         }
 
