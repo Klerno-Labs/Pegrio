@@ -50,7 +50,7 @@ function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
 
 export default function SocialProofBar() {
   const stats = [
-    { number: 50, suffix: '+', label: 'Websites Built' },
+    { number: 12, suffix: '+', label: 'Projects Delivered' },
     { number: 90, suffix: '+', label: 'PageSpeed Score' },
     { number: 3, suffix: '-Week', label: 'Avg Delivery' },
   ]

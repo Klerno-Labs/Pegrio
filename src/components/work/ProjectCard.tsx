@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackEvent, GA_EVENTS } from '@/lib/analytics'
 
 interface BeforeAfter {
   label: string
@@ -15,6 +16,7 @@ interface Project {
   industry: string
   package: string
   result: string
+  highlight?: string
   demoUrl?: string
   beforeUrl?: string
   beforeAfter?: BeforeAfter[]
@@ -28,6 +30,12 @@ export default function ProjectCard({ project }: { project: Project }) {
     <>
       <div className="card flex flex-col">
         <div className="mb-4">
+          {project.highlight && (
+            <div className="mb-3 inline-flex items-center gap-1.5 bg-green-50 border border-green-200 px-3 py-1 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              <span className="text-xs font-semibold text-green-700">{project.highlight}</span>
+            </div>
+          )}
           <h3 className="text-xl mb-2">{project.name}</h3>
           <div className="flex flex-wrap gap-2">
             {/* Type badge */}
@@ -53,7 +61,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 
         <div className="flex gap-3">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => { trackEvent(GA_EVENTS.PORTFOLIO_MODAL_OPEN, { project: project.name }); setIsModalOpen(true) }}
             className="btn-secondary flex-1"
           >
             View Details

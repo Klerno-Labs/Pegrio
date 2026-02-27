@@ -22,7 +22,7 @@ export default function WorkPage() {
         <div className="container text-center">
           <h1 className="mb-6">Our Work</h1>
           <p className="text-xl text-gray-muted max-w-2xl mx-auto">
-            Every site built for one goal: more leads for your business.
+            Real projects. Real businesses. Real results you can verify.
           </p>
         </div>
       </section>

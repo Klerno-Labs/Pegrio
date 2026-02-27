@@ -13,6 +13,7 @@ export default function PortfolioGrid() {
       type: 'Website' as const,
       industry: 'Retail',
       package: 'Enterprise Package',
+      highlight: 'Custom Next.js e-commerce',
       result: 'Full custom Next.js e-commerce site for a Houston hemp retailer — age verification, product browsing, modern gradient design, and error monitoring with Sentry',
       demoUrl: 'https://shopthcplus.com',
       beforeUrl: 'https://3rdcoastsmokecompany.com',
@@ -107,6 +108,7 @@ export default function PortfolioGrid() {
       type: 'Website' as const,
       industry: 'Home Services',
       package: 'Starter Package',
+      highlight: 'Page 1 on Google in 60 days',
       result: 'New site ranking on page 1 for "plumber Katy TX" within 60 days of launch',
       services: [
         '5-page responsive website',
@@ -137,6 +139,7 @@ export default function PortfolioGrid() {
       type: 'Website' as const,
       industry: 'Home Services',
       package: 'Growth Package',
+      highlight: 'Built & live in 18 days',
       result: 'Professional site built and live in 18 days — now their #1 consistent source of new leads',
       services: [
         'Fast-tracked custom design',
@@ -152,6 +155,7 @@ export default function PortfolioGrid() {
       type: 'Website' as const,
       industry: 'Med Spas',
       package: 'Enterprise Package',
+      highlight: 'Luxury design + booking system',
       result: 'High-end custom design with online booking integration — matches the caliber of their brand and clientele',
       services: [
         'Luxury custom design',
@@ -183,6 +187,7 @@ export default function PortfolioGrid() {
       type: 'Website' as const,
       industry: 'Restaurants',
       package: 'Growth Package',
+      highlight: 'Full online ordering system',
       result: 'Full online ordering system with cart, checkout, and order confirmation — built for high-volume takeout',
       demoUrl: '/demos/demo-growth/index.html',
       services: [
@@ -199,6 +204,7 @@ export default function PortfolioGrid() {
       type: 'Website' as const,
       industry: 'Restaurants',
       package: 'Enterprise Package',
+      highlight: 'AI chatbot + loyalty rewards',
       result: 'Premium Japanese restaurant site with AI chatbot, loyalty rewards, admin dashboard, and full e-commerce',
       demoUrl: '/demos/demo-enterprise/index.html',
       services: [

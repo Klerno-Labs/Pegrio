@@ -21,7 +21,7 @@ export default function ContactPage() {
       {/* Page Header */}
       <section className="section bg-white pt-32">
         <div className="container text-center">
-          <h1 className="mb-6">Let's Find Out If Your Website Is Costing You Clients</h1>
+          <h1 className="mb-6">Let&apos;s Talk About What Your Business Needs Online</h1>
           <p className="text-xl text-gray-muted max-w-2xl mx-auto">
             Start your project or send a message. We respond within 1 business day.
           </p>

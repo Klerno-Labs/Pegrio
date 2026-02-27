@@ -1,11 +1,11 @@
 {
-  "name": "Pegrio - AI-Powered Business Websites",
+  "name": "Pegrio - Professional Websites for Local Businesses",
   "short_name": "Pegrio",
-  "description": "Professional websites with AI chatbots for restaurants, salons & fitness studios. Fixed pricing, fast delivery.",
+  "description": "Custom websites and industry apps for home service businesses, med spas, and restaurants. Fixed pricing, fast delivery.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0071e3",
+  "theme_color": "#1a1a2e",
   "orientation": "portrait-primary",
   "icons": [
     {

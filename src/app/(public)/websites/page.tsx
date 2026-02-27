@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import PricingTiers from '@/components/websites/PricingTiers'
+import WhyNotDIY from '@/components/websites/WhyNotDIY'
 import MaintenancePlans from '@/components/websites/MaintenancePlans'
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function WebsitesPage() {
       </section>
 
       <PricingTiers />
+      <WhyNotDIY />
       <MaintenancePlans />
     </>
   )

@@ -158,10 +158,34 @@
   animation: slideIn 0.2s ease-out;
 }
 
+/* ─── Hero animated gradient mesh ─── */
+
+@keyframes meshShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-gradient-mesh {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 1) 0%,
+    rgba(26, 26, 46, 0.95) 30%,
+    rgba(107, 63, 160, 0.15) 50%,
+    rgba(26, 26, 46, 0.95) 70%,
+    rgba(26, 26, 46, 1) 100%
+  );
+  background-size: 200% 200%;
+  animation: meshShift 15s ease-in-out infinite;
+}
+
 /* ─── Hero accent text ─── */
 
 .gradient-text {
-  color: #6B3FA0;
+  background: linear-gradient(135deg, #6B3FA0 0%, #9B6FD0 50%, #6B3FA0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ─── Shimmer animation for badges ─── */

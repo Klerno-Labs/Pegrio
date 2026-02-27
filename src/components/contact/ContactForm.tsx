@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackEvent, GA_EVENTS } from '@/lib/analytics'
 
 const budgetToPrice: Record<string, number> = {
   'under-2000': 1500,
@@ -92,6 +93,7 @@ export default function ContactForm() {
 
       if (res.ok) {
         setIsSubmitted(true)
+        trackEvent(GA_EVENTS.CONTACT_FORM_SUBMIT, { budget: data.budget, need: data.need })
       } else {
         setSubmitError('Something went wrong. Please try again.')
       }

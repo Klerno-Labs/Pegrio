@@ -14,7 +14,7 @@ export default function FAQSection() {
     },
     {
       question: 'What platform do you build on?',
-      answer: 'Webflow for design-forward projects, WordPress for content-heavy sites that need more plugins',
+      answer: 'Most of our projects are built with Next.js and Tailwind CSS — the same modern stack used by Vercel, Netflix, and Hulu. For simpler projects, we recommend the best platform for your needs.',
     },
     {
       question: 'Do you work with businesses outside Houston?',

@@ -9,17 +9,20 @@ export default function PortfolioPreview() {
     {
       name: 'THC Plus',
       industry: 'Retail',
+      highlight: 'Custom Next.js e-commerce',
       demoUrl: 'https://shopthcplus.com',
       result: 'Full custom Next.js e-commerce site with age verification, product catalog, and modern gradient design — live in Houston',
     },
     {
       name: 'Lumière Med Spa',
       industry: 'Med Spas & Aesthetics',
+      highlight: 'Luxury design + booking system',
       result: 'High-end custom design with online booking integration — matches the caliber of their brand and clientele',
     },
     {
       name: 'Yuki Izakaya',
       industry: 'Restaurants & Food',
+      highlight: 'AI chatbot + loyalty rewards',
       demoUrl: '/demos/demo-enterprise/index.html',
       result: 'Premium Japanese restaurant site with AI chatbot, loyalty rewards, admin dashboard, and full e-commerce',
     },
@@ -40,6 +43,12 @@ export default function PortfolioPreview() {
                 whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
               >
                 <div className="mb-4">
+                  {project.highlight && (
+                    <div className="mb-3 inline-flex items-center gap-1.5 bg-green-50 border border-green-200 px-3 py-1 rounded-full">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                      <span className="text-xs font-semibold text-green-700">{project.highlight}</span>
+                    </div>
+                  )}
                   <h3 className="mb-2">{project.name}</h3>
                   <span className="inline-block bg-blue-light text-blue-accent px-3 py-1 rounded-full text-sm font-medium">
                     {project.industry}

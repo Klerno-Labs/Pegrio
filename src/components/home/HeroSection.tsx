@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
+import { trackEvent, GA_EVENTS } from '@/lib/analytics'
 
 export default function HeroSection() {
   const shouldReduceMotion = useReducedMotion()
@@ -15,14 +16,26 @@ export default function HeroSection() {
 
   return (
     <section className="bg-navy text-white relative overflow-hidden">
-      {/* Dot-grid background pattern */}
-      <div className="absolute inset-0 bg-dots opacity-30" />
-
-      {/* Subtle radial glow */}
-      <div className="absolute inset-0">
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(107,63,160,0.1) 0%, transparent 70%)' }}
+      {/* Animated gradient mesh background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 hero-gradient-mesh" />
+        <motion.div
+          className="absolute w-[600px] h-[600px] rounded-full opacity-20 blur-[120px]"
+          style={{ background: 'radial-gradient(circle, #6B3FA0, transparent)', top: '20%', left: '30%' }}
+          animate={shouldReduceMotion ? {} : {
+            x: ['-10%', '10%', '-10%'],
+            y: ['-10%', '15%', '-10%'],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute w-[500px] h-[500px] rounded-full opacity-15 blur-[100px]"
+          style={{ background: 'radial-gradient(circle, #4A90D9, transparent)', bottom: '10%', right: '20%' }}
+          animate={shouldReduceMotion ? {} : {
+            x: ['10%', '-10%', '10%'],
+            y: ['10%', '-15%', '10%'],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
@@ -45,9 +58,8 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="mb-6 font-display"
           >
-            Your Website Should Be{' '}
-            <span className="gradient-text">Generating Leads.</span>{' '}
-            Is It?
+            We Build Websites That{' '}
+            <span className="gradient-text">Actually Bring You Customers</span>
           </motion.h1>
 
           <motion.p
@@ -56,7 +68,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="text-xl md:text-2xl mb-10 text-gray-300 leading-relaxed"
           >
-            We build high-performance websites for home service businesses, med spas, and restaurants in Houston, Katy, and across the US — designed to rank on Google and convert visitors into customers.
+            Custom websites for home service businesses, med spas, and restaurants in Houston, Katy, and across the US — built to rank on Google and turn visitors into paying customers.
           </motion.p>
 
           <motion.div
@@ -68,6 +80,7 @@ export default function HeroSection() {
             <Link
               href="/order"
               className="btn-primary text-lg px-8 py-4 w-full sm:w-auto"
+              onClick={() => trackEvent(GA_EVENTS.CTA_CLICK, { location: 'hero', label: 'Start Your Project' })}
             >
               Start Your Project
             </Link>

@@ -8,6 +8,8 @@ import PricingPreview from '@/components/home/PricingPreview'
 import PortfolioPreview from '@/components/home/PortfolioPreview'
 import TrustSection from '@/components/home/TrustSection'
 import FAQSection from '@/components/home/FAQSection'
+import ResultsSection from '@/components/home/ResultsSection'
+import TechStackBar from '@/components/home/TechStackBar'
 import FinalCTA from '@/components/home/FinalCTA'
 import ScrollPopup from '@/components/home/ScrollPopup'
 import SectionDivider from '@/components/SectionDivider'
@@ -38,8 +40,7 @@ export default function Home() {
       name: 'Pegrio',
       description: 'Website design agency for local businesses. High-performance websites for home service businesses, med spas, and restaurants.',
       url: 'https://www.pegrio.com',
-      telephone: '+1-832-555-0100',
-      email: 'c.hatfield309@gmail.com',
+      email: 'hello@pegrio.com',
       founder: {
         '@type': 'Person',
         name: 'Chris Hatfield',
@@ -127,7 +128,10 @@ export default function Home() {
       <PricingPreview />
       <SectionDivider type="wave" from="#FFFFFF" to="#F8F5F0" />
       <PortfolioPreview />
-      <SectionDivider type="angle" from="#F8F5F0" to="#FFFFFF" />
+      <SectionDivider type="angle" from="#F8F5F0" to="#1a1a2e" />
+      <ResultsSection />
+      <SectionDivider type="curve" from="#1a1a2e" to="#FFFFFF" />
+      <TechStackBar />
       <TrustSection />
       <SectionDivider type="curve" from="#FFFFFF" to="#F8F5F0" />
       <FAQSection />

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { trackEvent, GA_EVENTS } from '@/lib/analytics'
 
 export default function ScrollPopup() {
   const [isVisible, setIsVisible] = useState(false)
@@ -32,9 +33,11 @@ export default function ScrollPopup() {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const email = formData.get('email')
-    console.log('Email submitted:', email)
+    const website = formData.get('website')
+    console.log('Audit request:', { email, website })
 
     setIsSubmitted(true)
+    trackEvent(GA_EVENTS.POPUP_EMAIL_SUBMIT)
     setTimeout(() => {
       handleClose()
     }, 3000)
@@ -66,30 +69,41 @@ export default function ScrollPopup() {
             <div className="p-6">
               {!isSubmitted ? (
                 <>
-                  <h3 className="text-2xl font-bold mb-2">Get a Free Website Audit</h3>
+                  <h3 className="text-2xl font-bold mb-2">Free 5-Minute Video Audit</h3>
                   <p className="text-gray-muted mb-6">
-                    We&apos;ll record a short video reviewing your site — completely free, no strings attached.
+                    Drop your URL and we&apos;ll record a personalized video showing exactly what&apos;s hurting your Google ranking and what to fix first.
                   </p>
 
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-3">
+                    <input
+                      type="url"
+                      name="website"
+                      placeholder="https://yourbusiness.com"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-accent"
+                    />
+
                     <input
                       type="email"
                       name="email"
                       required
-                      placeholder="your@email.com"
+                      placeholder="Where should we send it?"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-accent"
                     />
 
                     <button type="submit" className="btn-primary w-full">
-                      Get My Free Audit
+                      Send My Free Video Audit
                     </button>
+
+                    <p className="text-xs text-gray-400 text-center">
+                      No pitch. No spam. Just an honest review.
+                    </p>
                   </form>
                 </>
               ) : (
                 <div className="py-8 text-center">
                   <div className="text-5xl mb-4">✓</div>
                   <h3 className="text-2xl font-bold mb-2">Got it!</h3>
-                  <p className="text-gray-muted">We&apos;ll be in touch shortly.</p>
+                  <p className="text-gray-muted">We&apos;ll record your audit and send it over shortly.</p>
                 </div>
               )}
             </div>
