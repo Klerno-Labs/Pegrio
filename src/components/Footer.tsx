@@ -17,7 +17,7 @@ export default function Footer() {
               Custom websites and industry apps for local businesses.
             </p>
             <p className="text-gray-500 text-xs">
-              Katy, TX — Serving clients nationwide
+              Houston, TX — Serving clients nationwide
             </p>
           </div>
 

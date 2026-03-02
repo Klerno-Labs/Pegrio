@@ -37,8 +37,9 @@ export default function Home() {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
       '@id': 'https://www.pegrio.com/#business',
-      name: 'Pegrio',
-      description: 'Website design agency for local businesses. High-performance websites for home service businesses, med spas, and restaurants.',
+      name: 'Pegrio LLC',
+      legalName: 'Pegrio LLC',
+      description: 'Website design agency for local businesses in Houston, TX. Custom websites for home service businesses, med spas, and restaurants.',
       url: 'https://www.pegrio.com',
       email: 'hello@pegrio.com',
       founder: {
@@ -47,14 +48,14 @@ export default function Home() {
       },
       address: {
         '@type': 'PostalAddress',
-        addressLocality: 'Katy',
+        addressLocality: 'Houston',
         addressRegion: 'TX',
-        postalCode: '77494',
         addressCountry: 'US',
       },
       areaServed: [
         { '@type': 'City', name: 'Houston' },
         { '@type': 'City', name: 'Katy' },
+        { '@type': 'State', name: 'Texas' },
         { '@type': 'Country', name: 'United States' },
       ],
       priceRange: '$$',
