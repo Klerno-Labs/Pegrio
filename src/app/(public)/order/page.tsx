@@ -9,6 +9,15 @@ import AddOnSelector from '@/components/order/AddOnSelector'
 import OrderSummary, { calculateOrderTotal } from '@/components/order/OrderSummary'
 import type { AddOn } from '@/components/order/AddOnSelector'
 
+// Add-on IDs that are included in each tier (minimum tier that includes them)
+const ADDON_INCLUDED_IN_TIER: Record<string, number> = {
+  'blog-cms': 2,
+  'seo-audit': 2,
+  'analytics': 2,
+  'ecommerce': 3,
+  'booking': 3,
+}
+
 const STEPS = [
   { id: 1, label: 'Choose Plan' },
   { id: 2, label: 'Maintenance' },
@@ -229,7 +238,14 @@ function OrderPageContent() {
                   Select the website package that fits your business needs.
                 </p>
               </div>
-              <TierSelector selectedTier={selectedTier} onSelect={setSelectedTier} />
+              <TierSelector selectedTier={selectedTier} onSelect={(tier) => {
+                setSelectedTier(tier)
+                // Remove any add-ons that are now included in the new tier
+                setSelectedAddOns(prev => prev.filter(a => {
+                  const minTier = ADDON_INCLUDED_IN_TIER[a.id]
+                  return minTier === undefined || tier < minTier
+                }))
+              }} />
             </motion.div>
           )}
 
@@ -278,6 +294,7 @@ function OrderPageContent() {
                 selectedAddOns={selectedAddOns}
                 onToggle={handleAddOnToggle}
                 onQuantityChange={handleQuantityChange}
+                selectedTier={selectedTier}
               />
             </motion.div>
           )}

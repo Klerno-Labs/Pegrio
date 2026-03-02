@@ -16,6 +16,17 @@ interface AddOnSelectorProps {
   selectedAddOns: AddOn[]
   onToggle: (addOn: AddOn) => void
   onQuantityChange?: (addOnId: string, quantity: number) => void
+  selectedTier?: number | null
+}
+
+// Map of add-on IDs to the minimum tier that includes them
+// Tier 1 = Starter, Tier 2 = Growth, Tier 3 = Enterprise
+const includedInTier: Record<string, number> = {
+  'blog-cms': 2,       // Growth includes "Blog / CMS system"
+  'seo-audit': 2,      // Growth includes "Full on-page SEO + schema markup"
+  'analytics': 2,      // Growth includes "GA4 + heatmap setup"
+  'ecommerce': 3,      // Enterprise includes "E-commerce or booking/CRM integration"
+  'booking': 3,        // Enterprise includes "E-commerce or booking/CRM integration"
 }
 
 const availableAddOns: Omit<AddOn, 'quantity'>[] = [
@@ -80,13 +91,21 @@ const availableAddOns: Omit<AddOn, 'quantity'>[] = [
 
 export { availableAddOns }
 
-export default function AddOnSelector({ selectedAddOns, onToggle, onQuantityChange }: AddOnSelectorProps) {
+export default function AddOnSelector({ selectedAddOns, onToggle, onQuantityChange, selectedTier }: AddOnSelectorProps) {
   const isSelected = (id: string) => selectedAddOns.some(a => a.id === id)
   const getQuantity = (id: string) => selectedAddOns.find(a => a.id === id)?.quantity || 1
+  const isIncludedInPlan = (id: string) => {
+    if (!selectedTier) return false
+    const minTier = includedInTier[id]
+    return minTier !== undefined && selectedTier >= minTier
+  }
+
+  // Filter out add-ons already included in the selected tier
+  const visibleAddOns = availableAddOns.filter(addOn => !isIncludedInPlan(addOn.id))
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {availableAddOns.map((addOn, i) => {
+      {visibleAddOns.map((addOn, i) => {
         const selected = isSelected(addOn.id)
 
         return (
