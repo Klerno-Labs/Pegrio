@@ -13,4 +13,6 @@ export const GA_EVENTS = {
   CTA_CLICK: 'cta_click',
   DEMO_VIEW: 'demo_view',
   PORTFOLIO_MODAL_OPEN: 'portfolio_modal_open',
+  BLOG_CTA_CLICK: 'blog_cta_click',
+  CITY_PAGE_VIEW: 'city_page_view',
 } as const

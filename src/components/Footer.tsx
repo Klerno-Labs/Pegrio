@@ -34,6 +34,15 @@ export default function Footer() {
               <Link href="/websites#maintenance" className="text-gray-400 hover:text-white transition-colors text-sm">
                 Maintenance Plans
               </Link>
+              <Link href="/websites/houston" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Houston
+              </Link>
+              <Link href="/websites/katy" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Katy
+              </Link>
+              <Link href="/websites/sugar-land" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Sugar Land
+              </Link>
             </div>
           </div>
 
@@ -43,6 +52,9 @@ export default function Footer() {
             <div className="flex flex-col gap-2.5">
               <Link href="/work" className="text-gray-400 hover:text-white transition-colors text-sm">
                 Portfolio
+              </Link>
+              <Link href="/blog" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Blog
               </Link>
               <Link href="/about" className="text-gray-400 hover:text-white transition-colors text-sm">
                 About

@@ -27,6 +27,7 @@ export default function Navigation() {
     { href: '/websites', label: 'Websites' },
     { href: '/apps', label: 'Apps', isNew: true },
     { href: '/work', label: 'Work' },
+    { href: '/blog', label: 'Blog' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
   ]
