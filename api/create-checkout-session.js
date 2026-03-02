@@ -11,21 +11,39 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const crypto = require('crypto');
 
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+    'https://pegrio.com',
+    'https://www.pegrio.com',
+    process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : null,
+].filter(Boolean);
+
+function getCorsOrigin(req) {
+    const origin = req.headers.origin || req.headers.referer || '';
+    return ALLOWED_ORIGINS.find(o => origin.startsWith(o)) || ALLOWED_ORIGINS[0];
+}
+
 // CORS headers
-const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json',
-};
+function getHeaders(req) {
+    return {
+        'Access-Control-Allow-Origin': getCorsOrigin(req),
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json',
+    };
+}
 
 /**
  * Main handler function
  */
 export default async function handler(req, res) {
+    // Set CORS headers
+    const corsHeaders = getHeaders(req);
+    Object.entries(corsHeaders).forEach(([key, value]) => res.setHeader(key, value));
+
     // Handle OPTIONS request for CORS
     if (req.method === 'OPTIONS') {
-        return res.status(200).json({ success: true });
+        return res.status(200).end();
     }
 
     // Only accept POST
