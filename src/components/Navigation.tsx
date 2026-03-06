@@ -25,7 +25,8 @@ export default function Navigation() {
 
   const navLinks = [
     { href: '/websites', label: 'Websites' },
-    { href: '/apps', label: 'Apps', isNew: true },
+    { href: '/apps', label: 'Apps' },
+    { href: '/store', label: 'Store', isNew: true },
     { href: '/work', label: 'Work' },
     { href: '/blog', label: 'Blog' },
     { href: '/about', label: 'About' },
