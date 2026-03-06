@@ -1,12 +1,4 @@
-import { createPool } from '@vercel/postgres'
-
-/**
- * Connects to Robert's database to read public showcase items.
- * Requires SHOWCASE_DATABASE_URL env var pointing to Robert's Neon Postgres.
- */
-const pool = createPool({
-  connectionString: process.env.SHOWCASE_DATABASE_URL,
-})
+import { sql } from '@vercel/postgres'
 
 export interface ShowcaseItem {
   id: string
@@ -24,7 +16,7 @@ export interface ShowcaseItem {
 }
 
 export async function getPublicShowcaseItems(niche?: string): Promise<ShowcaseItem[]> {
-  const { rows } = await pool.sql`
+  const { rows } = await sql`
     SELECT
       id, name, niche, description, live_url, github_repo,
       price, showcase_status, screenshots, features, tech_stack, created_at
@@ -56,7 +48,7 @@ export async function getPublicShowcaseItems(niche?: string): Promise<ShowcaseIt
 }
 
 export async function getShowcaseItemById(id: string): Promise<ShowcaseItem | null> {
-  const { rows } = await pool.sql`
+  const { rows } = await sql`
     SELECT
       id, name, niche, description, live_url, github_repo,
       price, showcase_status, screenshots, features, tech_stack, created_at
